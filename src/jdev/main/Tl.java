@@ -1,71 +1,71 @@
-package jdev.main;
+    package jdev.main;
 
-import jdev.form.*;
-import jdev.form.Form_Empty;
-import tl.*;
-import java.awt.Component;
-import jdev.menu.EventMenuSelected;
+    import jdev.form.*;
+    import jdev.form.Form_Empty;
+    import tl.*;
+    import java.awt.Component;
+    import jdev.menu.EventMenuSelected;
 
-public class Tl extends javax.swing.JFrame {
-    
-    private static Tl main;
-    
-    public Tl() {
-        initComponents();
-        init();
-    }
-    
-    private void init() {
-        main = this;
-        //titleBar.initJFram(this);
-        menu_tl1.addEvent(new EventMenuSelected() {
-            @Override
-            public void menuSelected(int index, int indexSubMenu) {
-                if (index == 0 && indexSubMenu == 0) {
-                    showForm(new Form_tl());
+    public class Tl extends javax.swing.JFrame {
+
+        private static Tl main;
+
+        public Tl() {
+            initComponents();
+            init();
+        }
+
+        private void init() {
+            main = this;
+            //titleBar.initJFram(this);
+            menu_tl1.addEvent(new EventMenuSelected() {
+                @Override
+                public void menuSelected(int index, int indexSubMenu) {
+                    if (index == 0 && indexSubMenu == 0) {
+                        showForm(new Form_tl());
+                    }
+                 //emp tab
+                    else if (index == 1 && indexSubMenu == 1) {
+                            showForm(new emp1());
+                            }
+                    else if (index == 1 && indexSubMenu == 2) {
+                            showForm(new empcred());
+                            }
+
+                 //payroll
+                    else if (index == 2 && indexSubMenu == 0) {
+                            showForm(new payr());
+                    }
+
+                 //
+                    else if (index == 3 && indexSubMenu == 0) {
+                            showForm(new sched());
+                    }
+                    // PERFORMANCE
+                    else if (index == 4 && indexSubMenu == 0) {
+                            showForm(new perf1());
+                    }
+                    else if (index == 4 && indexSubMenu == 1) {
+                            showForm(new ProdRec());
+                    }
+                    else {
+                        showForm(new Form_Empty(index + " " + indexSubMenu));
+                    }
                 }
-             //emp tab
-                else if (index == 1 && indexSubMenu == 1) {
-                        showForm(new emp1());
-                        }
-                else if (index == 1 && indexSubMenu == 2) {
-                        showForm(new empcred());
-                        }
-                
-             //payroll
-                else if (index == 2 && indexSubMenu == 0) {
-                        showForm(new payr());
-                }
-                
-             //
-                else if (index == 3 && indexSubMenu == 0) {
-                        showForm(new sched());
-                }
-                // PERFORMANCE
-                else if (index == 4 && indexSubMenu == 0) {
-                        showForm(new perf1());
-                }
-                else if (index == 4 && indexSubMenu == 1) {
-                        showForm(new ProdRec());
-                }
-                else {
-                    showForm(new Form_Empty(index + " " + indexSubMenu));
-                }
-            }
-        });
-        menu_tl1.setSelectedIndex(0, 0);
-    }
-    
-    public void showForm(Component com) {
-        body.removeAll();
-        body.add(com);
-        body.repaint();
-        body.revalidate();
-    }
-    
-    public static Tl getMain() {
-        return main;
-    }
+            });
+            menu_tl1.setSelectedIndex(0, 0);
+        }
+
+        public void showForm(Component com) {
+            body.removeAll();
+            body.add(com);
+            body.repaint();
+            body.revalidate();
+        }
+
+        public static Tl getMain() {
+            return main;
+        }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -133,8 +133,8 @@ public class Tl extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menu_tl1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(menu_tl1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)

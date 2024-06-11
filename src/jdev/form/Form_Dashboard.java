@@ -20,6 +20,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
     public Form_Dashboard() {
         initComponents();
         init();
+        loadData();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -102,9 +103,7 @@ public class Form_Dashboard extends javax.swing.JPanel {
                     card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
                 }
             }
-            
-             
-            
+   
             
         } catch (SQLException ex) {
             ex.printStackTrace();

@@ -5,6 +5,16 @@
  */
 package hr;
 
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author i5
@@ -16,6 +26,13 @@ public class empBen extends javax.swing.JPanel {
      */
     public empBen() {
         initComponents();
+        displayDataInTable();
+        // Add action listener for jButton1
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
     }
 
     /**
@@ -168,8 +185,117 @@ public class empBen extends javax.swing.JPanel {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+        Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    // Retrieve data from text fields
+    int employeeID = Integer.parseInt(jTextField9.getText()); // Assuming jTextField9 contains EmployeeID
+    String empName = jTextField10.getText(); // Assuming jTextField10 contains Employee Name
+    int hmoNo = Integer.parseInt(jTextField16.getText()); // Assuming jTextField16 contains HMO no.
+    
+    // Retrieve LOB and Position from the database
+    String[] data = getLOBAndPositionFromDatabase(employeeID);
+    String lob = data[0];
+    String position = data[1];
+    
+    float incentive = 0.0f; // You need to retrieve Incentive data from somewhere
+    
+    // Insert data into the database
+    try {
+        Connection con = ConnectionManager.getConnection();
+        PreparedStatement pst = con.prepareStatement("INSERT INTO benefit (EmployeeID, Emp_lname, HMO, HMO_date_time, LOB, Level, Incentive) VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, ?, ?)");
+        pst.setInt(1, employeeID);
+        pst.setString(2, empName);
+        pst.setInt(3, hmoNo);
+        pst.setString(4, lob);
+        pst.setString(5, position);
+        pst.setFloat(6, incentive);
+        pst.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Data inserted successfully.");
+        
+        // Clear text fields after insertion
+        jTextField9.setText("");
+        jTextField10.setText("");
+        jTextField16.setText("");
+        
+        // Update the table with new data
+        displayDataInTable();
+        
+        // Close database connection
+        con.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error inserting data: " + ex.getMessage());
+    }
+}
 
 
+    
+        
+    private String[] getLOBAndPositionFromDatabase(int employeeID) {
+    String[] result = new String[2]; // Array to store LOB and Position
+    con = null;
+    pst = null;
+    rs = null;
+    
+        try {
+            con = ConnectionManager.getConnection();
+            pst = con.prepareStatement("SELECT emp_lob, emp_position FROM emp_info WHERE employeeID = ?");
+            pst.setInt(1, employeeID);
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                result[0] = rs.getString("emp_lob"); // Store LOB
+                result[1] = rs.getString("emp_position"); // Store Position
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error retrieving data from the database: " + ex.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error closing database resources: " + ex.getMessage());
+            }
+        }
+
+        return result;
+    }
+    
+    private void displayDataInTable() {
+        DefaultTableModel model = (DefaultTableModel) jTable3.getModel();
+        model.setRowCount(0); // Clear existing rows
+        
+        try {
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM benefit");
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getInt("EmployeeID"),
+                    rs.getString("Emp_lname"),
+                    rs.getInt("HMO"),
+                    rs.getString("HMO_date_time"),
+                    rs.getString("LOB"),
+                    rs.getInt("Level"),
+                    rs.getFloat("Incentive")
+                };
+                model.addRow(row);
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error retrieving data from the database: " + ex.getMessage());
+        }
+    }
+
+
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel24;
@@ -186,3 +312,4 @@ public class empBen extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
+

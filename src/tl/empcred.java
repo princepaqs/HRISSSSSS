@@ -89,6 +89,11 @@ public class empcred extends javax.swing.JPanel {
         });
 
         jButton7.setText("CLEAR");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("UPDATE RECORD");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -257,7 +262,57 @@ public class empcred extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+                            // TODO add your handling code here:
+              // TODO add your handling code here:
+    DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    int selectedRow = jTable2.getSelectedRow(); // Get the selected row index
+
+    if (selectedRow == -1) {
+        // No row is selected
+        JOptionPane.showMessageDialog(this, "Please select a row to delete", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Confirm deletion
+    int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the selected employee?", "Confirm Deletion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+    if (response != JOptionPane.YES_OPTION) {
+        // User chose No or closed the dialog, so don't proceed with deletion
+        return;
+    }
+
+    // Get the Employee ID from the selected row
+    String employeeID = model.getValueAt(selectedRow, 0).toString(); // Assuming EmployeeID is in the first column
+
+    // Database connection and delete operation
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    try {
+        con = ConnectionManager.getConnection();
+        String query = "DELETE FROM emp_info WHERE EmployeeID = ?";
+        pstmt = con.prepareStatement(query);
+        pstmt.setString(1, employeeID);
+
+        int rowsDeleted = pstmt.executeUpdate();
+        if (rowsDeleted > 0) {
+            // Remove the row from the JTable model
+            model.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "Employee deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to delete the employee.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "An error occurred while deleting the employee.", "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+                
+                
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -325,6 +380,10 @@ public class empcred extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+            clearFields();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
     private String getStringValue(Object obj) {
     if (obj != null) {
         return obj.toString();
@@ -384,9 +443,15 @@ public class empcred extends javax.swing.JPanel {
     }
   
     private void searchData() {
-    String employeeID = jTextField5.getText().trim(); // Assuming jTextField5 is for Employee ID
-    String firstName = jTextField6.getText().trim(); // Assuming jTextField6 is for First Name
-    String lastName = jTextField7.getText().trim(); // Assuming jTextField7 is for Last Name
+    String employeeID = jTextField5.getText().trim();
+    String firstName = jTextField6.getText().trim();
+    String lastName = jTextField7.getText().trim(); 
+        
+  // Validate Employee ID
+    if (employeeID.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Text Fields cannot be empty", "Validation Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
     try {
         con = ConnectionManager.getConnection();
@@ -404,7 +469,7 @@ public class empcred extends javax.swing.JPanel {
         if (!lastName.isEmpty()) {
             query += " AND emp_lname LIKE '%" + lastName + "%'";
         }
-
+        
         rs = stmt.executeQuery(query);
 
         // Clear existing table data

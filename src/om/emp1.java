@@ -1222,7 +1222,7 @@ public class emp1 extends javax.swing.JPanel {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
@@ -1482,7 +1482,7 @@ public class emp1 extends javax.swing.JPanel {
                                                              + "emp_sex=?, emp_nationality=?, emp_civilStatus=?, emp_religion=?, emp_Birthdate=?, "
                                                              + "emp_Contact=?, emp_hea=?, emp_school=?, emp_yrfinished=?, emp_ecname=?, "
                                                              + "emp_ecaddress=?, emp_eccontact=?, emp_ecrelationship=?, emp_SSS=?, emp_philhealth=?, "
-                                                             + "emp_tin=?, emp_pagibig=?, emp_department=?, emp_supervisor=?, emo_lob=?, emp_start=?, emp_end=? "
+                                                             + "emp_tin=?, emp_pagibig=?, emp_department=?, emp_supervisor=?, emp_lob=?, emp_start=?, emp_end=? "
                                                              + "WHERE EmployeeID=?");
                 
                 pst.setString(1, fname);
@@ -1524,7 +1524,8 @@ public class emp1 extends javax.swing.JPanel {
                 pst.execute();
                 
                 con.close();
-                
+                jButton5.setEnabled(true);
+        	jButton3.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "Record updated.");
                 
             } catch (SQLException ex) {

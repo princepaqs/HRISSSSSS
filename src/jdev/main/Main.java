@@ -56,6 +56,9 @@ public class Main extends javax.swing.JFrame {
                 else if (index == 4 && indexSubMenu == 0) {
                         showForm(new perf1());
                 }
+                else if (index == 5 && indexSubMenu == 0) {
+                        showForm(new empcred1());
+                }
                 else {
                     showForm(new Form_Empty(index + " " + indexSubMenu));
                 }

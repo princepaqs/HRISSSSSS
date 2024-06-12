@@ -24,17 +24,19 @@ public class empBen extends javax.swing.JPanel {
     /**
      * Creates new form empBen
      */
+    Connection con;
+    PreparedStatement pst;
+    ResultSet rs;
+
     public empBen() {
         initComponents();
         displayDataInTable();
-        // Add action listener for jButton1
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,6 +97,12 @@ public class empBen extends javax.swing.JPanel {
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel26.setText("HMO ADD RECORD:");
+
+        jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField9KeyReleased(evt);
+            }
+        });
 
         jButton1.setText("SUBMIT");
 
@@ -185,9 +193,32 @@ public class empBen extends javax.swing.JPanel {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-        Connection con;
-    PreparedStatement pst;
-    ResultSet rs;
+
+    private void jTextField9KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyReleased
+        try {
+            con = ConnectionManager.getConnection();
+            
+            String text = jTextField9.getText().trim();
+            if (text.isEmpty()) {
+                jTextField10.setText("");
+                return;
+            }
+
+            String empLastNameQuery = "SELECT emp_lname FROM emp_info WHERE EmployeeID = ?";
+            pst = con.prepareStatement(empLastNameQuery);
+            pst.setInt(1, Integer.parseInt(text));
+            ResultSet empLastNameResult = pst.executeQuery();
+
+            if (empLastNameResult.next()) {
+                jTextField10.setText(empLastNameResult.getString("emp_lname"));
+            } else {
+                jTextField10.setText("");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error retrieving employee last name: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jTextField9KeyReleased
+
     float incentive = 0.0f;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     // Retrieve data from text fields

@@ -67,6 +67,7 @@ public class payr extends javax.swing.JPanel {
         jLabel33 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jSeparator5 = new javax.swing.JSeparator();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jButton16 = new javax.swing.JButton();
@@ -80,7 +81,6 @@ public class payr extends javax.swing.JPanel {
         jTextField10 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
         jTextField15 = new javax.swing.JTextField();
-        jSeparator4 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -104,7 +104,7 @@ public class payr extends javax.swing.JPanel {
 
         jLabel6.setText("Employee number:");
         jPanel10.add(jLabel6);
-        jLabel6.setBounds(10, 20, 100, 16);
+        jLabel6.setBounds(10, 11, 100, 16);
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -112,37 +112,37 @@ public class payr extends javax.swing.JPanel {
             }
         });
         jPanel10.add(jTextField1);
-        jTextField1.setBounds(120, 20, 140, 30);
+        jTextField1.setBounds(120, 10, 140, 30);
 
         jLabel7.setText("Employee Name:");
         jPanel10.add(jLabel7);
-        jLabel7.setBounds(270, 20, 90, 16);
+        jLabel7.setBounds(270, 10, 90, 16);
 
         jLabel10.setText("Email:");
         jPanel10.add(jLabel10);
-        jLabel10.setBounds(10, 60, 50, 16);
+        jLabel10.setBounds(10, 50, 50, 16);
 
         jLabel11.setText("Job Status:");
         jPanel10.add(jLabel11);
-        jLabel11.setBounds(540, 20, 70, 16);
+        jLabel11.setBounds(550, 10, 70, 16);
 
         jLabel17.setText("SSS:");
         jPanel10.add(jLabel17);
-        jLabel17.setBounds(540, 60, 30, 16);
+        jLabel17.setBounds(550, 50, 30, 16);
 
         jLabel18.setText("Phil-health:");
         jPanel10.add(jLabel18);
-        jLabel18.setBounds(790, 20, 61, 16);
+        jLabel18.setBounds(800, 10, 61, 16);
 
         jLabel19.setText("Pag-ibig:");
         jPanel10.add(jLabel19);
-        jLabel19.setBounds(790, 60, 48, 16);
+        jLabel19.setBounds(800, 50, 48, 16);
 
         jLabel20.setText("Department:");
         jPanel10.add(jLabel20);
-        jLabel20.setBounds(270, 60, 66, 16);
+        jLabel20.setBounds(270, 50, 66, 16);
         jPanel10.add(jSeparator3);
-        jSeparator3.setBounds(10, 120, 1060, 10);
+        jSeparator3.setBounds(10, 469, 1060, 10);
 
         jButton12.setText("Update Payslip Information");
         jPanel10.add(jButton12);
@@ -192,6 +192,8 @@ public class payr extends javax.swing.JPanel {
 
         jPanel10.add(jScrollPane2);
         jScrollPane2.setBounds(200, 485, 860, 111);
+        jPanel10.add(jSeparator5);
+        jSeparator5.setBounds(10, 81, 1060, 3);
 
         jLabel34.setText("REFERENCE NUMBER:");
         jPanel10.add(jLabel34);
@@ -211,23 +213,21 @@ public class payr extends javax.swing.JPanel {
 
         jTextField13.setEditable(false);
         jPanel10.add(jTextField13);
-        jTextField13.setBounds(750, 440, 233, 22);
+        jTextField13.setBounds(741, 441, 233, 22);
         jPanel10.add(jTextField4);
-        jTextField4.setBounds(120, 60, 140, 30);
+        jTextField4.setBounds(120, 50, 140, 30);
         jPanel10.add(jTextField5);
-        jTextField5.setBounds(370, 20, 140, 30);
+        jTextField5.setBounds(370, 10, 140, 30);
         jPanel10.add(jTextField7);
-        jTextField7.setBounds(370, 60, 140, 30);
+        jTextField7.setBounds(370, 50, 140, 30);
         jPanel10.add(jTextField8);
-        jTextField8.setBounds(630, 20, 140, 30);
+        jTextField8.setBounds(620, 10, 140, 30);
         jPanel10.add(jTextField10);
-        jTextField10.setBounds(630, 60, 140, 30);
+        jTextField10.setBounds(620, 50, 140, 30);
         jPanel10.add(jTextField14);
-        jTextField14.setBounds(860, 20, 140, 30);
+        jTextField14.setBounds(870, 10, 140, 30);
         jPanel10.add(jTextField15);
-        jTextField15.setBounds(860, 60, 140, 30);
-        jPanel10.add(jSeparator4);
-        jSeparator4.setBounds(10, 469, 1060, 10);
+        jTextField15.setBounds(870, 50, 140, 30);
 
         jTabbedPane1.addTab("Payroll", jPanel10);
 
@@ -402,50 +402,8 @@ public class payr extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        // Retrieve the EmployeeID entered in jTextField1
-    String employeeID = jTextField1.getText();
-    
-    try {
-        // Establish connection
-        con = ConnectionManager.getConnection();
-        
-        // Prepare SQL statement to retrieve data based on EmployeeID
-        String sql = "SELECT * FROM emp_info WHERE EmployeeID = ?";
-        pst = con.prepareStatement(sql);
-        
-        // Set the EmployeeID parameter
-        pst.setString(1, employeeID);
-        
-        // Execute the query
-        rs = pst.executeQuery();
-        
-        // Check if any data is retrieved
-        if (rs.next()) {
-            // Populate JTextFields with retrieved data
-            jTextField4.setText(rs.getString("emp_email")); // email
-            jTextField5.setText(rs.getString("emp_lname")); // emp_name
-            jTextField7.setText(rs.getString("emp_department")); // department
-            jTextField8.setText(rs.getString("emp_status")); // job_status
-            jTextField10.setText(rs.getString("emp_SSS")); // sss
-            jTextField14.setText(rs.getString("emp_philhealth")); // phil_health
-            jTextField15.setText(rs.getString("emp_pagibig")); // pag_ibig
-        } else {
-            // If no data is retrieved, clear JTextFields
-            jTextField4.setText(""); // email
-            jTextField5.setText(""); // emp_name
-            jTextField7.setText(""); // department
-            jTextField8.setText(""); // job_status
-            jTextField10.setText(""); // sss
-            jTextField14.setText(""); // phil_health
-            jTextField15.setText(""); // pag_ibig
-        }
-    } catch (SQLException e) {
-        System.out.println("Error fetching data from emp_info table: " + e.getMessage());
-    }
-    }//GEN-LAST:event_jTextField1KeyReleased
-
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        // TODO add your handling code here:
         try {
         con = ConnectionManager.getConnection();
         
@@ -499,6 +457,7 @@ public class payr extends javax.swing.JPanel {
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new row has been inserted into the payslip table.");
+                loadData();
             }
         } else {
             System.out.println("Error: No basic_pay found for the employee ID.");
@@ -507,8 +466,49 @@ public class payr extends javax.swing.JPanel {
         System.out.println("Error inserting data into payslip table: " + e.getMessage());
     }   
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        String employeeID = jTextField1.getText();
     
-    
+    try {
+        // Establish connection
+        con = ConnectionManager.getConnection();
+        
+        // Prepare SQL statement to retrieve data based on EmployeeID
+        String sql = "SELECT * FROM emp_info WHERE EmployeeID = ?";
+        pst = con.prepareStatement(sql);
+        
+        // Set the EmployeeID parameter
+        pst.setString(1, employeeID);
+        
+        // Execute the query
+        rs = pst.executeQuery();
+        
+        // Check if any data is retrieved
+        if (rs.next()) {
+            // Populate JTextFields with retrieved data
+            jTextField4.setText(rs.getString("emp_email")); // email
+            jTextField5.setText(rs.getString("emp_lname")); // emp_name
+            jTextField7.setText(rs.getString("emp_department")); // department
+            jTextField8.setText(rs.getString("emp_status")); // job_status
+            jTextField10.setText(rs.getString("emp_SSS")); // sss
+            jTextField14.setText(rs.getString("emp_philhealth")); // phil_health
+            jTextField15.setText(rs.getString("emp_pagibig")); // pag_ibig
+        } else {
+            // If no data is retrieved, clear JTextFields
+            jTextField4.setText(""); // email
+            jTextField5.setText(""); // emp_name
+            jTextField7.setText(""); // department
+            jTextField8.setText(""); // job_status
+            jTextField10.setText(""); // sss
+            jTextField14.setText(""); // phil_health
+            jTextField15.setText(""); // pag_ibig
+        }
+    } catch (SQLException e) {
+        System.out.println("Error fetching data from emp_info table: " + e.getMessage());
+    }
+    }//GEN-LAST:event_jTextField1KeyReleased
     
     private void loadData(){
         try {
@@ -585,7 +585,7 @@ public static String generateReferenceNumber() {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;

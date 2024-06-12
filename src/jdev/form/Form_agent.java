@@ -20,6 +20,7 @@ public class Form_agent extends javax.swing.JPanel {
     public Form_agent() {
         initComponents();
         init();
+        loadData();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
@@ -29,7 +30,7 @@ public class Form_agent extends javax.swing.JPanel {
                     if(roundPanel2.isVisible()) {
                         con = ConnectionManager.getConnection();
                     
-                        pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, \", \", emp_info.emp_fname, \" \", emp_info.emp_mname) AS emp_name, emp_info.emp_department, dtr.timestamp, dtr.status FROM dtr LEFT JOIN emp_info ON dtr.EmployeeID=emp_info.EmployeeID WHERE dtr.timestamp>DATE(dtr.timestamp) AND emp_info.EmployeeID=?");
+                        pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, \", \", emp_info.emp_fname, \" \", emp_info.emp_mname) AS emp_name, emp_info.emp_department, dtr.timestamp, dtr.status FROM dtr LEFT JOIN emp_info ON dtr.EmployeeID=emp_info.EmployeeID WHERE emp_info.EmployeeID=? ORDER BY dtr.timestamp DESC");
                         
                         pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
                         
@@ -56,7 +57,7 @@ public class Form_agent extends javax.swing.JPanel {
                         
                         rs.next();
                         
-                        //jLabel7.setText(String.valueOf(rs.getInt("emp_count")));
+                        card3.lbValues.setText(String.valueOf(rs.getInt("emp_count")));
                         
                         
                         con.close();
@@ -97,14 +98,14 @@ public class Form_agent extends javax.swing.JPanel {
             rs.next();
             card1.lbValues.setText(String.valueOf(rs.getString("emp_count")));
             
-            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
-            while(rs.next()) {
-                if (rs.getString("emp_sex").equals("Male")) {
-                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                } else {
-                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                }
-            }
+//            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
+//            while(rs.next()) {
+//                if (rs.getString("emp_sex").equals("Male")) {
+//                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
+//                } else {
+//                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
+//                }
+//            }
             
              
             

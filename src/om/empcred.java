@@ -33,17 +33,7 @@ public class empcred extends javax.swing.JPanel {
     public empcred() {
         initComponents();
         loadData();
-        
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
+
     }
 
     /**
@@ -92,6 +82,11 @@ public class empcred extends javax.swing.JPanel {
         jButton7.setText("CLEAR");
 
         jButton8.setText("UPDATE RECORD");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("REMOVE RECORD");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -235,16 +230,19 @@ public class empcred extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private String getStringValue(Object obj) {
+    if (obj == null) {
+        return ""; // Or whatever default value you want to return for null
+    }
+    return obj.toString();
+}
+    
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
+   // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-                // TODO add your handling code here:
-                searchData();
-    } 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+     DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
     int selectedRow = jTable2.getSelectedRow(); // Get the selected row index
 
     if (selectedRow == -1) {
@@ -255,35 +253,28 @@ public class empcred extends javax.swing.JPanel {
 
     try {
         Connection con = ConnectionManager.getConnection();
-        String query = "UPDATE emp_info SET emp_fname = ?, emp_lname = ?, emp_lob = ?, emp_email = ?, emp_supervisor = ?, emp_position = ? WHERE EmployeeID = ?";
+        String query = "UPDATE cred SET Status = ?, emp_fname = ?, emp_lname = ?, cEmail = ?, LOB = ?, OM = ?, Position = ? WHERE EmployeeID = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
 
         // Retrieve data from the selected row
-        String employeeID = model.getValueAt(selectedRow, 0).toString(); // Assuming EmployeeID is in the first column
-        String firstName = getStringValue(model.getValueAt(selectedRow, 1)); // Assuming First Name is in the second column
-        String lastName = getStringValue(model.getValueAt(selectedRow, 2)); // Assuming Last Name is in the third column
-        String companyEmail = getStringValue(model.getValueAt(selectedRow, 3)); // Assuming Company Email is in the fourth column
-        String LOB = getStringValue(model.getValueAt(selectedRow, 4)); // Assuming LOB is in the fifth column
-        String operationManager = getStringValue(model.getValueAt(selectedRow, 5)); // Assuming Operation Manager is in the sixth column
-        String position = getStringValue(model.getValueAt(selectedRow, 6)); // Assuming Position is in the seventh column
-
-        // Log retrieved data
-        System.out.println("Updating EmployeeID: " + employeeID);
-        System.out.println("First Name: " + firstName);
-        System.out.println("Last Name: " + lastName);
-        System.out.println("Company Email: " + companyEmail);
-        System.out.println("LOB: " + LOB);
-        System.out.println("Operation Manager: " + operationManager);
-        System.out.println("Position: " + position);
+        String empID = model.getValueAt(selectedRow, 0).toString(); // Assuming EmployeeID is in the first column
+        String status = model.getValueAt(selectedRow, 7).toString(); // Assuming Status is in the eighth column
+        String emp_fname = model.getValueAt(selectedRow, 1).toString(); // Assuming emp_fname is in the second column
+        String emp_lname = model.getValueAt(selectedRow, 2).toString(); // Assuming emp_lname is in the third column
+        String cEmail = model.getValueAt(selectedRow, 3).toString(); // Assuming cEmail is in the fourth column
+        String LOB = model.getValueAt(selectedRow, 4).toString(); // Assuming LOB is in the fifth column
+        String OM = model.getValueAt(selectedRow, 5).toString(); // Assuming OM is in the sixth column
+        String Position = model.getValueAt(selectedRow, 6).toString(); // Assuming Position is in the seventh column
 
         // Set parameters for the prepared statement
-        pstmt.setString(1, firstName);
-        pstmt.setString(2, lastName);
-        pstmt.setString(3, LOB);
-        pstmt.setString(4, companyEmail);
-        pstmt.setString(5, operationManager);
-        pstmt.setString(6, position);
-        pstmt.setString(7, employeeID);
+        pstmt.setString(1, status);
+        pstmt.setString(2, emp_fname);
+        pstmt.setString(3, emp_lname);
+        pstmt.setString(4, cEmail);
+        pstmt.setString(5, LOB);
+        pstmt.setString(6, OM);
+        pstmt.setString(7, Position);
+        pstmt.setString(8, empID);
 
         // Execute the update
         int rowsUpdated = pstmt.executeUpdate();
@@ -294,19 +285,17 @@ public class empcred extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "No rows were updated", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        con.close(); // Close the connection
     } catch (SQLException ex) {
         ex.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    }   
-    
-    private String getStringValue(Object obj) {
-    if (obj != null) {
-        return obj.toString();
-    } else {
-        return ""; // or any default value you prefer
-    }
-}
+    }//GEN-LAST:event_jButton8ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+                // TODO add your handling code here:
+                searchData();
+    } 
+ 
 
 
      // Method to clear text fields
@@ -318,30 +307,7 @@ public class empcred extends javax.swing.JPanel {
     }
     
     // Method to update existing employee
-    private void updateEmployee() {
-        String employeeID = jTextField5.getText().trim();
-        String firstName = jTextField6.getText().trim();
-        String lastName = jTextField7.getText().trim();
-        String department = (String) jComboBox2.getSelectedItem();
-
-        try {
-            con = ConnectionManager.getConnection();
-            String query = "UPDATE emp_info SET emp_fname = ?, emp_lname = ?, emp_lob = ? WHERE EmployeeID = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, firstName);
-            pstmt.setString(2, lastName);
-            pstmt.setString(3, department);
-            pstmt.setString(4, employeeID);
-
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                loadData();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+    
       // Method to add mouse listener to jTable2
     private void addTableListener() {
         jTable2.addMouseListener(new MouseAdapter() {
@@ -368,7 +334,7 @@ public class empcred extends javax.swing.JPanel {
         stmt = con.createStatement();
 
         // Construct the SQL query based on the search criteria
-        String query = "SELECT * FROM emp_info WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
+        String query = "SELECT * FROM cred WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
 
         if (!employeeID.isEmpty()) {
             query += " AND EmployeeID = '" + employeeID + "'";
@@ -389,32 +355,20 @@ public class empcred extends javax.swing.JPanel {
 
         // Add search results to the table model
         while (rs.next()) {
-           
-
-            // Check if the position is "Agent"
-            if (rs.getString("emp_position").equals("Agent")||rs.getString("emp_position").equals("Operation Manager")) {
-                foundAgent = true; // Set flag to true if an agent is found
-            }
-            if(rs.getString("emp_position").equals("Agent")||rs.getString("emp_position").equals("Operation Manager")){
-                 model.addRow(new Object[]{
-                rs.getInt("EmployeeID"),
-                rs.getString("emp_fname"),
-                rs.getString("emp_lname"),
-                rs.getString("emp_email"),
-                rs.getString("emp_lob"),
-                rs.getString("emp_supervisor"),
-                rs.getString("emp_position"),
-                rs.getString("emp_civilStatus")
-            });
+        model.addRow(new Object[]{
+            rs.getInt("EmployeeID"),
+            rs.getString("emp_fname"),
+            rs.getString("emp_lname"),
+            rs.getString("cEmail"),
+            rs.getString("LOB"),
+            rs.getString("OM"),
+            rs.getString("Position"), // corrected typo here
+            rs.getString("Status")
+        });
             }
 
-        }
 
         // If no agents were found, show a JOptionPane
-        if (!foundAgent) {
-            JOptionPane.showMessageDialog(this, "No Agents Found", "Search Result", JOptionPane.INFORMATION_MESSAGE);
-            loadData();
-        }
 
     } catch (SQLException ex) {
         ex.printStackTrace();
@@ -422,32 +376,28 @@ public class empcred extends javax.swing.JPanel {
 }
 
     
-     private void loadData() {
+    private void loadData() {
         try {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
 
-            rs = stmt.executeQuery("SELECT * from emp_info");
+            rs = stmt.executeQuery("SELECT * from cred");
 
             // Create a DefaultTableModel with column names
             String[] columnNames = {"Employee Number", "First Name", "Last Name", "Company email", "LOB", "Operation Manager", "Position", "Status"};
             model = new DefaultTableModel(columnNames, 0);
 
             while (rs.next()) {
-    // Add data to the table model
-    if (rs.getString("emp_position").equals("Operation Manager")) {
         model.addRow(new Object[]{
             rs.getInt("EmployeeID"),
             rs.getString("emp_fname"),
             rs.getString("emp_lname"),
-            rs.getString("emp_email"),
-            rs.getString("emp_lob"),
-            rs.getString("emp_supervisor"),
-            rs.getString("emp_position"), // corrected typo here
-            rs.getString("emp_civilStatus")
+            rs.getString("cEmail"),
+            rs.getString("LOB"),
+            rs.getString("OM"),
+            rs.getString("Position"), // corrected typo here
+            rs.getString("Status")
         });
-    }
-
             }
 
             // Once all data is loaded, set the model to your JTable
@@ -457,7 +407,7 @@ public class empcred extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;
@@ -479,4 +429,5 @@ public class empcred extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
+
 }

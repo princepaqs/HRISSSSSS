@@ -21,6 +21,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import javax.swing.table.DefaultTableModel;
 
 public class payr extends javax.swing.JPanel {
 
@@ -29,13 +31,8 @@ public class payr extends javax.swing.JPanel {
      */
     public payr() {
         initComponents();
-        jButton13.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            insertDataIntoPayroll();
-        }
-    });
         
+        loadData();
         String refNumber = generateReferenceNumber();
         jTextField13.setText(refNumber);
     }
@@ -462,14 +459,41 @@ public class payr extends javax.swing.JPanel {
         if (basicPayResult.next()) {
             double basicPay = basicPayResult.getDouble("basic_pay");
 
+            // Get current date
+            Calendar cal = Calendar.getInstance();
+            int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+            int payoutDate;
+            
+            // Calculate payout date based on the day of the month
+            if (dayOfMonth >= 1 && dayOfMonth <= 15) {
+                payoutDate = 25;
+                basicPay = basicPay / 2.0;
+            } else {
+                payoutDate = 10;
+                basicPay = basicPay / 2.0;
+                // Check if it's the last day of the month
+                if (dayOfMonth == cal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                    // Move to next month
+                    cal.add(Calendar.MONTH, 1);
+                }
+            }
+            int hours = 120;
+            double payperhour = basicPay/hours;
+           
+            // Construct payout date string (YYYY-MM-DD)
+            String month = String.format("%02d", cal.get(Calendar.MONTH) + 1); // Adding 1 because Calendar.MONTH is zero-based
+            String year = String.valueOf(cal.get(Calendar.YEAR));
+            String payoutDateString = String.format("%s-%s-%02d", year, month, payoutDate);
+
             // Prepare the INSERT statement for payslip table
-            String payslipInsertQuery = "INSERT INTO payslip (ref_id, employee_id, basic_pay) VALUES (?, ?, ?)";
+            String payslipInsertQuery = "INSERT INTO payslip (ref_id, employee_id, payout_date, basic_pay) VALUES (?, ?, ?, ?)";
             pst = con.prepareStatement(payslipInsertQuery);
 
             // Set values from JTextFields
             pst.setString(1, jTextField13.getText()); // ref_id
             pst.setInt(2, Integer.parseInt(jTextField1.getText())); // employee_id
-            pst.setDouble(3, basicPay); // basic_pay
+            pst.setString(3, payoutDateString); // payout_date
+            pst.setDouble(4, basicPay); // basic_pay
 
             // Execute the INSERT statement
             int rowsInserted = pst.executeUpdate();
@@ -481,12 +505,38 @@ public class payr extends javax.swing.JPanel {
         }
     } catch (SQLException e) {
         System.out.println("Error inserting data into payslip table: " + e.getMessage());
-    }
+    }   
     }//GEN-LAST:event_jButton13ActionPerformed
-
-    private void insertDataIntoPayroll() {
     
-}
+    
+    
+    private void loadData(){
+        try {
+                con = ConnectionManager.getConnection(); // Establish a connection to the database
+                stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+                rs = stmt.executeQuery("SELECT * from payslip"); // Execute a SELECT query to retrieve data from the "cred" table
+
+                // Create a DefaultTableModel with column names
+                String[] columnNames = {"EMPLOYEE ID", "REFFERENCE NUMBER", "PAYOUT DATE"};
+                DefaultTableModel model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+                while (rs.next()) {
+                    // Iterate over the ResultSet and add each row to the DefaultTableModel
+                    model.addRow(new Object[]{
+                        rs.getString("employee_id"),
+                        rs.getString("ref_id"),
+                        rs.getString("payout_date"),
+                    });
+                }
+
+                // Set the model to your JTable to display the data
+                jTable2.setModel(model);
+
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Handle SQL exceptions
+            }
+    }
 
 public static String generateReferenceNumber() {
         // Prefix
@@ -504,7 +554,9 @@ public static String generateReferenceNumber() {
         String referenceNumber = String.format("%s-%s-%03d", prefix, dateTime, randomNumber);
         
         return referenceNumber;
-    }    
+    }   
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;

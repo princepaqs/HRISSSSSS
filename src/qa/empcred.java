@@ -8,6 +8,14 @@ package qa;
 import qa.*;
 import om.*;
 import hr.*;
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,8 +26,14 @@ public class empcred extends javax.swing.JPanel {
     /**
      * Creates new form empcred
      */
+        Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
+    
     public empcred() {
         initComponents();
+        loadData();
     }
 
     /**
@@ -43,7 +57,6 @@ public class empcred extends javax.swing.JPanel {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel29 = new javax.swing.JPanel();
         jScrollPane15 = new javax.swing.JScrollPane();
@@ -61,18 +74,26 @@ public class empcred extends javax.swing.JPanel {
 
         jLabel77.setText("Department:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IT", "HUMAN RESOURCES", "TEAM LEADER", "OPERATION MANAGER", "QUALITY ANALYST", "SUBJECT MATTER EXPERT", "AGENT" }));
 
         jButton6.setText("SEARCH");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("CLEAR");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("UPDATE RECORD");
-
-        jButton9.setText("REMOVE RECORD");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -143,14 +164,15 @@ public class empcred extends javax.swing.JPanel {
                                 .addComponent(jLabel77)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
+                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel9Layout.createSequentialGroup()
+                                .addGap(119, 119, 119)
+                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 1052, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -161,15 +183,12 @@ public class empcred extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel63)
-                        .addComponent(jLabel77)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton6)
-                        .addComponent(jButton8)))
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel63)
+                    .addComponent(jLabel77)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -179,7 +198,7 @@ public class empcred extends javax.swing.JPanel {
                         .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton7)
-                        .addComponent(jButton9)))
+                        .addComponent(jButton8)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -211,16 +230,170 @@ public class empcred extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        searchData();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+    
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+            clearFields();         // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+  DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    int selectedRow = jTable2.getSelectedRow(); // Get the selected row index
+
+    if (selectedRow == -1) {
+        // No row is selected
+        JOptionPane.showMessageDialog(this, "Please select a row to update", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        Connection con = ConnectionManager.getConnection();
+        String query = "UPDATE cred SET Status = ? WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+
+        // Retrieve data from the selected row
+        String empID = getStringValue(model.getValueAt(selectedRow, 0));
+        String status = getStringValue(model.getValueAt(selectedRow, 7)); // Assuming Position is in the seventh column
+
+        // Set parameters for the prepared statement
+        pstmt.setString(1, status);
+        pstmt.setString(2, empID);
+      
+
+        // Execute the update
+        int rowsUpdated = pstmt.executeUpdate();
+        System.out.println("Rows updated: " + rowsUpdated);
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadData(); // Assuming this method reloads the data in the JTable
+        } else {
+            JOptionPane.showMessageDialog(this, "No rows were updated", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+    private void loadData() {
+        try {
+            con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery("SELECT * from cred");
+
+            // Create a DefaultTableModel with column names
+            String[] columnNames = {"Employee Number", "First Name", "Last Name", "Company email", "LOB", "Operation Manager", "Position", "Status"};
+            model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+        model.addRow(new Object[]{
+            rs.getInt("EmployeeID"),
+            rs.getString("emp_fname"),
+            rs.getString("emp_lname"),
+            rs.getString("cEmail"),
+            rs.getString("LOB"),
+            rs.getString("OM"),
+            rs.getString("Position"), // corrected typo here
+            rs.getString("Status")
+        });
+            }
+
+            // Once all data is loaded, set the model to your JTable
+            jTable2.setModel(model);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+     private void clearFields() {
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jComboBox2.setSelectedIndex(0);
+        loadData();
+    }
+      private String getStringValue(Object obj) {
+    if (obj != null) {
+        return obj.toString();
+    } else {
+        return ""; // or any default value you prefer
+    }
+      }
+    private void searchData() {
+    String employeeID = jTextField5.getText().trim();
+    String firstName = jTextField6.getText().trim();
+    String lastName = jTextField7.getText().trim(); 
+        
+  // Validate Employee ID
+    if (employeeID.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Text Fields cannot be empty", "Validation Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    try {
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+
+        // Construct the SQL query based on the search criteria
+        String query = "SELECT * FROM emp_info WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
+
+        if (!employeeID.isEmpty()) {
+            query += " AND EmployeeID = '" + employeeID + "'";
+        }
+        if (!firstName.isEmpty()) {
+            query += " AND emp_fname LIKE '%" + firstName + "%'";
+        }
+        if (!lastName.isEmpty()) {
+            query += " AND emp_lname LIKE '%" + lastName + "%'";
+        }
+        
+        rs = stmt.executeQuery(query);
+
+        // Clear existing table data
+        model.setRowCount(0);
+
+        boolean foundAgent = false; // Flag to check if any agents were found
+
+        // Add search results to the table model
+        while (rs.next()) {
+           
+
+            // Check if the position is "Agent"
+            if (rs.getString("emp_position").equals("Agent")) {
+                foundAgent = true; // Set flag to true if an agent is found
+            }
+            if(rs.getString("emp_position").equals("Agent")){
+                 model.addRow(new Object[]{
+                rs.getInt("EmployeeID"),
+                rs.getString("emp_fname"),
+                rs.getString("emp_lname"),
+                rs.getString("emp_email"),
+                rs.getString("emp_lob"),
+                rs.getString("emp_supervisor"),
+                rs.getString("emp_position"),
+                rs.getString("emp_civilStatus")
+            });
+            }
+
+        }
+
+        // If no agents were found, show a JOptionPane
+        if (!foundAgent) {
+            JOptionPane.showMessageDialog(this, "No Agents Found", "Search Result", JOptionPane.INFORMATION_MESSAGE);
+            loadData();
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;

@@ -42,12 +42,11 @@ public class Menu_qa extends JPanel {
         
             Connection con;
             PreparedStatement pst;
-            ResultSet rs;
-        
+            ResultSet rs;       
       
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.DASHBOARD, "Dashboard"));
                     addTitle("MAIN");
-                    addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PERM_CONTACT_CALENDAR, "Employee", "Employee Record", "Daily Time Record"));
+                    addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PERM_CONTACT_CALENDAR, "Employee","Employee Record", "Daily Time Record"));
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PAYMENT, "Payslip Record"));
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.VIEW_LIST, "Schedule"));
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PIE_CHART_OUTLINED, "Performance", "Tracker"));

@@ -20,6 +20,7 @@ public class Form_QA extends javax.swing.JPanel {
     public Form_QA() {
         initComponents();
         init();
+        loadData();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -28,7 +29,7 @@ public class Form_QA extends javax.swing.JPanel {
                     if(roundPanel2.isVisible()) {
                         con = ConnectionManager.getConnection();
                     
-                        pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, \", \", emp_info.emp_fname, \" \", emp_info.emp_mname) AS emp_name, emp_info.emp_department, dtr.timestamp, dtr.status FROM dtr LEFT JOIN emp_info ON dtr.EmployeeID=emp_info.EmployeeID WHERE dtr.timestamp>DATE(dtr.timestamp)");
+                        pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, \", \", emp_info.emp_fname, \" \", emp_info.emp_mname) AS emp_name, emp_info.emp_department, dtr.timestamp, dtr.status FROM dtr LEFT JOIN emp_info ON dtr.EmployeeID=emp_info.EmployeeID WHERE dtr.timestamp>DATE(dtr.timestamp) ORDER BY dtr.timestamp DESC");
                         
                         rs = pst.executeQuery();
                         
@@ -49,7 +50,7 @@ public class Form_QA extends javax.swing.JPanel {
                         
                         stmt = con.createStatement();
                         
-                        rs = stmt.executeQuery("SELECT COUNT(EmployeeID) AS emp_count FROM dtr WHERE dtr.status=\"Day In\" AND DATE(dtr.timestamp)=CURRENT_DATE()");
+                        rs = stmt.executeQuery("SELECT COUNT(EmployeeID) AS emp_count FROM dtr WHERE dtr.status=\"Day In\" AND DATE(dtr.timestamp)=CURRENT_DATE() ORDER BY dtr.timestamp DESC");
                         
                         rs.next();
                         
@@ -86,31 +87,20 @@ public class Form_QA extends javax.swing.JPanel {
     String time;
     DefaultTableModel model;
     
-    private void loadData() {
+      private void loadData(){
         try {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
             
-            rs = stmt.executeQuery("SELECT COUNT(*) as emp_count FROM emp_info");
+            rs = stmt.executeQuery("SELECT COUNT(DISTINCT EmployeeID) AS dayInCount FROM dtr WHERE status = 'Day In' AND DATE(timestamp) = CURRENT_DATE()");
             rs.next();
-            card1.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-            
-            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
-            while(rs.next()) {
-                if (rs.getString("emp_sex").equals("Male")) {
-                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                } else {
-                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                }
-            }
-            
-             
-            
+            card3.lbValues.setText(String.valueOf(rs.getString("dayInCount")));
+
             
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
+   }
     
     private void setTime() {
         time = sdf.format(Calendar.getInstance().getTime());

@@ -170,7 +170,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox2">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;IT&quot;, &quot;HUMAN RESOURCES&quot;, &quot;TEAM LEADER&quot;, &quot;OPERATION MANAGER&quot;, &quot;QUALITY ANALYST&quot; })" type="code"/>
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;IT&quot;, &quot;HUMAN RESOURCES&quot;, &quot;TEAM LEADER&quot;, &quot;OPERATION MANAGER&quot;, &quot;QUALITY ANALYST&quot;, &quot;SUBJECT MATTER EXPERT&quot;, &quot;AGENT&quot; })" type="code"/>
             </Property>
           </Properties>
           <Events>

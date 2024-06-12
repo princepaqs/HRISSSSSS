@@ -73,7 +73,7 @@ public class empcred extends javax.swing.JPanel {
 
         jLabel77.setText("Department:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IT", "HUMAN RESOURCES", "TEAM LEADER", "OPERATION MANAGER", "QUALITY ANALYST" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IT", "HUMAN RESOURCES", "TEAM LEADER", "OPERATION MANAGER", "QUALITY ANALYST", "SUBJECT MATTER EXPERT", "AGENT" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -319,30 +319,7 @@ public class empcred extends javax.swing.JPanel {
     }
     
     // Method to update existing employee
-    private void updateEmployee() {
-        String employeeID = jTextField5.getText().trim();
-        String firstName = jTextField6.getText().trim();
-        String lastName = jTextField7.getText().trim();
-        String department = (String) jComboBox2.getSelectedItem();
-
-        try {
-            con = ConnectionManager.getConnection();
-            String query = "UPDATE emp_info SET emp_fname = ?, emp_lname = ?, emp_lob = ? WHERE EmployeeID = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, firstName);
-            pstmt.setString(2, lastName);
-            pstmt.setString(3, department);
-            pstmt.setString(4, employeeID);
-
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                loadData();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+   
       // Method to add mouse listener to jTable2
     private void addTableListener() {
         jTable2.addMouseListener(new MouseAdapter() {

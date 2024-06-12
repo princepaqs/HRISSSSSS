@@ -4,6 +4,15 @@
  */
 package qa;
 
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import qa.*;
 
 /**
@@ -14,9 +23,16 @@ public class ProdRec extends javax.swing.JPanel {
 
     /**
      * Creates new form ProdRec
-     */
+         */
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     public ProdRec() {
         initComponents();
+        loadData();
+        qa_date.setDate(new Date());
+        kc_date.setDate(new Date());
     }
 
     /**
@@ -37,10 +53,10 @@ public class ProdRec extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        quality_score = new javax.swing.JTextField();
+        qa_id = new javax.swing.JTextField();
+        qa_name = new javax.swing.JTextField();
+        qa_date = new com.toedter.calendar.JDateChooser();
         roundPanel2 = new jdev.swing.RoundPanel();
         jScrollPane13 = new javax.swing.JScrollPane();
         jTable10 = new javax.swing.JTable();
@@ -52,10 +68,10 @@ public class ProdRec extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        kc_score = new javax.swing.JTextField();
+        kc_id = new javax.swing.JTextField();
+        kc_name = new javax.swing.JTextField();
+        kc_date = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(java.awt.Color.white);
 
@@ -77,7 +93,16 @@ public class ProdRec extends javax.swing.JPanel {
 
         jLabel5.setText("Transaction Quality Score:");
 
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        qa_id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                qa_idKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                qa_idKeyTyped(evt);
+            }
+        });
+
+        qa_date.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
@@ -94,22 +119,22 @@ public class ProdRec extends javax.swing.JPanel {
                             .addGroup(roundPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(qa_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(roundPanel1Layout.createSequentialGroup()
                                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-                                    .addComponent(jTextField8))
+                                    .addComponent(qa_id, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                                    .addComponent(qa_name))
                                 .addGap(4, 4, 4)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(quality_score, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -133,19 +158,19 @@ public class ProdRec extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(qa_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(qa_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(qa_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(quality_score, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(42, Short.MAX_VALUE))
@@ -212,7 +237,13 @@ public class ProdRec extends javax.swing.JPanel {
 
         jLabel10.setText("Knowledge Check Score:");
 
-        jDateChooser2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        kc_id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                kc_idKeyReleased(evt);
+            }
+        });
+
+        kc_date.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout roundPanel3Layout = new javax.swing.GroupLayout(roundPanel3);
         roundPanel3.setLayout(roundPanel3Layout);
@@ -233,18 +264,18 @@ public class ProdRec extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(roundPanel3Layout.createSequentialGroup()
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(kc_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(12, 12, 12))
                             .addGroup(roundPanel3Layout.createSequentialGroup()
                                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(kc_name, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(kc_id, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(12, Short.MAX_VALUE))))
                     .addGroup(roundPanel3Layout.createSequentialGroup()
                         .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(roundPanel3Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(kc_score, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel10))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(roundPanel3Layout.createSequentialGroup()
@@ -266,22 +297,22 @@ public class ProdRec extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kc_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(kc_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel3Layout.createSequentialGroup()
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(kc_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(kc_score, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
@@ -331,18 +362,228 @@ public class ProdRec extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                     // TODO add your handling code here:
+           try {
+    String fname = qa_name.getText();
+    String ids = qa_id.getText();
+    String qascore = quality_score.getText();
+    
+    // Check if the fields are not empty
+    if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
+        // Display an error message if any of the fields is empty
+        JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Parse the productivity score to a double
+    double productivityScore = Double.parseDouble(qascore);
+    
+    // Prepare the INSERT or UPDATE query
+    Connection con = ConnectionManager.getConnection();
+    String queryCheck = "SELECT * FROM performance WHERE EmployeeID = ?";
+    PreparedStatement pstmtCheck = con.prepareStatement(queryCheck);
+    pstmtCheck.setString(1, ids);
+    ResultSet rsCheck = pstmtCheck.executeQuery();
+    
+    if (rsCheck.next()) {
+        // If the ID already exists, perform an update operation
+        String queryUpdate = "UPDATE performance SET Quality = ?, name = ?, date = ? WHERE EmployeeID = ?";
+        PreparedStatement pstmtUpdate = con.prepareStatement(queryUpdate);
+        String date = qa_date.getDate().toString();
+        pstmtUpdate.setDouble(1, productivityScore);
+        pstmtUpdate.setString(2, fname);
+        pstmtUpdate.setString(3, date);
+        pstmtUpdate.setString(4, ids);
+        int rowsUpdated = pstmtUpdate.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Productivity data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        // If the ID doesn't exist, perform an insert operation
+        String queryInsert = "INSERT INTO performance (EmployeeID, Quality, name, date, knowledge_checker, Perf, Attdnce, Overall) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmtInsert = con.prepareStatement(queryInsert);
+        String date = qa_date.getDate().toString();
+        pstmtInsert.setString(1, ids);
+        pstmtInsert.setDouble(2, productivityScore);
+        pstmtInsert.setString(3, fname);
+        pstmtInsert.setString(4, date);
+        pstmtInsert.setString(5, null);
+        pstmtInsert.setString(6, null);
+        pstmtInsert.setString(7, null);
+        pstmtInsert.setString(8, null);
+        int rowsInserted = pstmtInsert.executeUpdate();
+        
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    loadData();
+} catch (Exception e) {
+    // Handle any exceptions that occur during the operation
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void loadData() {
+    try (Connection con = ConnectionManager.getConnection();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT * FROM performance");
+    ) {
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"Date", "ID", "Name", "QA Score", "Knowledge Check", "Updated By"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Iterate over the ResultSet and add each row to the model
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("date"),
+                rs.getInt("EmployeeID"),
+                rs.getString("name"),
+                rs.getDouble("Quality"),
+                rs.getInt("knowledge_checker"),
+                "Current User"
+            });
+        }
+
+        // Set the model to the JTable
+        jTable10.setModel(model);
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+                 // TODO add your handling code here:
+                        try {
+        String fname = kc_name.getText();
+        String ids = kc_id.getText();
+        String qascore = kc_score.getText();
+        
+        // Check if the fields are not empty
+        if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
+            // Display an error message if any of the fields is empty
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Parse the productivity score to a double
+        int productivityScore = Integer.parseInt(qascore);
+        
+        // Prepare the INSERT query
+        Connection con = ConnectionManager.getConnection();
+        String query = "UPDATE performance SET knowledge_checker = ? WHERE EmployeeID = ?;";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        String date = kc_date.getDate().toString();
+        // Set the values for the parameters in the prepared statement
+        pstmt.setInt(1, productivityScore);
+        pstmt.setInt(2, Integer.parseInt(ids));
+
+        // Execute the INSERT query
+        int rowsInserted = pstmt.executeUpdate();
+        
+        if (rowsInserted > 0) {
+            // Display a success message if the insertion was successful
+            JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Display an error message if the insertion failed
+            JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        loadData();
+    } catch (Exception e) {
+        // Handle any exceptions that occur during the insertion process
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void qa_idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qa_idKeyTyped
+                                                      // TODO add your handling code here:
+    }//GEN-LAST:event_qa_idKeyTyped
 
+    private void qa_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qa_idKeyReleased
+        // TODO add your handling code here
+          String id = qa_id.getText().trim();
+            // Call the method to retrieve employee information based on the ID
+            if(id.isEmpty()){
+                qa_name.setText("");
+                quality_score.setText("");
+            }
+            getEmployeeByID(id);        // TODO add your handling code here:   
+    }//GEN-LAST:event_qa_idKeyReleased
+
+    private void kc_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kc_idKeyReleased
+                // TODO add your handling code here:
+                String id = qa_id.getText().trim();
+            // Call the method to retrieve employee information based on the ID
+            if(id.isEmpty()){
+                kc_name.setText("");
+                kc_score.setText("");
+            }
+            getEmployeeByID_KC(id);  
+    }//GEN-LAST:event_kc_idKeyReleased
+
+     private void getEmployeeByID(String id){
+    // Implement the logic to retrieve employee information based on the ID
+    // You can perform database queries or other operations here
+    // For example:
+    try {
+        con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
+
+        // Execute a SELECT query to retrieve data from the "emp_info" table based on the employee ID
+       String query = "SELECT * FROM emp_info WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, id);
+        rs = pstmt.executeQuery();
+        
+        while(rs.next()){
+
+                   qa_name.setText(rs.getString("emp_fname") + " " + rs.getString("emp_lname"));
+        }
+         
+        
+        // Process the ResultSet and display or handle the retrieved employee information
+        // For example, you can display the information in JTextFields or other components
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+     }
+   private void getEmployeeByID_KC(String id){
+    // Implement the logic to retrieve employee information based on the ID
+    // You can perform database queries or other operations here
+    // For example:
+    try {
+        con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
+
+        // Execute a SELECT query to retrieve data from the "emp_info" table based on the employee ID
+       String query = "SELECT * FROM emp_info WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, id);
+        rs = pstmt.executeQuery();
+        
+        while(rs.next()){
+            kc_name.setText(rs.getString("emp_fname") + " " + rs.getString("emp_lname"));
+        }
+         
+        
+        // Process the ResultSet and display or handle the retrieved employee information
+        // For example, you can display the information in JTextFields or other components
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -358,12 +599,14 @@ public class ProdRec extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable10;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private com.toedter.calendar.JDateChooser kc_date;
+    private javax.swing.JTextField kc_id;
+    private javax.swing.JTextField kc_name;
+    private javax.swing.JTextField kc_score;
+    private com.toedter.calendar.JDateChooser qa_date;
+    private javax.swing.JTextField qa_id;
+    private javax.swing.JTextField qa_name;
+    private javax.swing.JTextField quality_score;
     private jdev.swing.RoundPanel roundPanel1;
     private jdev.swing.RoundPanel roundPanel2;
     private jdev.swing.RoundPanel roundPanel3;

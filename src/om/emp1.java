@@ -89,7 +89,7 @@ public class emp1 extends javax.swing.JPanel {
                 String emp_id = String.valueOf(rs.getInt("EmployeeID"));
                 String emp_name = rs.getString("emp_name");
                 String emp_dept = rs.getString("emp_department");
-                String emp_action = "Update Record";
+                String emp_action = "View Record";
                 
                 String data[] = {emp_id, emp_name, emp_dept, emp_action};
                 model.addRow(data);
@@ -315,7 +315,6 @@ public class emp1 extends javax.swing.JPanel {
     }
     
     private void disableAllFields() {
-        jButton3.setEnabled(false);
         
         jTextField1.setEditable(false);
         jTextField3.setEditable(false);
@@ -434,7 +433,6 @@ public class emp1 extends javax.swing.JPanel {
         jLabel35 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jTextField32 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
         jComboBox9 = new javax.swing.JComboBox<>();
         jComboBox10 = new javax.swing.JComboBox<>();
         jComboBox11 = new javax.swing.JComboBox<>();
@@ -455,7 +453,6 @@ public class emp1 extends javax.swing.JPanel {
         jComboBox3 = new javax.swing.JComboBox<>();
         jLabel49 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
-        jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -699,13 +696,6 @@ public class emp1 extends javax.swing.JPanel {
 
         jTextField32.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jButton3.setText("Update Record");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jComboBox9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single", "Married", "Widow", "Legally Separated" }));
 
@@ -758,13 +748,6 @@ public class emp1 extends javax.swing.JPanel {
 
         jComboBox4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Level 1", "Level 2", "Level 3" }));
-
-        jButton5.setText("Enable Editing");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -842,11 +825,6 @@ public class emp1 extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -1035,10 +1013,7 @@ public class emp1 extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel46)
                         .addGap(2, 2, 2)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jLabel2.getAccessibleContext().setAccessibleParent(jScrollPane15);
@@ -1404,138 +1379,6 @@ public class emp1 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton14ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
-        String surname = jTextField1.getText();
-        String fname = jTextField3.getText();
-        String mname = jTextField4.getText();
-        
-        String address = jTextField5.getText();
-        String email = jTextField6.getText();
-        
-        String contact = jTextField7.getText();
-        String civilStatus = String.valueOf(jComboBox9.getSelectedItem());
-        
-        String nationality = jTextField12.getText();
-        String sex = String.valueOf(jComboBox10.getSelectedItem());
-        String religion = jTextField23.getText();
-
-        String hea = String.valueOf(jComboBox2.getSelectedItem());
-        String school = jTextField26.getText();
-        int syFinish = jYearChooser1.getYear();
-
-        String sss = jTextField11.getText();
-        String pagibig = jTextField19.getText();
-        String philhealth = jTextField27.getText();
-        String tin = jTextField30.getText();
-
-        String ename = jTextField24.getText();
-        String econtact = jTextField32.getText();
-        String erelationship = jTextField25.getText();
-        String eaddress = jTextField29.getText();
-
-        String department = String.valueOf(jComboBox11.getSelectedItem());
-        String supervisor = String.valueOf(jComboBox3.getSelectedItem());
-        String lob = String.valueOf(jComboBox4.getSelectedItem());
-        String start = sdf.format(jDateChooser2.getDate());
-        String end = jDateChooser3.getDate() == null ? null : sdf.format(jDateChooser3.getDate());
-        
-        
-        boolean check_surname = isEmpty(surname);
-        boolean check_fname = isEmpty(fname);
-        boolean check_mname = isEmpty(mname);
-        
-        boolean check_address = isEmpty(address);
-        boolean check_email = isEmpty(email);
-        
-        boolean check_contact = isEmpty(contact);
-        boolean check_bday = isNull(jDateChooser1.getDate());
-        
-        boolean check_nationality = isEmpty(nationality);
-        boolean check_religion = isEmpty(religion);
-        
-        boolean check_school = isEmpty(school);
-        
-        boolean check_sss = isEmpty(sss);
-        boolean check_pagibig = isEmpty(pagibig);
-        boolean check_philhealth = isEmpty(philhealth);
-        boolean check_tin = isEmpty(tin);
-        
-        boolean check_ename = isEmpty(ename);
-        boolean check_econtact = isEmpty(econtact);
-        boolean check_erelationship = isEmpty(erelationship);
-        boolean check_eaddress = isEmpty(eaddress);
-        
-        boolean check_start = isNull(start);
-        
-        if (check_surname || check_fname || check_mname || check_address || check_email || check_contact || check_bday ||
-            check_nationality || check_religion || check_school || check_sss || check_pagibig || check_philhealth || 
-            check_tin || check_ename || check_econtact || check_erelationship || check_eaddress || check_start) {
-                JOptionPane.showMessageDialog(this, "Please fill out all fields.");
-        } else {
-            try {
-                String bday = sdf.format(jDateChooser1.getDate());
-                
-                
-                con = ConnectionManager.getConnection();
-                
-                pst = con.prepareStatement("UPDATE emp_info SET emp_fname=?, emp_lname=?, emp_mname=?, emp_address=?, emp_email=?, "
-                                                             + "emp_sex=?, emp_nationality=?, emp_civilStatus=?, emp_religion=?, emp_Birthdate=?, "
-                                                             + "emp_Contact=?, emp_hea=?, emp_school=?, emp_yrfinished=?, emp_ecname=?, "
-                                                             + "emp_ecaddress=?, emp_eccontact=?, emp_ecrelationship=?, emp_SSS=?, emp_philhealth=?, "
-                                                             + "emp_tin=?, emp_pagibig=?, emp_department=?, emp_supervisor=?, emp_lob=?, emp_start=?, emp_end=? "
-                                                             + "WHERE EmployeeID=?");
-                
-                pst.setString(1, fname);
-                pst.setString(2, surname);
-                pst.setString(3, mname);
-                pst.setString(4, address);
-                pst.setString(5, email);
-                pst.setString(6, sex);
-                pst.setString(7, nationality);
-                pst.setString(8, civilStatus);
-                pst.setString(9, religion);
-                pst.setString(10, bday);
-                pst.setString(11, contact);
-                pst.setString(12, hea);
-                pst.setString(13, school);
-                pst.setInt(14, syFinish);
-                pst.setString(15, ename);
-                pst.setString(16, eaddress);
-                pst.setString(17, econtact);
-                pst.setString(18, erelationship);
-                pst.setString(19, sss);
-                pst.setString(20, philhealth);
-                pst.setString(21, tin);
-                pst.setString(22, pagibig);
-                pst.setString(23, department);
-                pst.setString(24, supervisor);
-                pst.setString(25, lob);
-                pst.setString(26, start);
-                pst.setString(27, end);
-                pst.setInt(28, Integer.valueOf(User.getEmployeeTracked()));
-                
-                pst.execute();
-                
-                pst = con.prepareStatement("UPDATE login SET position=? WHERE employeeID=?");
-                
-                pst.setString(1, department);
-                pst.setInt(2, Integer.parseInt(User.getEmployeeTracked()));
-                
-                pst.execute();
-                
-                con.close();
-                jButton5.setEnabled(true);
-        	jButton3.setEnabled(false);
-                JOptionPane.showMessageDialog(this, "Record updated.");
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();   
-            }
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         boolean check_pay = isFloat(jTextField13.getText());
         boolean check_sss = isFloat(jTextField14.getText());
@@ -1606,53 +1449,10 @@ public class emp1 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        jButton3.setEnabled(true);
-        jButton5.setEnabled(false);
-        
-        jTextField1.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        
-        jTextField7.setEditable(true);
-        jComboBox9.setEnabled(true);
-        
-        jTextField12.setEditable(true);
-        jComboBox10.setEnabled(true);
-        jTextField23.setEditable(true);
-
-        jComboBox2.setEnabled(true);
-        jTextField26.setEditable(true);
-        jYearChooser1.setEnabled(true);
-
-        jTextField11.setEditable(true);
-        jTextField19.setEditable(true);
-        jTextField27.setEditable(true);
-        jTextField30.setEditable(true);
-
-        jTextField24.setEditable(true);
-        jTextField32.setEditable(true);
-        jTextField25.setEditable(true);
-        jTextField29.setEditable(true);
-
-        jComboBox11.setEnabled(true);
-        jComboBox3.setEnabled(true);
-        jComboBox4.setEnabled(true);
-        jDateChooser2.setEnabled(true);
-        jDateChooser3.setEnabled(true);
-        jDateChooser1.setEnabled(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox10;

@@ -9,6 +9,9 @@ package hr;
  *
  * @author i5
  */
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 import hris.ConnectionManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,12 +35,15 @@ public class payr extends javax.swing.JPanel {
             insertDataIntoPayroll();
         }
     });
+        
+        String refNumber = generateReferenceNumber();
+        jTextField13.setText(refNumber);
     }
         Connection con;
     Statement stmt;
     PreparedStatement pst;
     ResultSet rs;
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,38 +58,32 @@ public class payr extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jLabel33 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jSeparator5 = new javax.swing.JSeparator();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jButton16 = new javax.swing.JButton();
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
         jTextField15 = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -107,57 +107,56 @@ public class payr extends javax.swing.JPanel {
 
         jLabel6.setText("Employee number:");
         jPanel10.add(jLabel6);
-        jLabel6.setBounds(10, 11, 100, 16);
+        jLabel6.setBounds(10, 20, 100, 16);
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
         jPanel10.add(jTextField1);
-        jTextField1.setBounds(120, 10, 140, 20);
+        jTextField1.setBounds(120, 20, 140, 30);
 
         jLabel7.setText("Employee Name:");
         jPanel10.add(jLabel7);
-        jLabel7.setBounds(263, 14, 90, 16);
-
-        jLabel9.setText("Management:");
-        jPanel10.add(jLabel9);
-        jLabel9.setBounds(10, 34, 74, 16);
+        jLabel7.setBounds(270, 20, 90, 16);
 
         jLabel10.setText("Email:");
         jPanel10.add(jLabel10);
-        jLabel10.setBounds(10, 54, 50, 16);
+        jLabel10.setBounds(10, 60, 50, 16);
 
         jLabel11.setText("Job Status:");
         jPanel10.add(jLabel11);
-        jLabel11.setBounds(552, 14, 70, 16);
+        jLabel11.setBounds(540, 20, 70, 16);
 
         jLabel17.setText("SSS:");
         jPanel10.add(jLabel17);
-        jLabel17.setBounds(779, 14, 30, 16);
+        jLabel17.setBounds(540, 60, 30, 16);
 
         jLabel18.setText("Phil-health:");
         jPanel10.add(jLabel18);
-        jLabel18.setBounds(779, 34, 61, 16);
+        jLabel18.setBounds(790, 20, 61, 16);
 
         jLabel19.setText("Pag-ibig:");
         jPanel10.add(jLabel19);
-        jLabel19.setBounds(779, 54, 48, 16);
+        jLabel19.setBounds(790, 60, 48, 16);
 
         jLabel20.setText("Department:");
         jPanel10.add(jLabel20);
-        jLabel20.setBounds(263, 54, 66, 16);
-
-        jLabel21.setText("Grade:");
-        jPanel10.add(jLabel21);
-        jLabel21.setBounds(263, 34, 70, 16);
-
-        jLabel22.setText("Postal Code:");
-        jPanel10.add(jLabel22);
-        jLabel22.setBounds(540, 30, 80, 16);
+        jLabel20.setBounds(270, 60, 66, 16);
         jPanel10.add(jSeparator3);
-        jSeparator3.setBounds(10, 469, 1060, 10);
+        jSeparator3.setBounds(10, 120, 1060, 10);
 
         jButton12.setText("Update Payslip Information");
         jPanel10.add(jButton12);
         jButton12.setBounds(147, 440, 229, 23);
 
         jButton13.setText("Generate Payslip");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
         jPanel10.add(jButton13);
         jButton13.setBounds(382, 440, 239, 23);
 
@@ -196,8 +195,6 @@ public class payr extends javax.swing.JPanel {
 
         jPanel10.add(jScrollPane2);
         jScrollPane2.setBounds(200, 485, 860, 111);
-        jPanel10.add(jSeparator5);
-        jSeparator5.setBounds(10, 74, 1060, 10);
 
         jLabel34.setText("REFERENCE NUMBER:");
         jPanel10.add(jLabel34);
@@ -217,27 +214,23 @@ public class payr extends javax.swing.JPanel {
 
         jTextField13.setEditable(false);
         jPanel10.add(jTextField13);
-        jTextField13.setBounds(741, 441, 233, 22);
-        jPanel10.add(jTextField3);
-        jTextField3.setBounds(120, 30, 140, 20);
+        jTextField13.setBounds(750, 440, 233, 22);
         jPanel10.add(jTextField4);
-        jTextField4.setBounds(120, 50, 140, 20);
+        jTextField4.setBounds(120, 60, 140, 30);
         jPanel10.add(jTextField5);
-        jTextField5.setBounds(370, 10, 140, 20);
-        jPanel10.add(jTextField6);
-        jTextField6.setBounds(370, 30, 140, 20);
+        jTextField5.setBounds(370, 20, 140, 30);
         jPanel10.add(jTextField7);
-        jTextField7.setBounds(370, 50, 140, 20);
+        jTextField7.setBounds(370, 60, 140, 30);
         jPanel10.add(jTextField8);
-        jTextField8.setBounds(630, 10, 140, 20);
-        jPanel10.add(jTextField9);
-        jTextField9.setBounds(630, 30, 140, 20);
+        jTextField8.setBounds(630, 20, 140, 30);
         jPanel10.add(jTextField10);
-        jTextField10.setBounds(850, 10, 140, 20);
+        jTextField10.setBounds(630, 60, 140, 30);
         jPanel10.add(jTextField14);
-        jTextField14.setBounds(850, 30, 140, 20);
+        jTextField14.setBounds(860, 20, 140, 30);
         jPanel10.add(jTextField15);
-        jTextField15.setBounds(850, 50, 140, 20);
+        jTextField15.setBounds(860, 60, 140, 30);
+        jPanel10.add(jSeparator4);
+        jSeparator4.setBounds(10, 469, 1060, 10);
 
         jTabbedPane1.addTab("Payroll", jPanel10);
 
@@ -412,38 +405,106 @@ public class payr extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void insertDataIntoPayroll() {
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // Retrieve the EmployeeID entered in jTextField1
+    String employeeID = jTextField1.getText();
+    
     try {
+        // Establish connection
         con = ConnectionManager.getConnection();
         
-        String sql = "INSERT INTO payroll (ref_no, emp_no, management, email, emp_name, grade, department, job_status, postal_code, sss, phil_health, pag_ibig) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Prepare SQL statement to retrieve data based on EmployeeID
+        String sql = "SELECT * FROM emp_info WHERE EmployeeID = ?";
         pst = con.prepareStatement(sql);
-
-        // Set values from JTextFields
-        pst.setString(1, jTextField13.getText()); // ref_no
-        pst.setInt(2, Integer.parseInt(jTextField1.getText())); // emp_no
-        pst.setString(3, jTextField3.getText()); // management
-        pst.setString(4, jTextField4.getText()); // email
-        pst.setString(5, jTextField5.getText()); // emp_name
-        pst.setString(6, jTextField6.getText()); // grade
-        pst.setString(7, jTextField7.getText()); // department
-        pst.setString(8, jTextField8.getText()); // job_status
-        pst.setString(9, jTextField9.getText()); // postal_code
-        pst.setString(10, jTextField10.getText()); // sss
-        pst.setString(11, jTextField14.getText()); // phil_health
-        pst.setString(12, jTextField15.getText()); // pag_ibig
-
-        // Execute the INSERT statement
-        int rowsInserted = pst.executeUpdate();
-        if (rowsInserted > 0) {
-            System.out.println("A new row has been inserted into the payroll table.");
+        
+        // Set the EmployeeID parameter
+        pst.setString(1, employeeID);
+        
+        // Execute the query
+        rs = pst.executeQuery();
+        
+        // Check if any data is retrieved
+        if (rs.next()) {
+            // Populate JTextFields with retrieved data
+            jTextField4.setText(rs.getString("emp_email")); // email
+            jTextField5.setText(rs.getString("emp_lname")); // emp_name
+            jTextField7.setText(rs.getString("emp_department")); // department
+            jTextField8.setText(rs.getString("emp_status")); // job_status
+            jTextField10.setText(rs.getString("emp_SSS")); // sss
+            jTextField14.setText(rs.getString("emp_philhealth")); // phil_health
+            jTextField15.setText(rs.getString("emp_pagibig")); // pag_ibig
+        } else {
+            // If no data is retrieved, clear JTextFields
+            jTextField4.setText(""); // email
+            jTextField5.setText(""); // emp_name
+            jTextField7.setText(""); // department
+            jTextField8.setText(""); // job_status
+            jTextField10.setText(""); // sss
+            jTextField14.setText(""); // phil_health
+            jTextField15.setText(""); // pag_ibig
         }
     } catch (SQLException e) {
-        System.out.println("Error inserting data into payroll table: " + e.getMessage());
+        System.out.println("Error fetching data from emp_info table: " + e.getMessage());
     }
+    }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        try {
+        con = ConnectionManager.getConnection();
+        
+        // Retrieve basic_pay from the salary table
+        String basicPayQuery = "SELECT basic_pay FROM salary WHERE emp_id = ?";
+        pst = con.prepareStatement(basicPayQuery);
+        pst.setInt(1, Integer.parseInt(jTextField1.getText())); // employee_id
+        ResultSet basicPayResult = pst.executeQuery();
+        
+        // Check if basic_pay data is retrieved
+        if (basicPayResult.next()) {
+            double basicPay = basicPayResult.getDouble("basic_pay");
+
+            // Prepare the INSERT statement for payslip table
+            String payslipInsertQuery = "INSERT INTO payslip (ref_id, employee_id, basic_pay) VALUES (?, ?, ?)";
+            pst = con.prepareStatement(payslipInsertQuery);
+
+            // Set values from JTextFields
+            pst.setString(1, jTextField13.getText()); // ref_id
+            pst.setInt(2, Integer.parseInt(jTextField1.getText())); // employee_id
+            pst.setDouble(3, basicPay); // basic_pay
+
+            // Execute the INSERT statement
+            int rowsInserted = pst.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("A new row has been inserted into the payslip table.");
+            }
+        } else {
+            System.out.println("Error: No basic_pay found for the employee ID.");
+        }
+    } catch (SQLException e) {
+        System.out.println("Error inserting data into payslip table: " + e.getMessage());
+    }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void insertDataIntoPayroll() {
+    
 }
 
-    
+public static String generateReferenceNumber() {
+        // Prefix
+        String prefix = "REF";
+        
+        // Current date and time
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        String dateTime = sdf.format(new Date());
+        
+        // Random number
+        Random random = new Random();
+        int randomNumber = random.nextInt(1000); // Generates a random number between 0 and 999
+        
+        // Combine prefix, dateTime, and random number to create the reference number
+        String referenceNumber = String.format("%s-%s-%03d", prefix, dateTime, randomNumber);
+        
+        return referenceNumber;
+    }    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -461,21 +522,18 @@ public class payr extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
@@ -487,13 +545,10 @@ public class payr extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField14;
     private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField txtDate3;
     private javax.swing.JTextField txtDate4;
     // End of variables declaration//GEN-END:variables

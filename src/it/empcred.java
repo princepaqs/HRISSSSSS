@@ -5,10 +5,15 @@
  */
 package it;
 
-import sme.*;
-import tl.*;
-import om.*;
-import hr.*;
+import hris.ConnectionManager;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,7 +27,13 @@ public class empcred extends javax.swing.JPanel {
     public empcred() {
         initComponents();
     }
-
+    Connection con;
+    Statement stmt;
+    PreparedStatement pst;
+    ResultSet rs;
+    SimpleDateFormat  sdf = new SimpleDateFormat("hh:mm:ss a");
+    String time;
+    DefaultTableModel model;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,6 +80,8 @@ public class empcred extends javax.swing.JPanel {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox<>();
+        jTextField16 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -89,6 +102,8 @@ public class empcred extends javax.swing.JPanel {
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        jTextField15 = new javax.swing.JTextField();
 
         jTabbedPane1.setBackground(java.awt.Color.white);
 
@@ -256,18 +271,18 @@ public class empcred extends javax.swing.JPanel {
         jLabel12.setText("Password:");
 
         jComboBox4.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agent", "Human Resource", "IT", "Team Leader", "Operation Manager", "Subject Matter Expert", "Quality Analyst" }));
         jComboBox4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jComboBox3.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agent", "Human Resource", "IT", "Team Leader", "Operation Manager", "Subject Matter Expert", "Quality Analyst" }));
         jComboBox3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jTextField9.setEditable(false);
         jTextField9.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jLabel8.setText("Employee Name:");
+        jLabel8.setText("First Name:");
 
         jLabel7.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel7.setText("Employee ID:");
@@ -295,6 +310,12 @@ public class empcred extends javax.swing.JPanel {
         jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVE", "RESIGNED" }));
         jComboBox7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jTextField16.setEditable(false);
+        jTextField16.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
+
+        jLabel20.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
+        jLabel20.setText("Last Name:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -316,8 +337,13 @@ public class empcred extends javax.swing.JPanel {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField9)
-                            .addComponent(jTextField10)))
+                            .addComponent(jTextField10)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -347,7 +373,9 @@ public class empcred extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -449,6 +477,11 @@ public class empcred extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jButton3.setText("Generate Password");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel13.setText("Password:");
@@ -460,24 +493,29 @@ public class empcred extends javax.swing.JPanel {
         jTextField12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jComboBox5.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agent", "Human Resource", "IT", "Team Leader", "Operation Manager", "Subject Matter Expert", "Quality Analyst" }));
         jComboBox5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jComboBox6.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agent", "Human Resource", "IT", "Team Leader", "Operation Manager", "Subject Matter Expert", "Quality Analyst" }));
         jComboBox6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jTextField13.setEditable(false);
         jTextField13.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
 
         jLabel15.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jLabel15.setText("Employee Name:");
+        jLabel15.setText("First Name:");
 
         jLabel16.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel16.setText("Employee ID:");
 
         jTextField14.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jTextField14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTextField14.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField14KeyReleased(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
         jLabel17.setText("LOB:");
@@ -487,6 +525,17 @@ public class empcred extends javax.swing.JPanel {
 
         jButton4.setText("SUBMIT");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
+        jLabel19.setText("Last Name:");
+
+        jTextField15.setEditable(false);
+        jTextField15.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -505,8 +554,13 @@ public class empcred extends javax.swing.JPanel {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox5, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField13)
-                            .addComponent(jTextField14)))
+                            .addComponent(jTextField14)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13)
@@ -531,7 +585,10 @@ public class empcred extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19)
+                        .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -565,7 +622,7 @@ public class empcred extends javax.swing.JPanel {
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -615,6 +672,134 @@ public class empcred extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // Retrieve values from text fields and combo boxes
+    String employeeID = jTextField14.getText();
+    String emp_fname = jTextField13.getText();
+    String emp_lname = jTextField15.getText();
+    String cEmail = jTextField12.getText();
+    String lob = (String) jComboBox6.getSelectedItem();
+    String position = (String) jComboBox5.getSelectedItem();
+    String password = jTextField11.getText();
+    String om = "";
+
+    try {
+        // Establish database connection
+        Connection con = ConnectionManager.getConnection();
+
+        // Query the login table for 'OM' value where the position is "Operation Manager"
+        String omQuery = "SELECT emp_lname FROM login WHERE position = 'Operation Manager'";
+        PreparedStatement omStmt = con.prepareStatement(omQuery);
+        ResultSet omRs = omStmt.executeQuery();
+
+        // If 'OM' value is found, retrieve the corresponding emp_lname
+        if (omRs.next()) {
+            om = omRs.getString("emp_lname");
+        }
+
+        // Close resources
+        omRs.close();
+        omStmt.close();
+        // Insert data into the cred table
+        String insertQuery = "INSERT INTO cred (EmployeeID, emp_fname, emp_lname, cEmail, LOB, Position, Password, OM, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = con.prepareStatement(insertQuery);
+        pstmt.setString(1, employeeID);
+        pstmt.setString(2, emp_fname);
+        pstmt.setString(3, emp_lname);
+        pstmt.setString(4, cEmail);
+        pstmt.setString(5, lob);
+        pstmt.setString(6, position);
+        pstmt.setString(7, password);
+        pstmt.setString(8, om);
+        pstmt.setString(9, "active"); // Set the value of 'status' as "active"
+        int rowsInserted = pstmt.executeUpdate();
+
+        // Close resources
+        pstmt.close();
+        con.close();
+
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(this, "Data inserted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to insert data", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        // Handle any SQL exceptions or display error messages
+    }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField14KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField14KeyReleased
+        // Retrieve the EmployeeID from the JTextField
+    String employeeID = jTextField14.getText();
+    
+    try {
+        // Establish database connection
+        Connection con = ConnectionManager.getConnection();
+
+        // Query the emp_info table for emp_fname and emp_lname based on EmployeeID
+        String query = "SELECT emp_fname, emp_lname FROM emp_info WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, employeeID);
+        ResultSet rs = pstmt.executeQuery();
+
+        // If EmployeeID is found, update the corresponding text fields with emp_fname and emp_lname
+        if (rs.next()) {
+            jTextField13.setText(rs.getString("emp_fname"));
+            jTextField15.setText(rs.getString("emp_lname"));
+        } else {
+            // If EmployeeID is not found, clear the text fields or display a message
+            jTextField13.setText("");
+            jTextField15.setText("");
+            JOptionPane.showMessageDialog(this, "Employee ID not found", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        // Close resources
+        rs.close();
+        pstmt.close();
+        con.close();
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        // Handle any SQL exceptions or display error messages
+    }
+    }//GEN-LAST:event_jTextField14KeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try {
+        // Establish database connection
+        Connection con = ConnectionManager.getConnection();
+
+        // Query the login table to retrieve the password
+        String query = "SELECT emp_pw FROM login";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        // Check if any rows are returned
+        if (rs.next()) {
+            // Retrieve the password from the result set
+            String emp_pw = rs.getString("emp_pw");
+            
+            // Update the JTextField with the retrieved password
+            jTextField11.setText(emp_pw);
+        } else {
+            // Handle the case when no rows are returned
+            // You can display a message or take any other appropriate action
+            System.out.println("No password found in the database.");
+        }
+
+        // Close resources
+        rs.close();
+        pstmt.close();
+        con.close();
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        // Handle any SQL exceptions or display error messages
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -643,6 +828,8 @@ public class empcred extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
@@ -669,6 +856,8 @@ public class empcred extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
     private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField jTextField15;
+    private javax.swing.JTextField jTextField16;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;

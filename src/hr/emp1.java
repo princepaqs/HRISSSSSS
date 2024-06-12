@@ -447,10 +447,9 @@ public class emp1 extends javax.swing.JPanel {
         jLabel49 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
+        jDateChooser1 = new org.netbeans.modules.form.InvalidComponent();
+        jDateChooser2 = new org.netbeans.modules.form.InvalidComponent();
+        jDateChooser3 = new org.netbeans.modules.form.InvalidComponent();
         jPanel1 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -495,7 +494,7 @@ public class emp1 extends javax.swing.JPanel {
         jLabel57 = new javax.swing.JLabel();
         jTextField21 = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
+        jDateChooser4 = new org.netbeans.modules.form.InvalidComponent();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
@@ -525,7 +524,6 @@ public class emp1 extends javax.swing.JPanel {
         jComboBox12 = new javax.swing.JComboBox<>();
         jComboBox13 = new javax.swing.JComboBox<>();
         jComboBox14 = new javax.swing.JComboBox<>();
-        jYearChooser2 = new com.toedter.calendar.JYearChooser();
         jLabel77 = new javax.swing.JLabel();
         jLabel78 = new javax.swing.JLabel();
         jTextField28 = new javax.swing.JTextField();
@@ -536,9 +534,9 @@ public class emp1 extends javax.swing.JPanel {
         jLabel81 = new javax.swing.JLabel();
         jTextField41 = new javax.swing.JTextField();
         jLabel82 = new javax.swing.JLabel();
-        jDateChooser5 = new com.toedter.calendar.JDateChooser();
+        jDateChooser5 = new org.netbeans.modules.form.InvalidComponent();
         jLabel83 = new javax.swing.JLabel();
-        jDateChooser6 = new com.toedter.calendar.JDateChooser();
+        jDateChooser6 = new org.netbeans.modules.form.InvalidComponent();
 
         setBackground(java.awt.Color.white);
         setMaximumSize(new java.awt.Dimension(1368, 736));
@@ -876,7 +874,7 @@ public class emp1 extends javax.swing.JPanel {
                                 .addComponent(jLabel45)
                                 .addGap(12, 12, 12)
                                 .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(507, 507, 507))
+                .addGap(504, 504, 504))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -987,8 +985,7 @@ public class emp1 extends javax.swing.JPanel {
                                     .addComponent(jTextField23, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                                     .addComponent(jComboBox9, 0, 250, Short.MAX_VALUE)
                                     .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(jYearChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))))))
                 .addGap(482, 482, 482))
         );
         jPanel2Layout.setVerticalGroup(
@@ -996,60 +993,55 @@ public class emp1 extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jLabel15))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(20, 20, 20)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(55, 55, 55)))
+                                .addComponent(jLabel7)
+                                .addGap(65, 65, 65)
+                                .addComponent(jLabel15))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17)
-                            .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel9)
+                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel10)
+                                .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)
+                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel14)
+                            .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17)
+                    .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel40)
                 .addGap(18, 18, 18)
@@ -1198,7 +1190,7 @@ public class emp1 extends javax.swing.JPanel {
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Daily Time Record", jPanel19);
@@ -1442,8 +1434,6 @@ public class emp1 extends javax.swing.JPanel {
         jLabel58.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel58.setText("Birthday");
 
-        jDateChooser4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
         jLabel59.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel59.setText("Civil Status");
 
@@ -1557,12 +1547,8 @@ public class emp1 extends javax.swing.JPanel {
         jLabel82.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel82.setText("Start Date");
 
-        jDateChooser5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
         jLabel83.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel83.setText("End Date");
-
-        jDateChooser6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1701,9 +1687,7 @@ public class emp1 extends javax.swing.JPanel {
                                                     .addComponent(jLabel62)
                                                     .addComponent(jLabel66))
                                                 .addGap(22, 22, 22)
-                                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jYearChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
@@ -1764,14 +1748,12 @@ public class emp1 extends javax.swing.JPanel {
                             .addComponent(jLabel62)
                             .addComponent(jTextField31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(55, 55, 55)))
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jYearChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel64)
-                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel65)
-                        .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel66)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel64)
+                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel65)
+                    .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel66))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel77)
                 .addGap(18, 18, 18)
@@ -1833,7 +1815,7 @@ public class emp1 extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 742, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1851,7 +1833,7 @@ public class emp1 extends javax.swing.JPanel {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1866,7 +1848,7 @@ public class emp1 extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2185,45 +2167,10 @@ public class emp1 extends javax.swing.JPanel {
         jDateChooser3.setEnabled(true);
         jDateChooser1.setEnabled(true);
     }//GEN-LAST:event_jButton5ActionPerformed
-private int getEmployeeAbsences(int employeeId) {
-    int absences = 0;
 
-    try {
-        con = ConnectionManager.getConnection();
-        String query = "SELECT DATE(timestamp) as date, COUNT(CASE WHEN status = 'Day In' THEN 1 END) as day_in_count, "
-                     + "COUNT(CASE WHEN status = 'Day Out' THEN 1 END) as day_out_count "
-                     + "FROM dtr WHERE EmployeeID = ? "
-                     + "GROUP BY DATE(timestamp)";
-        
-        pst = con.prepareStatement(query);
-        pst.setInt(1, employeeId);
-        
-        rs = pst.executeQuery();
-        
-        while (rs.next()) {
-            int dayInCount = rs.getInt("day_in_count");
-            int dayOutCount = rs.getInt("day_out_count");
-            
-            // Consider it an absence if any day lacks either a "Day In" or "Day Out" entry
-            if (dayInCount == 0 || dayOutCount == 0) {
-                absences++;
-            }
-        }
-        
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (pst != null) pst.close();
-            if (con != null) con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    return absences;
-}
+    private void jTextField28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField28ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField28ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -2358,7 +2305,7 @@ private int getEmployeeAbsences(int employeeId) {
                 pst.execute();
 
                 pst = con.prepareStatement("INSERT INTO cred ( emp_fname, emp_lname, cEmail, LOB, OM, Position, Status, Password)"
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");                
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)");
                 pst.setString(1, fname);
                 pst.setString(2, surname);
                 pst.setString(3, email);
@@ -2376,10 +2323,45 @@ private int getEmployeeAbsences(int employeeId) {
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+private int getEmployeeAbsences(int employeeId) {
+    int absences = 0;
 
-    private void jTextField28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField28ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField28ActionPerformed
+    try {
+        con = ConnectionManager.getConnection();
+        String query = "SELECT DATE(timestamp) as date, COUNT(CASE WHEN status = 'Day In' THEN 1 END) as day_in_count, "
+                     + "COUNT(CASE WHEN status = 'Day Out' THEN 1 END) as day_out_count "
+                     + "FROM dtr WHERE EmployeeID = ? "
+                     + "GROUP BY DATE(timestamp)";
+        
+        pst = con.prepareStatement(query);
+        pst.setInt(1, employeeId);
+        
+        rs = pst.executeQuery();
+        
+        while (rs.next()) {
+            int dayInCount = rs.getInt("day_in_count");
+            int dayOutCount = rs.getInt("day_out_count");
+            
+            // Consider it an absence if any day lacks either a "Day In" or "Day Out" entry
+            if (dayInCount == 0 || dayOutCount == 0) {
+                absences++;
+            }
+        }
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    return absences;
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2400,12 +2382,12 @@ private int getEmployeeAbsences(int employeeId) {
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox9;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
-    private com.toedter.calendar.JDateChooser jDateChooser5;
-    private com.toedter.calendar.JDateChooser jDateChooser6;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser1;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser2;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser3;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser4;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser5;
+    private org.netbeans.modules.form.InvalidComponent jDateChooser6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2546,7 +2528,5 @@ private int getEmployeeAbsences(int employeeId) {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
-    private com.toedter.calendar.JYearChooser jYearChooser2;
     // End of variables declaration//GEN-END:variables
 }

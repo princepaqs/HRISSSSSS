@@ -4,6 +4,13 @@
  */
 package tl;
 
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 import om.*;
 
 /**
@@ -15,8 +22,14 @@ public class sched extends javax.swing.JPanel {
     /**
      * Creates new form sched
      */
+      Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
+    
     public sched() {
         initComponents();
+        loadSchedule();
     }
 
     /**
@@ -93,6 +106,11 @@ public class sched extends javax.swing.JPanel {
         jLabel108.setText("Month");
 
         jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        jComboBox11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox11ActionPerformed(evt);
+            }
+        });
 
         jLabel109.setText("Positions:");
 
@@ -117,7 +135,20 @@ public class sched extends javax.swing.JPanel {
 
         jLabel110.setText("Year");
 
+        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022","2023" ,"2024", "2025" }));
+        jComboBox12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox12ActionPerformed(evt);
+            }
+        });
+
         jLabel111.setText("EMPLOYEE NUMBER:");
+
+        jTextField24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField24ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
         jPanel47.setLayout(jPanel47Layout);
@@ -200,6 +231,127 @@ public class sched extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void jComboBox11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox11ActionPerformed
+            filterSched();        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox11ActionPerformed
+
+    private void jComboBox12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox12ActionPerformed
+        filterSched();      // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox12ActionPerformed
+
+    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
+        String empId = jTextField24.getText().trim();
+            // Call the method to filter schedules based on the employee ID
+            filterSchedulesByEmployeeId(empId);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField24ActionPerformed
+    private void filterSchedulesByEmployeeId(String empId) {
+    try {
+        con = ConnectionManager.getConnection(); // Establish a connection to the database
+        stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+        // Execute a SELECT query to retrieve data from the "schedules" table
+        // Filter the records based on the inputted employee ID
+        String query = "SELECT * FROM schedules WHERE id = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, empId);
+        rs = pstmt.executeQuery();
+
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
+        model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+        while (rs.next()) {
+            // Iterate over the ResultSet and add each row to the DefaultTableModel
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("month"),
+                rs.getString("year"),
+                rs.getString("restday"),
+                rs.getString("time_in"),
+                rs.getString("time_out"),
+            });
+        }
+
+        // Set the model to your JTable to display the filtered data
+        jTable2.setModel(model);
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+}
+    private void loadSchedule(){
+        try {
+                con = ConnectionManager.getConnection(); // Establish a connection to the database
+                stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+                rs = stmt.executeQuery("SELECT * from schedules"); // Execute a SELECT query to retrieve data from the "cred" table
+
+                // Create a DefaultTableModel with column names
+                String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
+                model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+                while (rs.next()) {
+                    // Iterate over the ResultSet and add each row to the DefaultTableModel
+                    model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("month"),
+                        rs.getString("year"),
+                        rs.getString("restday"),
+                        rs.getString("time_in"),
+                        rs.getString("time_out"),
+                    });
+                }
+
+                // Set the model to your JTable to display the data
+                jTable2.setModel(model);
+
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Handle SQL exceptions
+            }
+    }
+    
+    private void filterSched(){
+        try {
+        con = ConnectionManager.getConnection(); // Establish a connection to the database
+        stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+        // Get the selected month from the JComboBox
+         String selectedMonth = (String) jComboBox11.getSelectedItem();
+        String selectedYear = (String) jComboBox12.getSelectedItem();
+
+        // Execute a SELECT query to retrieve data from the "schedules" table
+        // Filter the records based on the selected month and year
+        String query = "SELECT * FROM schedules WHERE month = ? AND year = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, selectedMonth);
+        pstmt.setString(2, selectedYear);
+        rs = pstmt.executeQuery();
+
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
+        model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+        while (rs.next()) {
+            // Iterate over the ResultSet and add each row to the DefaultTableModel
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("month"),
+                rs.getString("year"),
+                rs.getString("restday"),
+                rs.getString("time_in"),
+                rs.getString("time_out"),
+            });
+        }
+
+        // Set the model to your JTable to display the filtered data
+        jTable2.setModel(model);
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;

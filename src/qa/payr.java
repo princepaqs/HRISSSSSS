@@ -5,9 +5,15 @@
  */
 package qa;
 
-import tl.*;
-import om.*;
-import hr.*;
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
+
 
 /**
  *
@@ -20,7 +26,14 @@ public class payr extends javax.swing.JPanel {
      */
     public payr() {
         initComponents();
+        
+        loadData();
+
     }
+        Connection con;
+    Statement stmt;
+    PreparedStatement pst;
+    ResultSet rs;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,6 +231,33 @@ public class payr extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void loadData() {
+    try {
+        con = ConnectionManager.getConnection(); // Establish a connection to the database
+        stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+        rs = stmt.executeQuery("SELECT * from payslip"); // Execute a SELECT query to retrieve data from the "payslip" table
+
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"EMPLOYEE ID", "REFERENCE NUMBER", "PAYOUT DATE"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+        while (rs.next()) {
+            // Iterate over the ResultSet and add each row to the DefaultTableModel
+            model.addRow(new Object[]{
+                rs.getString("employee_id"),
+                rs.getString("ref_id"),
+                rs.getString("payout_date")
+            });
+        }
+
+        // Set the model to your jTable6 to display the data
+        jTable2.setModel(model);
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

@@ -21,6 +21,9 @@ public class Form_agent extends javax.swing.JPanel {
         initComponents();
         init();
         loadData();
+        loadData2();
+        loadData3();
+        
         // UPDATE TABLE AND EMPLOYEE PRESENT
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
@@ -91,31 +94,75 @@ public class Form_agent extends javax.swing.JPanel {
     
   
     
-    private void loadData() {
-        try {
-            con = ConnectionManager.getConnection();
-            stmt = con.createStatement();
-            
-            rs = stmt.executeQuery("SELECT COUNT(*) as emp_count FROM emp_info");
-            rs.next();
-            card1.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-            
-//            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
-//            while(rs.next()) {
-//                if (rs.getString("emp_sex").equals("Male")) {
-//                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-//                } else {
-//                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-//                }
-//            }
-            
-             
-            
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+   private void loadData() {
+    try {
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        
+        // Fetch productivity value for the current employee ID
+        pst = con.prepareStatement("SELECT productivity FROM productivity WHERE id = ?");
+        pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
+        rs = pst.executeQuery();
+        
+        // If there is a result, update the card label
+        if(rs.next()) {
+            card1.lbValues.setText(String.valueOf(rs.getString("productivity")));
         }
+        
+        con.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
+   private void loadData2() {
+    try {
+        con = ConnectionManager.getConnection();
+        
+        // Fetch Quality and Knowledge Checker values for the current employee ID
+        pst = con.prepareStatement("SELECT Quality, Knowledge_Checker FROM performance WHERE EmployeeID = ?");
+        pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
+        rs = pst.executeQuery();
+        
+        // If there is a result, update the respective card labels
+        if(rs.next()) {
+            // Update card2 with Quality value
+            card2.lbValues.setText(String.valueOf(rs.getString("Quality")));
+            // Update card5 with Knowledge Checker value
+            card5.lbValues.setText(String.valueOf(rs.getString("Knowledge_Checker")));
+        }
+        
+        con.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+   
+   private void loadData3() {
+    String employeeID = User.getEmployeeID();
+    
+    try (Connection con = ConnectionManager.getConnection()) {
+        
+        // Retrieve the attendance value for the specified employeeID
+        String query1 = "SELECT Attdnce AS att FROM performance WHERE EmployeeID = ?";
+        try (PreparedStatement pst1 = con.prepareStatement(query1)) {
+            pst1.setInt(1, Integer.parseInt(employeeID));
+            try (ResultSet rs1 = pst1.executeQuery()) {
+                if (rs1.next()) {
+                    card3.lbValues.setText(String.valueOf(rs1.getDouble("att")) + "%");
+                } else {
+                    card3.lbValues.setText("N/A");
+                }
+            }
+        }
+       
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
+
+
+
     
     private void setTime() {
         time = sdf.format(Calendar.getInstance().getTime());

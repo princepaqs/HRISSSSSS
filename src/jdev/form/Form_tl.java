@@ -21,6 +21,7 @@ public class Form_tl extends javax.swing.JPanel {
         initComponents();
         init();
         loadData();
+        loadData2();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -154,36 +155,25 @@ public class Form_tl extends javax.swing.JPanel {
     DefaultTableModel model;
     User employee = new User();
    private void loadData() {
-        try {
-            con = ConnectionManager.getConnection();
-            stmt = con.createStatement();
-            
-            rs = stmt.executeQuery("SELECT Attdnce AS att FROM performance WHERE EmployeeID = " + employee.getEmployeeID());
-            rs.next();
-            card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
-            
-//            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
-//            while(rs.next()) {
-//                if (rs.getString("emp_sex").equals("Male")) {
-//                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-//                } else {
-//                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-//                }
-//            }
-
-        rs = stmt.executeQuery("SELECT productivity AS prod FROM productivity WHERE id = " + employee.getEmployeeID());
-        if (rs.next()) {
-            card4.lbValues.setText(String.valueOf(rs.getInt("prod")));
-        } else {
-            // Handle the case where no productivity value is found for the specified employeeID
-            card4.lbValues.setText("N/A");
+    try {
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+        
+        // Fetch productivity value for the current employee ID
+        pst = con.prepareStatement("SELECT productivity FROM productivity WHERE id = ?");
+        pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
+        rs = pst.executeQuery();
+        
+        // If there is a result, update the card label
+        if(rs.next()) {
+            card4.lbValues.setText(String.valueOf(rs.getString("productivity")));
         }
-            
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-   }
+        
+        con.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
     
     private void setTime() {
         time = sdf.format(Calendar.getInstance().getTime());
@@ -195,6 +185,29 @@ public class Form_tl extends javax.swing.JPanel {
         //  init card data
 
     }
+    private void loadData2() {
+    String employeeID = User.getEmployeeID();
+    
+    try (Connection con = ConnectionManager.getConnection()) {
+        
+        // Retrieve the attendance value for the specified employeeID
+        String query = "SELECT Attdnce AS att FROM performance WHERE EmployeeID = ?";
+        try (PreparedStatement pst = con.prepareStatement(query)) {
+            pst.setInt(1, Integer.parseInt(employeeID));
+            try (ResultSet rs = pst.executeQuery()) {
+                if (rs.next()) {
+                    card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
+                } else {
+                    card3.lbValues.setText("N/A");
+                }
+            }
+        }
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -424,6 +437,8 @@ public class Form_tl extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         try {
             con = ConnectionManager.getConnection();

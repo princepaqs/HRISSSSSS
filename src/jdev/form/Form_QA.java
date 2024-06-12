@@ -86,6 +86,8 @@ public class Form_QA extends javax.swing.JPanel {
     SimpleDateFormat  sdf = new SimpleDateFormat("hh:mm:ss a");
     String time;
     DefaultTableModel model;
+        
+      
     
       private void loadData(){
         try {

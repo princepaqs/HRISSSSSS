@@ -35,7 +35,7 @@ public class Agent extends javax.swing.JFrame {
                 }
                 // PERFORMANCE
                 else if (index == 3 && indexSubMenu == 0) {
-                        showForm(new perf1());
+                        showForm(new hr.perf1());
                 }
                 else {
                     showForm(new Form_Empty(index + " " + indexSubMenu));

@@ -152,15 +152,15 @@ public class Form_tl extends javax.swing.JPanel {
     SimpleDateFormat  sdf = new SimpleDateFormat("hh:mm:ss a");
     String time;
     DefaultTableModel model;
-    
+    User employee = new User();
    private void loadData() {
         try {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
             
-            rs = stmt.executeQuery("SELECT COUNT(DISTINCT EmployeeID) AS dayInCount FROM dtr WHERE status = 'Day In' AND DATE(timestamp) = CURRENT_DATE()");
+            rs = stmt.executeQuery("SELECT Attdnce AS att FROM performance WHERE EmployeeID = " + employee.getEmployeeID());
             rs.next();
-            card3.lbValues.setText(String.valueOf(rs.getString("dayInCount")));
+            card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
             
 //            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
 //            while(rs.next()) {
@@ -170,8 +170,14 @@ public class Form_tl extends javax.swing.JPanel {
 //                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
 //                }
 //            }
-            
-             
+
+        rs = stmt.executeQuery("SELECT productivity AS prod FROM productivity WHERE id = " + employee.getEmployeeID());
+        if (rs.next()) {
+            card4.lbValues.setText(String.valueOf(rs.getInt("prod")));
+        } else {
+            // Handle the case where no productivity value is found for the specified employeeID
+            card4.lbValues.setText("N/A");
+        }
             
             
         } catch (SQLException ex) {

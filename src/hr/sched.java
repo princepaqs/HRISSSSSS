@@ -9,6 +9,7 @@ import hris.ConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,9 +19,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class sched extends javax.swing.JPanel {
 
-    public static void setSelectedIndex(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * Creates new form sched
@@ -46,19 +44,12 @@ public class sched extends javax.swing.JPanel {
         jTabbedPane6 = new javax.swing.JTabbedPane();
         jPanel47 = new javax.swing.JPanel();
         jPanel37 = new javax.swing.JPanel();
-        jScrollPane20 = new javax.swing.JScrollPane();
-        jTable11 = new javax.swing.JTable();
-        jLabel109 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel108 = new javax.swing.JLabel();
+        jComboBox11 = new javax.swing.JComboBox<>();
         jLabel110 = new javax.swing.JLabel();
         jComboBox12 = new javax.swing.JComboBox<>();
-        jButton29 = new javax.swing.JButton();
         jLabel111 = new javax.swing.JLabel();
         jTextField24 = new javax.swing.JTextField();
 
@@ -71,30 +62,23 @@ public class sched extends javax.swing.JPanel {
 
         jPanel47.setBackground(java.awt.Color.white);
 
-        jTable11.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "EMPLOYEE NUMBER", "NAME", "REST DAY", "LOB", "TIME IN", "TIME OUT"
+                "ID", "Month", "Year", "Restday", "Time in", "Time out"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true
+                false, false, false, false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane20.setViewportView(jTable11);
+        jScrollPane2.setViewportView(jTable2);
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
         jPanel37.setLayout(jPanel37Layout);
@@ -102,42 +86,42 @@ public class sched extends javax.swing.JPanel {
             jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel37Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane20, javax.swing.GroupLayout.PREFERRED_SIZE, 812, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(826, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 2432, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel37Layout.setVerticalGroup(
             jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addGroup(jPanel37Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jLabel109.setText("Positions:");
+        jLabel108.setText("Month");
 
-        jCheckBox1.setText("No Position Assigned");
-
-        jCheckBox2.setText("Operation Manager");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox11.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "January", "February", "March", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        jComboBox11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
+                jComboBox11ActionPerformed(evt);
             }
         });
 
-        jCheckBox3.setText("QA Manager");
+        jLabel110.setText("Year");
 
-        jCheckBox5.setText("Subject Matter Expert");
-
-        jCheckBox6.setText("Team Leader");
-
-        jCheckBox7.setText("IT");
-
-        jCheckBox8.setText("Agent");
-
-        jLabel110.setText("ORGANIZATION:");
-
-        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IT", "Human Resource", "Agent", "Quality Analyst", "Operation Manager", "Team Leader", "Subject Matter Expert" }));
-
-        jButton29.setText("PUBLISH AND NOTIFY");
+        jComboBox12.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2022","2023" ,"2024", "2025" }));
+        jComboBox12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox12ActionPerformed(evt);
+            }
+        });
 
         jLabel111.setText("EMPLOYEE NUMBER:");
+
+        jTextField24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField24ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel47Layout = new javax.swing.GroupLayout(jPanel47);
         jPanel47.setLayout(jPanel47Layout);
@@ -147,56 +131,35 @@ public class sched extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jComboBox12, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel109, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel108, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel110, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton29, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel111, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField24, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(824, 824, 824)
-                .addComponent(jPanel37, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField24, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox11, 0, 147, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel47Layout.setVerticalGroup(
             jPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel47Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel109)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox8)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel110)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel111)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton29, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel47Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel47Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel108)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox11, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel110)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel111)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane6.addTab("Schedule", jPanel47);
@@ -213,24 +176,34 @@ public class sched extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    private void jComboBox11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox11ActionPerformed
+        filterSched();        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox11ActionPerformed
+
+    private void jComboBox12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox12ActionPerformed
+        filterSched();      // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox12ActionPerformed
+
+    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
+        String empId = jTextField24.getText().trim();
+            // Call the method to filter schedules based on the employee ID
+            filterSchedulesByEmployeeId(empId);
+    }//GEN-LAST:event_jTextField24ActionPerformed
     
-    private void loadSchedule(){
-        try {
-         con = ConnectionManager.getConnection(); // Establish a connection to the database
+    private void filterSchedulesByEmployeeId(String empId) {
+    try {
+        con = ConnectionManager.getConnection(); // Establish a connection to the database
         stmt = con.createStatement(); // Create a statement object for executing SQL queries
 
         // Execute a SELECT query to retrieve data from the "schedules" table
         // Filter the records based on the inputted employee ID
-        String query = "SELECT * FROM schedules;";
+        String query = "SELECT * FROM schedules WHERE id = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
-//        pstmt.setString(1, empId);
+        pstmt.setString(1, empId);
         rs = pstmt.executeQuery();
 
         // Create a DefaultTableModel with column names
-        String[] columnNames = {"EMPLOYEE NUMBER", "NAME", "RES DAY", "LOB", "TIME IN", "TIME OUT"};
+        String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
         model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
 
         while (rs.next()) {
@@ -246,29 +219,95 @@ public class sched extends javax.swing.JPanel {
         }
 
         // Set the model to your JTable to display the filtered data
-        jTable11.setModel(model);
-        } catch (Exception e) {
+        jTable2.setModel(model);
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
+}
+    private void loadSchedule(){
+        try {
+                con = ConnectionManager.getConnection(); // Establish a connection to the database
+                stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+                rs = stmt.executeQuery("SELECT * from schedules"); // Execute a SELECT query to retrieve data from the "cred" table
+
+                // Create a DefaultTableModel with column names
+                String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
+                model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+                while (rs.next()) {
+                    // Iterate over the ResultSet and add each row to the DefaultTableModel
+                    model.addRow(new Object[]{
+                        rs.getInt("id"),
+                        rs.getString("month"),
+                        rs.getString("year"),
+                        rs.getString("restday"),
+                        rs.getString("time_in"),
+                        rs.getString("time_out"),
+                    });
+                }
+
+                // Set the model to your JTable to display the data
+                jTable2.setModel(model);
+
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Handle SQL exceptions
+            }
+    }
+    
+    private void filterSched(){
+        try {
+        con = ConnectionManager.getConnection(); // Establish a connection to the database
+        stmt = con.createStatement(); // Create a statement object for executing SQL queries
+
+        // Get the selected month from the JComboBox
+         String selectedMonth = (String) jComboBox11.getSelectedItem();
+        String selectedYear = (String) jComboBox12.getSelectedItem();
+
+        // Execute a SELECT query to retrieve data from the "schedules" table
+        // Filter the records based on the selected month and year
+        String query = "SELECT * FROM schedules WHERE month = ? AND year = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, selectedMonth);
+        pstmt.setString(2, selectedYear);
+        rs = pstmt.executeQuery();
+
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"ID", "Month", "Year", "Restday", "Time in", "Time out"};
+        model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+        while (rs.next()) {
+            // Iterate over the ResultSet and add each row to the DefaultTableModel
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("month"),
+                rs.getString("year"),
+                rs.getString("restday"),
+                rs.getString("time_in"),
+                rs.getString("time_out"),
+            });
         }
+
+        // Set the model to your JTable to display the filtered data
+        jTable2.setModel(model);
+
+    } catch (SQLException ex) {
+        ex.printStackTrace(); // Handle SQL exceptions
+    }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton29;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JComboBox<String> jComboBox11;
     private javax.swing.JComboBox<String> jComboBox12;
-    private javax.swing.JLabel jLabel109;
+    private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel110;
     private javax.swing.JLabel jLabel111;
     private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel47;
-    private javax.swing.JScrollPane jScrollPane20;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane6;
-    private javax.swing.JTable jTable11;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField24;
     // End of variables declaration//GEN-END:variables
 }

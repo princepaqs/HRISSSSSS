@@ -4,6 +4,15 @@
  */
 package om;
 
+import hris.ConnectionManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author i5
@@ -13,8 +22,17 @@ public class sched extends javax.swing.JPanel {
     /**
      * Creates new form sched
      */
+    private Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     public sched() {
         initComponents();
+        populateJTable1();
+        populateJTable2();
+    }
+    private void establishConnection() {
+        con = ConnectionManager.getConnection();
     }
 
     /**
@@ -64,6 +82,8 @@ public class sched extends javax.swing.JPanel {
         jComboBox5 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jComboBox6 = new javax.swing.JComboBox<>();
         roundPanel2 = new jdev.swing.RoundPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -264,6 +284,18 @@ public class sched extends javax.swing.JPanel {
         });
 
         jButton1.setText("SUBMIT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
@@ -301,7 +333,10 @@ public class sched extends javax.swing.JPanel {
                                             .addComponent(jLabel6)
                                             .addGap(18, 18, 18)
                                             .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel5)
+                                        .addGroup(roundPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel5)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(roundPanel1Layout.createSequentialGroup()
                                             .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel4)
@@ -313,7 +348,8 @@ public class sched extends javax.swing.JPanel {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(jTextField1)
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jComboBox1, 0, 157, Short.MAX_VALUE)
+                                                .addComponent(jYearChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(roundPanel1Layout.createSequentialGroup()
                                             .addGap(14, 14, 14)
                                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -335,9 +371,13 @@ public class sched extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -356,7 +396,7 @@ public class sched extends javax.swing.JPanel {
                     .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -448,7 +488,198 @@ public class sched extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    // Assuming you have a method to establish a database connection
+    con = ConnectionManager.getConnection();
+
+    // Retrieve values from Swing components
+    String id = jTextField1.getText();
+    String month = (String) jComboBox1.getSelectedItem();
+    int year = jYearChooser1.getYear();
+    String restday = (String) jComboBox6.getSelectedItem();
+    String firstOff = (String) jComboBox2.getSelectedItem();
+    String secondOff = (String) jComboBox3.getSelectedItem();
+    String timeIn = (String) jComboBox4.getSelectedItem();
+    String timeOut = (String) jComboBox5.getSelectedItem();
+
+    try {
+        // Check if the employee exists in the emp_no table
+        PreparedStatement checkEmpStmt = con.prepareStatement("SELECT COUNT(*) FROM emp_info WHERE employeeID = ?");
+        checkEmpStmt.setString(1, id);
+        ResultSet empResultSet = checkEmpStmt.executeQuery();
+        empResultSet.next();
+        int empCount = empResultSet.getInt(1);
+        
+        if (empCount == 0) {
+            // Employee ID not found, show error message
+            JOptionPane.showMessageDialog(this, "Employee with ID " + id + " not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Check if the employee already has a schedule
+            PreparedStatement checkSchedStmt = con.prepareStatement("SELECT COUNT(*) FROM schedules WHERE id = ?");
+            checkSchedStmt.setString(1, id);
+            ResultSet schedResultSet = checkSchedStmt.executeQuery();
+            schedResultSet.next();
+            int schedCount = schedResultSet.getInt(1);
+            if (schedCount > 0) {
+                // Employee already has a schedule, show confirmation dialog
+                int option = JOptionPane.showConfirmDialog(this, "This employee already has a schedule. Do you want to update?", "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    // Construct the SQL UPDATE statement
+                    String updateSql = "UPDATE schedules SET month = ?, year = ?, restday = ?, first_off = ?, second_off = ?, time_in = ?, time_out = ? WHERE id = ?";
+                    
+                    // Create a PreparedStatement object to prevent SQL injection
+                    PreparedStatement updateStmt = con.prepareStatement(updateSql);
+
+                    // Set parameter values
+                    updateStmt.setString(1, month);
+                    updateStmt.setInt(2, year);
+                    updateStmt.setString(3, restday);
+                    updateStmt.setString(4, firstOff);
+                    updateStmt.setString(5, secondOff);
+                    updateStmt.setString(6, timeIn);
+                    updateStmt.setString(7, timeOut);
+                    updateStmt.setString(8, id);
+
+                    // Execute the UPDATE statement
+                    int rowsUpdated = updateStmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        JOptionPane.showMessageDialog(this, "Employee schedule was updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        populateJTable1();
+                        populateJTable2();
+                    }
+                }
+            } else {
+                // Construct the SQL INSERT statement
+                String sql = "INSERT INTO schedules (id, month, year, restday, first_off, second_off, time_in, time_out) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                // Create a PreparedStatement object to prevent SQL injection
+                PreparedStatement pstmt = con.prepareStatement(sql);
+
+                // Set parameter values
+                pstmt.setString(1, id);
+                pstmt.setString(2, month);
+                pstmt.setInt(3, year);
+                pstmt.setString(4, restday);
+                pstmt.setString(5, firstOff);
+                pstmt.setString(6, secondOff);
+                pstmt.setString(7, timeIn);
+                pstmt.setString(8, timeOut);
+
+                // Execute the INSERT statement
+                int rowsInserted = pstmt.executeUpdate();
+                if (rowsInserted > 0) {
+                    JOptionPane.showMessageDialog(this, "Employee new schedule was inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    populateJTable1();
+                    populateJTable2();
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
+    // Method to retrieve data from the schedules table and populate jTable1
+    private void populateJTable1() {
+        establishConnection();
+        try {
+            // SQL query to select all columns from the schedules table
+            String query = "SELECT * FROM schedules";
+
+            // Create a PreparedStatement object
+            PreparedStatement pstmt = con.prepareStatement(query);
+
+            // Execute the query and get the result set
+            ResultSet rs = pstmt.executeQuery();
+
+            // Create a DefaultTableModel to hold the data for jTable1
+            DefaultTableModel model = new DefaultTableModel();
+
+            // Add columns to the model
+            model.addColumn("ID");
+            model.addColumn("Month");
+            model.addColumn("Year");
+            model.addColumn("Restday");
+            model.addColumn("First Off");
+            model.addColumn("Second Off");
+            model.addColumn("Time In");
+            model.addColumn("Time Out");
+
+            // Iterate through the result set and add rows to the model
+            while (rs.next()) {
+                Object[] row = {
+                        rs.getString("id"),
+                        rs.getString("month"),
+                        rs.getInt("year"),
+                        rs.getString("restday"),
+                        rs.getString("first_off"),
+                        rs.getString("second_off"),
+                        rs.getString("time_in"),
+                        rs.getString("time_out")
+                };
+                model.addRow(row);
+            }
+
+            // Set the model for jTable1
+            jTable1.setModel(model);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // Method to retrieve data from the schedules table and populate jTable2
+    private void populateJTable2() {
+        establishConnection();
+        try {
+            // SQL query to select all columns from the schedules table
+            String query = "SELECT * FROM schedules";
+
+            // Create a PreparedStatement object
+            PreparedStatement pstmt = con.prepareStatement(query);
+
+            // Execute the query and get the result set
+            ResultSet rs = pstmt.executeQuery();
+
+            // Create a DefaultTableModel to hold the data for jTable1
+            DefaultTableModel model = new DefaultTableModel();
+
+            // Add columns to the model
+            model.addColumn("ID");
+            model.addColumn("Month");
+            model.addColumn("Year");
+            model.addColumn("Restday");
+            model.addColumn("First Off");
+            model.addColumn("Second Off");
+            model.addColumn("Time In");
+            model.addColumn("Time Out");
+
+            // Iterate through the result set and add rows to the model
+            while (rs.next()) {
+                Object[] row = {
+                        rs.getString("id"),
+                        rs.getString("month"),
+                        rs.getInt("year"),
+                        rs.getString("restday"),
+                        rs.getString("first_off"),
+                        rs.getString("second_off"),
+                        rs.getString("time_in"),
+                        rs.getString("time_out")
+                };
+                model.addRow(row);
+            }
+
+            // Set the model for jTable1
+            jTable2.setModel(model);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
@@ -465,6 +696,7 @@ public class sched extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel109;
@@ -489,6 +721,7 @@ public class sched extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField24;
+    private com.toedter.calendar.JYearChooser jYearChooser1;
     private jdev.swing.RoundPanel roundPanel1;
     private jdev.swing.RoundPanel roundPanel2;
     // End of variables declaration//GEN-END:variables

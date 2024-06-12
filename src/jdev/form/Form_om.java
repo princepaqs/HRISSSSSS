@@ -20,6 +20,7 @@ public class Form_om extends javax.swing.JPanel {
     public Form_om() {
         initComponents();
         init();
+        loadData();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -90,10 +91,12 @@ public class Form_om extends javax.swing.JPanel {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
             
-            rs = stmt.executeQuery("SELECT COUNT(*) as emp_count FROM emp_info");
+            rs = stmt.executeQuery("SELECT COUNT(EmployeeID) AS emp_count FROM dtr WHERE dtr.status=\"Day In\" AND DATE(dtr.timestamp)=CURRENT_DATE()");
+                        
             rs.next();
-            card5.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-    
+                        
+            card5.lbValues.setText(String.valueOf(rs.getInt("emp_count")));
+            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

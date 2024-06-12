@@ -5,7 +5,16 @@
  */
 package om;
 
-import hr.*;
+import hris.ConnectionManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,8 +25,25 @@ public class empcred extends javax.swing.JPanel {
     /**
      * Creates new form empcred
      */
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
+    
     public empcred() {
         initComponents();
+        loadData();
+        
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
     }
 
     /**
@@ -212,7 +238,226 @@ public class empcred extends javax.swing.JPanel {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+                // TODO add your handling code here:
+                searchData();
+    } 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+    int selectedRow = jTable2.getSelectedRow(); // Get the selected row index
 
+    if (selectedRow == -1) {
+        // No row is selected
+        JOptionPane.showMessageDialog(this, "Please select a row to update", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        Connection con = ConnectionManager.getConnection();
+        String query = "UPDATE emp_info SET emp_fname = ?, emp_lname = ?, emp_lob = ?, emp_email = ?, emp_supervisor = ?, emp_position = ? WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+
+        // Retrieve data from the selected row
+        String employeeID = model.getValueAt(selectedRow, 0).toString(); // Assuming EmployeeID is in the first column
+        String firstName = getStringValue(model.getValueAt(selectedRow, 1)); // Assuming First Name is in the second column
+        String lastName = getStringValue(model.getValueAt(selectedRow, 2)); // Assuming Last Name is in the third column
+        String companyEmail = getStringValue(model.getValueAt(selectedRow, 3)); // Assuming Company Email is in the fourth column
+        String LOB = getStringValue(model.getValueAt(selectedRow, 4)); // Assuming LOB is in the fifth column
+        String operationManager = getStringValue(model.getValueAt(selectedRow, 5)); // Assuming Operation Manager is in the sixth column
+        String position = getStringValue(model.getValueAt(selectedRow, 6)); // Assuming Position is in the seventh column
+
+        // Log retrieved data
+        System.out.println("Updating EmployeeID: " + employeeID);
+        System.out.println("First Name: " + firstName);
+        System.out.println("Last Name: " + lastName);
+        System.out.println("Company Email: " + companyEmail);
+        System.out.println("LOB: " + LOB);
+        System.out.println("Operation Manager: " + operationManager);
+        System.out.println("Position: " + position);
+
+        // Set parameters for the prepared statement
+        pstmt.setString(1, firstName);
+        pstmt.setString(2, lastName);
+        pstmt.setString(3, LOB);
+        pstmt.setString(4, companyEmail);
+        pstmt.setString(5, operationManager);
+        pstmt.setString(6, position);
+        pstmt.setString(7, employeeID);
+
+        // Execute the update
+        int rowsUpdated = pstmt.executeUpdate();
+        System.out.println("Rows updated: " + rowsUpdated);
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadData(); // Assuming this method reloads the data in the JTable
+        } else {
+            JOptionPane.showMessageDialog(this, "No rows were updated", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }   
+    
+    private String getStringValue(Object obj) {
+    if (obj != null) {
+        return obj.toString();
+    } else {
+        return ""; // or any default value you prefer
+    }
+}
+
+
+     // Method to clear text fields
+    private void clearFields() {
+        jTextField5.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jComboBox2.setSelectedIndex(0);
+    }
+    
+    // Method to update existing employee
+    private void updateEmployee() {
+        String employeeID = jTextField5.getText().trim();
+        String firstName = jTextField6.getText().trim();
+        String lastName = jTextField7.getText().trim();
+        String department = (String) jComboBox2.getSelectedItem();
+
+        try {
+            con = ConnectionManager.getConnection();
+            String query = "UPDATE emp_info SET emp_fname = ?, emp_lname = ?, emp_lob = ? WHERE EmployeeID = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, department);
+            pstmt.setString(4, employeeID);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Employee updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadData();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+      // Method to add mouse listener to jTable2
+    private void addTableListener() {
+        jTable2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int selectedRow = jTable2.getSelectedRow();
+                if (selectedRow != -1) {
+                    jTextField5.setText(jTable2.getValueAt(selectedRow, 0).toString());
+                    jTextField6.setText(jTable2.getValueAt(selectedRow, 1).toString());
+                    jTextField7.setText(jTable2.getValueAt(selectedRow, 2).toString());
+                    jComboBox2.setSelectedItem(jTable2.getValueAt(selectedRow, 4).toString());
+                }
+            }
+        });
+    }
+  
+    private void searchData() {
+    String employeeID = jTextField5.getText().trim(); // Assuming jTextField5 is for Employee ID
+    String firstName = jTextField6.getText().trim(); // Assuming jTextField6 is for First Name
+    String lastName = jTextField7.getText().trim(); // Assuming jTextField7 is for Last Name
+
+    try {
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
+
+        // Construct the SQL query based on the search criteria
+        String query = "SELECT * FROM emp_info WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
+
+        if (!employeeID.isEmpty()) {
+            query += " AND EmployeeID = '" + employeeID + "'";
+        }
+        if (!firstName.isEmpty()) {
+            query += " AND emp_fname LIKE '%" + firstName + "%'";
+        }
+        if (!lastName.isEmpty()) {
+            query += " AND emp_lname LIKE '%" + lastName + "%'";
+        }
+
+        rs = stmt.executeQuery(query);
+
+        // Clear existing table data
+        model.setRowCount(0);
+
+        boolean foundAgent = false; // Flag to check if any agents were found
+
+        // Add search results to the table model
+        while (rs.next()) {
+           
+
+            // Check if the position is "Agent"
+            if (rs.getString("emp_position").equals("Agent")||rs.getString("emp_position").equals("Operation Manager")) {
+                foundAgent = true; // Set flag to true if an agent is found
+            }
+            if(rs.getString("emp_position").equals("Agent")||rs.getString("emp_position").equals("Operation Manager")){
+                 model.addRow(new Object[]{
+                rs.getInt("EmployeeID"),
+                rs.getString("emp_fname"),
+                rs.getString("emp_lname"),
+                rs.getString("emp_email"),
+                rs.getString("emp_lob"),
+                rs.getString("emp_supervisor"),
+                rs.getString("emp_position"),
+                rs.getString("emp_civilStatus")
+            });
+            }
+
+        }
+
+        // If no agents were found, show a JOptionPane
+        if (!foundAgent) {
+            JOptionPane.showMessageDialog(this, "No Agents Found", "Search Result", JOptionPane.INFORMATION_MESSAGE);
+            loadData();
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
+    
+     private void loadData() {
+        try {
+            con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
+
+            rs = stmt.executeQuery("SELECT * from emp_info");
+
+            // Create a DefaultTableModel with column names
+            String[] columnNames = {"Employee Number", "First Name", "Last Name", "Company email", "LOB", "Operation Manager", "Position", "Status"};
+            model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+    // Add data to the table model
+    if (rs.getString("emp_position").equals("Operation Manager")) {
+        model.addRow(new Object[]{
+            rs.getInt("EmployeeID"),
+            rs.getString("emp_fname"),
+            rs.getString("emp_lname"),
+            rs.getString("emp_email"),
+            rs.getString("emp_lob"),
+            rs.getString("emp_supervisor"),
+            rs.getString("emp_position"), // corrected typo here
+            rs.getString("emp_civilStatus")
+        });
+    }
+
+            }
+
+            // Once all data is loaded, set the model to your JTable
+            jTable2.setModel(model);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;

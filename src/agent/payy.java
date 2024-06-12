@@ -218,21 +218,21 @@ public class payy extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtDate4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate4ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDate4ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     private void txtDate5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDate5ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void txtDate4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDate4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDate4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,17 +242,13 @@ public class payy extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField txtDate3;
     private javax.swing.JTextField txtDate4;
     private javax.swing.JTextField txtDate5;
     // End of variables declaration//GEN-END:variables

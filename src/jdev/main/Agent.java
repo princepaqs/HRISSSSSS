@@ -27,7 +27,7 @@ public class Agent extends javax.swing.JFrame {
                 
              //payroll
                 else if (index == 1 && indexSubMenu == 0) {
-                        showForm(new payy());
+                        showForm(new payr());
                 }
              //
                 else if (index == 2 && indexSubMenu == 0) {

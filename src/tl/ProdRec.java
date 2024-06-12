@@ -260,7 +260,6 @@ public class ProdRec extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try {
         String fname = name.getText();
         String ids = id.getText();
@@ -272,7 +271,7 @@ public class ProdRec extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // Parse the productivity score to a double
         int productivityScore;
         int prodInput = Integer.parseInt(prod_score.getText());
@@ -300,11 +299,40 @@ public class ProdRec extends javax.swing.JPanel {
             productivityScore = 0; // Default value or handle as required
         }
 
-        // Prepare the INSERT query
+        // Check if the ID already exists in the database
         Connection con = ConnectionManager.getConnection();
-        String query = "INSERT INTO productivity (id, name, productivity, date) VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = con.prepareStatement(query);
+        String checkQuery = "SELECT * FROM productivity WHERE id = ?";
+        PreparedStatement checkStmt = con.prepareStatement(checkQuery);
+        checkStmt.setString(1, ids);
+        ResultSet rs = checkStmt.executeQuery();
+        
+        if (rs.next()) {
+            // If the ID exists, ask for confirmation to update the productivity score
+            int option = JOptionPane.showConfirmDialog(this, "The Employee has Product Score. Do you want to update?", "Update Productivity", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                // If yes, update the productivity score
+                String updateQuery = "UPDATE productivity SET productivity = ? WHERE id = ?";
+                PreparedStatement updateStmt = con.prepareStatement(updateQuery);
+                updateStmt.setInt(1, productivityScore);
+                updateStmt.setString(2, ids);
+                int rowsUpdated = updateStmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "Productivity data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    loadData();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to update productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                updateStmt.close();
+            }
+            // If no, cancel
+            return;
+        }
+        
+        // If ID doesn't exist, proceed with insertion
         String date = jDateChooser1.getDate().toString();
+        // Prepare the INSERT query
+        String insertQuery = "INSERT INTO productivity (id, name, productivity, date) VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = con.prepareStatement(insertQuery);
         // Set the values for the parameters in the prepared statement
         pstmt.setString(1, ids);
         pstmt.setString(2, fname);
@@ -316,17 +344,17 @@ public class ProdRec extends javax.swing.JPanel {
         if (rowsInserted > 0) {
             // Display a success message if the insertion was successful
             JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            loadData();
         } else {
             // Display an error message if the insertion failed
             JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        loadData();
+        loadData(); // Refresh data in the table
     } catch (Exception e) {
         // Handle any exceptions that occur during the insertion process
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-        
+    } 
     }//GEN-LAST:event_jButton1ActionPerformed
     
      private void loadData() {

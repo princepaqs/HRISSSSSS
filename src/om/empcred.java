@@ -33,7 +33,6 @@ public class empcred extends javax.swing.JPanel {
     public empcred() {
         initComponents();
         loadData();
-
     }
 
     /**
@@ -52,8 +51,6 @@ public class empcred extends javax.swing.JPanel {
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
         jLabel65 = new javax.swing.JLabel();
-        jLabel77 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -73,13 +70,19 @@ public class empcred extends javax.swing.JPanel {
 
         jLabel65.setText("Last Name:");
 
-        jLabel77.setText("Department:");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButton6.setText("SEARCH");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("CLEAR");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("UPDATE RECORD");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -151,17 +154,10 @@ public class empcred extends javax.swing.JPanel {
                                 .addComponent(jLabel63)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel65)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField7))
-                            .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(jLabel77)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel65)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
@@ -183,8 +179,6 @@ public class empcred extends javax.swing.JPanel {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel63)
-                        .addComponent(jLabel77)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton6)
@@ -239,6 +233,49 @@ public class empcred extends javax.swing.JPanel {
     
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
    // TODO add your handling code here:
+   //remove the selected row
+   int selectedRow = jTable2.getSelectedRow();
+    
+    // Check if any row is selected
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a row to remove", "Warning", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    // Retrieve the EmployeeID of the selected row
+    int employeeID = (int) jTable2.getValueAt(selectedRow, 0);
+    
+    try {
+        // Establish database connection
+        Connection con = ConnectionManager.getConnection();
+        
+        // Prepare the SQL delete statement
+        String deleteQuery = "DELETE FROM cred WHERE EmployeeID = ?";
+        PreparedStatement pstmt = con.prepareStatement(deleteQuery);
+        
+        // Set the parameter for the EmployeeID
+        pstmt.setInt(1, employeeID);
+        
+        // Execute the delete statement
+        int rowsDeleted = pstmt.executeUpdate();
+        
+        // Close resources
+        pstmt.close();
+        con.close();
+        
+        // Check if any rows were deleted
+        if (rowsDeleted > 0) {
+            JOptionPane.showMessageDialog(this, "Row removed successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            
+            // Reload the data in jTable2
+            loadData();
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to remove row", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -291,10 +328,17 @@ public class empcred extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Error updating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_jButton8ActionPerformed
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-                // TODO add your handling code here:
-                searchData();
-    } 
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        searchData();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        clearFields(); 
+    }//GEN-LAST:event_jButton7ActionPerformed
+ 
  
 
 
@@ -303,7 +347,6 @@ public class empcred extends javax.swing.JPanel {
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
-        jComboBox2.setSelectedIndex(0);
     }
     
     // Method to update existing employee
@@ -318,7 +361,6 @@ public class empcred extends javax.swing.JPanel {
                     jTextField5.setText(jTable2.getValueAt(selectedRow, 0).toString());
                     jTextField6.setText(jTable2.getValueAt(selectedRow, 1).toString());
                     jTextField7.setText(jTable2.getValueAt(selectedRow, 2).toString());
-                    jComboBox2.setSelectedItem(jTable2.getValueAt(selectedRow, 4).toString());
                 }
             }
         });
@@ -350,8 +392,6 @@ public class empcred extends javax.swing.JPanel {
 
         // Clear existing table data
         model.setRowCount(0);
-
-        boolean foundAgent = false; // Flag to check if any agents were found
 
         // Add search results to the table model
         while (rs.next()) {
@@ -414,11 +454,9 @@ public class empcred extends javax.swing.JPanel {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel77;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane15;

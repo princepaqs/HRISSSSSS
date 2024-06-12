@@ -9,6 +9,16 @@ package hr;
  *
  * @author i5
  */
+import hris.ConnectionManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class payr extends javax.swing.JPanel {
 
     /**
@@ -16,7 +26,17 @@ public class payr extends javax.swing.JPanel {
      */
     public payr() {
         initComponents();
+        jButton13.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            insertDataIntoPayroll();
+        }
+    });
     }
+        Connection con;
+    Statement stmt;
+    PreparedStatement pst;
+    ResultSet rs;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,6 +74,16 @@ public class payr extends javax.swing.JPanel {
         jTextField11 = new javax.swing.JTextField();
         jTextField12 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        jTextField10 = new javax.swing.JTextField();
+        jTextField14 = new javax.swing.JTextField();
+        jTextField15 = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -79,7 +109,7 @@ public class payr extends javax.swing.JPanel {
         jPanel10.add(jLabel6);
         jLabel6.setBounds(10, 11, 100, 16);
         jPanel10.add(jTextField1);
-        jTextField1.setBounds(113, 8, 140, 22);
+        jTextField1.setBounds(120, 10, 140, 20);
 
         jLabel7.setText("Employee Name:");
         jPanel10.add(jLabel7);
@@ -91,15 +121,15 @@ public class payr extends javax.swing.JPanel {
 
         jLabel10.setText("Email:");
         jPanel10.add(jLabel10);
-        jLabel10.setBounds(10, 54, 32, 16);
+        jLabel10.setBounds(10, 54, 50, 16);
 
         jLabel11.setText("Job Status:");
         jPanel10.add(jLabel11);
-        jLabel11.setBounds(552, 14, 56, 16);
+        jLabel11.setBounds(552, 14, 70, 16);
 
         jLabel17.setText("SSS:");
         jPanel10.add(jLabel17);
-        jLabel17.setBounds(779, 14, 21, 16);
+        jLabel17.setBounds(779, 14, 30, 16);
 
         jLabel18.setText("Phil-health:");
         jPanel10.add(jLabel18);
@@ -115,11 +145,11 @@ public class payr extends javax.swing.JPanel {
 
         jLabel21.setText("Grade:");
         jPanel10.add(jLabel21);
-        jLabel21.setBounds(263, 34, 34, 16);
+        jLabel21.setBounds(263, 34, 70, 16);
 
         jLabel22.setText("Postal Code:");
         jPanel10.add(jLabel22);
-        jLabel22.setBounds(552, 34, 66, 16);
+        jLabel22.setBounds(540, 30, 80, 16);
         jPanel10.add(jSeparator3);
         jSeparator3.setBounds(10, 469, 1060, 10);
 
@@ -188,6 +218,26 @@ public class payr extends javax.swing.JPanel {
         jTextField13.setEditable(false);
         jPanel10.add(jTextField13);
         jTextField13.setBounds(741, 441, 233, 22);
+        jPanel10.add(jTextField3);
+        jTextField3.setBounds(120, 30, 140, 20);
+        jPanel10.add(jTextField4);
+        jTextField4.setBounds(120, 50, 140, 20);
+        jPanel10.add(jTextField5);
+        jTextField5.setBounds(370, 10, 140, 20);
+        jPanel10.add(jTextField6);
+        jTextField6.setBounds(370, 30, 140, 20);
+        jPanel10.add(jTextField7);
+        jTextField7.setBounds(370, 50, 140, 20);
+        jPanel10.add(jTextField8);
+        jTextField8.setBounds(630, 10, 140, 20);
+        jPanel10.add(jTextField9);
+        jTextField9.setBounds(630, 30, 140, 20);
+        jPanel10.add(jTextField10);
+        jTextField10.setBounds(850, 10, 140, 20);
+        jPanel10.add(jTextField14);
+        jTextField14.setBounds(850, 30, 140, 20);
+        jPanel10.add(jTextField15);
+        jTextField15.setBounds(850, 50, 140, 20);
 
         jTabbedPane1.addTab("Payroll", jPanel10);
 
@@ -362,7 +412,38 @@ public class payr extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    private void insertDataIntoPayroll() {
+    try {
+        con = ConnectionManager.getConnection();
+        
+        String sql = "INSERT INTO payroll (ref_no, emp_no, management, email, emp_name, grade, department, job_status, postal_code, sss, phil_health, pag_ibig) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        pst = con.prepareStatement(sql);
 
+        // Set values from JTextFields
+        pst.setString(1, jTextField13.getText()); // ref_no
+        pst.setInt(2, Integer.parseInt(jTextField1.getText())); // emp_no
+        pst.setString(3, jTextField3.getText()); // management
+        pst.setString(4, jTextField4.getText()); // email
+        pst.setString(5, jTextField5.getText()); // emp_name
+        pst.setString(6, jTextField6.getText()); // grade
+        pst.setString(7, jTextField7.getText()); // department
+        pst.setString(8, jTextField8.getText()); // job_status
+        pst.setString(9, jTextField9.getText()); // postal_code
+        pst.setString(10, jTextField10.getText()); // sss
+        pst.setString(11, jTextField14.getText()); // phil_health
+        pst.setString(12, jTextField15.getText()); // pag_ibig
+
+        // Execute the INSERT statement
+        int rowsInserted = pst.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("A new row has been inserted into the payroll table.");
+        }
+    } catch (SQLException e) {
+        System.out.println("Error inserting data into payroll table: " + e.getMessage());
+    }
+}
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
@@ -399,10 +480,20 @@ public class payr extends javax.swing.JPanel {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
+    private javax.swing.JTextField jTextField14;
+    private javax.swing.JTextField jTextField15;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField txtDate3;
     private javax.swing.JTextField txtDate4;
     // End of variables declaration//GEN-END:variables

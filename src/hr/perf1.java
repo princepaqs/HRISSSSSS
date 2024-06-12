@@ -5,6 +5,13 @@
  */
 package hr;
 
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author i5
@@ -16,8 +23,12 @@ public class perf1 extends javax.swing.JPanel {
      */
     public perf1() {
         initComponents();
+        loadData();
     }
-    
+        Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     perfkc kc = new perfkc();
     perfatt att = new perfatt();
     perfqa qa = new perfqa();
@@ -160,7 +171,35 @@ public class perf1 extends javax.swing.JPanel {
                 .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
+  private void loadData() {
+    try (
+           Connection con = ConnectionManager.getConnection();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT cred.EmployeeID, performance.name AS Name, cred.LOB, cred.OM AS 'Operation Manager', performance.Quality AS 'QA', performance.knowledge_checker AS 'Knowledge Check', productivity.productivity AS 'Productivity' FROM cred INNER JOIN performance ON cred.EmployeeID = performance.EmployeeID INNER JOIN productivity ON cred.EmployeeID = productivity.id");
+    ) {
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"ID", "Name", "LOB", "Operation Manager", "QA Score", "Productivity", "Knowledge Check"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
+        // Iterate over the ResultSet and add each row to the model
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("EmployeeID"),
+                rs.getString("Name"),
+                rs.getString("LOB"),
+                rs.getString("Operation Manager"),
+                rs.getDouble("QA"),
+                rs.getDouble("Productivity"),
+                rs.getInt("Knowledge Check")
+            });
+        }
+
+        // Set the model to the JTable
+        jTable10.setModel(model);
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         
         String value = jComboBox1.getSelectedItem().toString();

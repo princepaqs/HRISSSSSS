@@ -352,7 +352,7 @@ public class empcred extends javax.swing.JPanel {
         stmt = con.createStatement();
 
         // Construct the SQL query based on the search criteria
-        String query = "SELECT * FROM emp_info WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
+        String query = "SELECT * FROM cred WHERE 1=1"; // 1=1 is used as a placeholder for dynamic conditions
 
         if (!employeeID.isEmpty()) {
             query += " AND EmployeeID = '" + employeeID + "'";
@@ -376,19 +376,19 @@ public class empcred extends javax.swing.JPanel {
            
 
             // Check if the position is "Agent"
-            if (rs.getString("emp_position").equals("Agent")) {
+            if (rs.getString("Position").equals("Agent")) {
                 foundAgent = true; // Set flag to true if an agent is found
             }
-            if(rs.getString("emp_position").equals("Agent")){
+            if(rs.getString("Position").equals("Agent")){
                  model.addRow(new Object[]{
-                rs.getInt("EmployeeID"),
-                rs.getString("emp_fname"),
-                rs.getString("emp_lname"),
-                rs.getString("emp_email"),
-                rs.getString("emp_lob"),
-                rs.getString("emp_supervisor"),
-                rs.getString("emp_position"),
-                rs.getString("emp_civilStatus")
+                    rs.getInt("EmployeeID"),
+                    rs.getString("emp_fname"),
+                    rs.getString("emp_lname"),
+                    rs.getString("cEmail"),
+                    rs.getString("LOB"),
+                    rs.getString("OM"),
+                    rs.getString("Position"),
+                    rs.getString("Status")
             });
             }
 
@@ -415,7 +415,7 @@ public class empcred extends javax.swing.JPanel {
 
  
             
-            rs = stmt.executeQuery("SELECT * from cred");
+            rs = stmt.executeQuery("SELECT * from cred WHERE Position = 'Agent'");
 
             // Create a DefaultTableModel with column names
             String[] columnNames = {"Employee Number", "First Name", "Last Name", "Company email", "LOB", "Operation Manager", "Position", "Status"};

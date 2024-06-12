@@ -139,12 +139,12 @@ public class emp1 extends javax.swing.JPanel {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
 
-            rs = stmt.executeQuery("SELECT EmployeeID, CONCAT(emp_lname, \", \", emp_fname) AS emp_name FROM emp_info WHERE emp_department=\"Team Leader\"");
+            rs = stmt.executeQuery("SELECT emp_lname, CONCAT(emp_lname, \", \", emp_fname) AS emp_name FROM emp_info WHERE emp_department=\"Team Leader\"");
             
             jComboBox3.addItem("No Team Leader");
             
             while(rs.next()) {
-                jComboBox3.addItem(rs.getString("EmployeeID"));
+                jComboBox3.addItem(rs.getString("emp_lname"));
             }
             
             con.close();

@@ -41,7 +41,7 @@ public class Qa extends javax.swing.JFrame {
                 
              //
                 else if (index == 3 && indexSubMenu == 0) {
-                        showForm(new sched());
+                        showForm(new tl.sched());
                 }
                 
                 // PERFORMANCE

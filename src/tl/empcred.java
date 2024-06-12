@@ -410,7 +410,11 @@ public class empcred extends javax.swing.JPanel {
         try {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
+            
+             rs = stmt.executeQuery("SELECT COUNT(DISTINCT EmployeeID) AS dayInCount FROM dtr WHERE status = 'Day In' AND DATE(timestamp) = CURRENT_DATE()");
 
+ 
+            
             rs = stmt.executeQuery("SELECT * from cred");
 
             // Create a DefaultTableModel with column names
@@ -437,6 +441,7 @@ public class empcred extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
+     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;

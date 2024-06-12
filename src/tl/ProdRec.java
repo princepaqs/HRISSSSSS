@@ -4,7 +4,17 @@
  */
 package tl;
 
+import hris.ConnectionManager;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,8 +25,14 @@ public class ProdRec extends javax.swing.JPanel {
     /**
      * Creates new form ProdRec
      */
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     public ProdRec() {
         initComponents();
+        jDateChooser1.setDate(new Date());
+        loadData();
     }
 
     /**
@@ -243,9 +259,80 @@ public class ProdRec extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+        String fname = name.getText();
+        String ids = id.getText();
+        String prodString = prod_score.getText();
+        
+        // Check if the fields are not empty
+        if (fname.isEmpty() || ids.isEmpty() || prodString.isEmpty()) {
+            // Display an error message if any of the fields is empty
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Parse the productivity score to a double
+        int productivityScore = Integer.parseInt(prodString);
+        
+        // Prepare the INSERT query
+        Connection con = ConnectionManager.getConnection();
+        String query = "INSERT INTO productivity (id, name, productivity, date) VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        String date = jDateChooser1.getDate().toString();
+        // Set the values for the parameters in the prepared statement
+        pstmt.setString(1, ids);
+        pstmt.setString(2, fname);
+        pstmt.setInt(3, productivityScore);
+        pstmt.setString(4, date);
+        // Execute the INSERT query
+        int rowsInserted = pstmt.executeUpdate();
+        
+        if (rowsInserted > 0) {
+            // Display a success message if the insertion was successful
+            JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Display an error message if the insertion failed
+            JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        loadData();
+    } catch (Exception e) {
+        // Handle any exceptions that occur during the insertion process
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+     private void loadData() {
+        try {
+            con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
 
+            rs = stmt.executeQuery("SELECT * from productivity");
+
+            // Create a DefaultTableModel with column names
+            String[] columnNames = {"Date", "ID", "Name", "Productivity", "Updated By"};
+            model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+        model.addRow(new Object[]{
+            rs.getString("date"),
+            rs.getInt("id"),
+            rs.getString("name"),
+            rs.getInt("productivity"),
+            "Current User"
+        });
+            }
+
+            // Once all data is loaded, set the model to your JTable
+            jTable10.setModel(model);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nameActionPerformed

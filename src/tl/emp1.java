@@ -46,8 +46,7 @@ public class emp1 extends javax.swing.JPanel {
         initComponents();
         
         jTabbedPane2.setEnabledAt(1, false);
-        jTabbedPane2.setEnabledAt(2, false);
-        jTabbedPane2.setEnabledAt(3, false);
+        jTabbedPane2.setEnabledAt(2, false);   
         jDateChooser1.setDateFormatString("yyyy-MM-dd");
         
         jTabbedPane2.addChangeListener(new ChangeListener() {
@@ -56,8 +55,6 @@ public class emp1 extends javax.swing.JPanel {
                     populateEmployeeInformation();
                 } else if(jTabbedPane2.getSelectedIndex() == 2) {
                     populateDTR();
-                } else if(jTabbedPane2.getSelectedIndex() == 3) {
-                    populateSalary();
                 }
             }
         });
@@ -101,8 +98,7 @@ public class emp1 extends javax.swing.JPanel {
                     User.setEmployeeTracked(value);
                     
                     jTabbedPane2.setEnabledAt(1, true);
-                    jTabbedPane2.setEnabledAt(2, true);
-                    jTabbedPane2.setEnabledAt(3, true);   
+                    jTabbedPane2.setEnabledAt(2, true); 
                     
                     jTabbedPane2.setSelectedIndex(1);
                 }
@@ -268,54 +264,7 @@ public class emp1 extends javax.swing.JPanel {
         }                        
     }
     
-    public void populateSalary() {
-        try {
-            con = ConnectionManager.getConnection();
-
-            pst = con.prepareStatement("SELECT emp_info.*, salary.* FROM emp_info LEFT JOIN salary ON emp_info.EmployeeID=salary.emp_id WHERE EmployeeID=?");
-            
-            pst.setString(1, User.getEmployeeTracked());
-            
-            rs = pst.executeQuery();
-            
-            rs.next();
-            
-            // SALARY INFO
-            jTextField13.setText(rs.getString("basic_pay"));
-            jTextField14.setText(rs.getString("sss"));
-            jTextField15.setText(rs.getString("pagibig"));
-            jTextField18.setText(rs.getString("philhealth"));
-            jTextField20.setText(rs.getString("tax"));
-            jCheckBox1.setSelected(rs.getInt("appraisal") == 1);
-            
-            // Get Payslip
-            pst = con.prepareStatement("SELECT * FROM payroll WHERE emp_id=?");
-            
-            pst.setInt(1, Integer.parseInt(User.getEmployeeTracked()));
-            
-            rs = pst.executeQuery();
-            
-            model = (DefaultTableModel) jTable4.getModel();
-            model.setRowCount(0);
-            
-            while(rs.next()) {
-                int ref = rs.getInt("payroll_id");
-                int emp_id = rs.getInt("emp_id");
-                String period = rs.getString("payroll_period");
-                float net_pay = rs.getFloat("net_pay");
-                //object docu = rs.getObject("docu");
-                
-                Object data[] = {ref, emp_id, period, net_pay};
-                model.addRow(data);
-            }
-            
-
-            con.close();
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+   
     
     private void disableAllFields() {
         jButton3.setEnabled(false);

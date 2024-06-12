@@ -28,6 +28,7 @@ public class ProdRec extends javax.swing.JPanel {
     Statement stmt;
     ResultSet rs;
     DefaultTableModel model;
+    public String attendanceScore = "";
     public ProdRec() {
         initComponents();
         loadData();
@@ -93,6 +94,12 @@ public class ProdRec extends javax.swing.JPanel {
 
         jLabel5.setText("Transaction Quality Score:");
 
+        quality_score.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quality_scoreActionPerformed(evt);
+            }
+        });
+
         qa_id.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 qa_idKeyReleased(evt);
@@ -142,7 +149,7 @@ public class ProdRec extends javax.swing.JPanel {
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
@@ -209,7 +216,9 @@ public class ProdRec extends javax.swing.JPanel {
         roundPanel2.setLayout(roundPanel2Layout);
         roundPanel2Layout.setHorizontalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 897, Short.MAX_VALUE)
+            .addGroup(roundPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 922, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,10 +333,13 @@ public class ProdRec extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(roundPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
@@ -350,7 +362,7 @@ public class ProdRec extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 3, Short.MAX_VALUE))
+                .addGap(0, 67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,72 +373,105 @@ public class ProdRec extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                    // TODO add your handling code here:
            try {
-    String fname = qa_name.getText();
-    String ids = qa_id.getText();
-    String qascore = quality_score.getText();
-    
-    // Check if the fields are not empty
-    if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
-        // Display an error message if any of the fields is empty
-        JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    // Parse the productivity score to a double
-    double productivityScore = Double.parseDouble(qascore);
-    
-    // Prepare the INSERT or UPDATE query
-    Connection con = ConnectionManager.getConnection();
-    String queryCheck = "SELECT * FROM performance WHERE EmployeeID = ?";
-    PreparedStatement pstmtCheck = con.prepareStatement(queryCheck);
-    pstmtCheck.setString(1, ids);
-    ResultSet rsCheck = pstmtCheck.executeQuery();
-    
-    if (rsCheck.next()) {
-        // If the ID already exists, perform an update operation
-        String queryUpdate = "UPDATE performance SET Quality = ?, name = ?, date = ? WHERE EmployeeID = ?";
-        PreparedStatement pstmtUpdate = con.prepareStatement(queryUpdate);
-        String date = qa_date.getDate().toString();
-        pstmtUpdate.setDouble(1, productivityScore);
-        pstmtUpdate.setString(2, fname);
-        pstmtUpdate.setString(3, date);
-        pstmtUpdate.setString(4, ids);
-        int rowsUpdated = pstmtUpdate.executeUpdate();
-        
-        if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(this, "Productivity data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to update productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+        String fname = qa_name.getText();
+        String ids = qa_id.getText();
+        String qascore = quality_score.getText();
+
+        // Check if the fields are not empty
+        if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
+            // Display an error message if any of the fields is empty
+            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-    } else {
-        // If the ID doesn't exist, perform an insert operation
-        String queryInsert = "INSERT INTO performance (EmployeeID, Quality, name, date, knowledge_checker, Perf, Attdnce, Overall) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement pstmtInsert = con.prepareStatement(queryInsert);
-        String date = qa_date.getDate().toString();
-        pstmtInsert.setString(1, ids);
-        pstmtInsert.setDouble(2, productivityScore);
-        pstmtInsert.setString(3, fname);
-        pstmtInsert.setString(4, date);
-        pstmtInsert.setString(5, null);
-        pstmtInsert.setString(6, null);
-        pstmtInsert.setString(7, null);
-        pstmtInsert.setString(8, null);
-        int rowsInserted = pstmtInsert.executeUpdate();
-        
-        if (rowsInserted > 0) {
-            JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+
+        // Determine the productivity score based on the quality score
+        double productivityScore;
+        switch (qascore) {
+            case "5":
+                productivityScore = 120;
+                break;
+            case "4":
+                productivityScore = 96;
+                break;
+            case "3":
+                productivityScore = 72;
+                break;
+            case "2":
+                productivityScore = 48;
+                break;
+            case "1":
+                productivityScore = 24;
+                break;
+            case "1.5":
+                productivityScore = 36;
+                break;
+            case "2.5":
+                productivityScore = 60;
+                break;
+            case "3.5":
+                productivityScore = 84;
+                break;
+            case "4.5":
+                productivityScore = 108;
+                break;
+            default:
+                // Handle other cases if needed
+                productivityScore = 0;
+                break;
         }
+
+        // Prepare the INSERT or UPDATE query
+        Connection con = ConnectionManager.getConnection();
+        String queryCheck = "SELECT * FROM performance WHERE EmployeeID = ?";
+        PreparedStatement pstmtCheck = con.prepareStatement(queryCheck);
+        pstmtCheck.setString(1, ids);
+        ResultSet rsCheck = pstmtCheck.executeQuery();
+ 
+        if (rsCheck.next()) {
+            // If the ID already exists, perform an update operation
+            String queryUpdate = "UPDATE performance SET Quality = ?, name = ?, date = ?, Attdnce = ? WHERE EmployeeID = ?";
+            PreparedStatement pstmtUpdate = con.prepareStatement(queryUpdate);
+            String date = qa_date.getDate().toString();
+            pstmtUpdate.setDouble(1, productivityScore);
+            pstmtUpdate.setString(2, fname);
+            pstmtUpdate.setString(3, date);
+            pstmtUpdate.setString(5, ids);
+            pstmtUpdate.setDouble(4, Double.parseDouble(attendanceScore));
+            int rowsUpdated = pstmtUpdate.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Productivity data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // If the ID doesn't exist, perform an insert operation
+            String queryInsert = "INSERT INTO performance (EmployeeID, Quality, name, date, knowledge_checker, Perf, Attdnce, Overall) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmtInsert = con.prepareStatement(queryInsert);
+            String date = qa_date.getDate().toString();
+            pstmtInsert.setString(1, ids);
+            pstmtInsert.setDouble(2, productivityScore);
+            pstmtInsert.setString(3, fname);
+            pstmtInsert.setString(4, date);
+            pstmtInsert.setString(5, kc_score.getText());
+            pstmtInsert.setString(6, null);
+            pstmtInsert.setString(7, null);
+            pstmtInsert.setDouble(8, Double.parseDouble(attendanceScore));
+            int rowsInserted = pstmtInsert.executeUpdate();
+
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        loadData();
+    } catch (Exception e) {
+        // Handle any exceptions that occur during the operation
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
-    loadData();
-} catch (Exception e) {
-    // Handle any exceptions that occur during the operation
-    e.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void loadData() {
@@ -444,8 +489,8 @@ public class ProdRec extends javax.swing.JPanel {
                 rs.getString("date"),
                 rs.getInt("EmployeeID"),
                 rs.getString("name"),
-                rs.getDouble("Quality"),
-                rs.getInt("knowledge_checker"),
+                rs.getDouble("Quality") + "%",
+                rs.getInt("knowledge_checker") + "%",
                 "Current User"
             });
         }
@@ -456,50 +501,99 @@ public class ProdRec extends javax.swing.JPanel {
         ex.printStackTrace();
     }
 }
+ private int getEmployeeAbsences(int employeeId) {
+            int absences = 0;
 
+            try {
+                con = ConnectionManager.getConnection();
+                String query = "SELECT DATE(timestamp) as date, COUNT(CASE WHEN status = 'Day In' THEN 1 END) as day_in_count, "
+                             + "COUNT(CASE WHEN status = 'Day Out' THEN 1 END) as day_out_count "
+                             + "FROM dtr WHERE EmployeeID = ? "
+                             + "GROUP BY DATE(timestamp)";
+
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setInt(1, employeeId);
+
+                rs = pst.executeQuery();
+
+                while (rs.next()) {
+                    int dayInCount = rs.getInt("day_in_count");
+                    int dayOutCount = rs.getInt("day_out_count");
+
+                    // Consider it an absence if any day lacks either a "Day In" or "Day Out" entry
+                    if (dayInCount == 0 || dayOutCount == 0) {
+                        absences++;
+                    }
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }  
+            return absences;
+        }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
                  // TODO add your handling code here:
-                        try {
-        String fname = kc_name.getText();
-        String ids = kc_id.getText();
-        String qascore = kc_score.getText();
-        
-        // Check if the fields are not empty
-        if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
-            // Display an error message if any of the fields is empty
-            JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Parse the productivity score to a double
-        int productivityScore = Integer.parseInt(qascore);
-        
-        // Prepare the INSERT query
-        Connection con = ConnectionManager.getConnection();
-        String query = "UPDATE performance SET knowledge_checker = ? WHERE EmployeeID = ?;";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        String date = kc_date.getDate().toString();
-        // Set the values for the parameters in the prepared statement
-        pstmt.setInt(1, productivityScore);
-        pstmt.setInt(2, Integer.parseInt(ids));
-
-        // Execute the INSERT query
-        int rowsInserted = pstmt.executeUpdate();
-        
-        if (rowsInserted > 0) {
-            // Display a success message if the insertion was successful
-            JOptionPane.showMessageDialog(this, "Productivity data inserted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            // Display an error message if the insertion failed
-            JOptionPane.showMessageDialog(this, "Failed to insert productivity data", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        loadData();
-    } catch (Exception e) {
-        // Handle any exceptions that occur during the insertion process
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+       try {
+    String fname = kc_name.getText();
+    String ids = kc_id.getText();
+    String qascore = kc_score.getText();
+    
+    // Check if the fields are not empty
+    if (fname.isEmpty() || ids.isEmpty() || qascore.isEmpty()) {
+        // Display an error message if any of the fields is empty
+        JOptionPane.showMessageDialog(this, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+    
+    // Determine the productivity score based on the knowledge checker score
+    int productivityScore;
+    switch (qascore) {
+        case "5":
+            productivityScore = 120;
+            break;
+        case "4":
+            productivityScore = 96;
+            break;
+        case "3":
+            productivityScore = 72;
+            break;
+        case "2":
+            productivityScore = 48;
+            break;
+        case "1":
+            productivityScore = 24;
+            break;
+        default:
+            // Handle other cases if needed
+            productivityScore = 0;
+            break;
+    }
+    
+    // Prepare the UPDATE query
+    Connection con = ConnectionManager.getConnection();
+    String query = "UPDATE performance SET knowledge_checker = ? WHERE EmployeeID = ?";
+    PreparedStatement pstmt = con.prepareStatement(query);
+    pstmt.setInt(1, productivityScore);
+    pstmt.setInt(2, Integer.parseInt(ids));
+
+    // Execute the UPDATE query
+    int rowsUpdated = pstmt.executeUpdate();
+    
+    if (rowsUpdated > 0) {
+        // Display a success message if the update was successful
+        JOptionPane.showMessageDialog(this, "Productivity data updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        // Display an error message if the update failed
+        JOptionPane.showMessageDialog(this, "Failed to update productivity data", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    loadData();
+} catch (Exception e) {
+    // Handle any exceptions that occur during the update process
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void qa_idKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qa_idKeyTyped
@@ -514,6 +608,8 @@ public class ProdRec extends javax.swing.JPanel {
                 qa_name.setText("");
                 quality_score.setText("");
             }
+
+        handleIDKeyReleased(id);
             getEmployeeByID(id);        // TODO add your handling code here:   
     }//GEN-LAST:event_qa_idKeyReleased
 
@@ -528,6 +624,33 @@ public class ProdRec extends javax.swing.JPanel {
             getEmployeeByID_KC(id);  
     }//GEN-LAST:event_kc_idKeyReleased
 
+    private void quality_scoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quality_scoreActionPerformed
+          
+    }//GEN-LAST:event_quality_scoreActionPerformed
+         private void handleIDKeyReleased(String id) {
+    if (!id.isEmpty()) {
+        try {
+            int employeeID = Integer.parseInt(id); // Convert the ID to an integer
+
+            int absences = getEmployeeAbsences(employeeID);
+            
+            if (absences >= 2) {
+                attendanceScore = "20";
+            } else if (absences == 1) {
+                attendanceScore ="60";
+            } else {
+                attendanceScore = "100";
+            }
+            con.close();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ID format.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error retrieving information: " + ex.getMessage());
+        }
+    }
+}
+    
      private void getEmployeeByID(String id){
     // Implement the logic to retrieve employee information based on the ID
     // You can perform database queries or other operations here

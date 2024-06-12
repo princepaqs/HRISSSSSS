@@ -16,12 +16,13 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 public class Form_QA extends javax.swing.JPanel {
-
+        User employee = new User();
     public Form_QA() {
         initComponents();
         init();
         loadData();
-        User employee = new User();
+        
+        
         String employeeID = employee.getEmployeeID(); // Get employeeID from the other class
         loadProductivity(employeeID);
         // UPDATE TABLE AND EMPLOYEE PRESENT
@@ -111,20 +112,34 @@ public class Form_QA extends javax.swing.JPanel {
      // Assuming the other class is called Employee
   
     
-      private void loadData(){
-        try {
-            con = ConnectionManager.getConnection();
-            stmt = con.createStatement();
-            
-            rs = stmt.executeQuery("SELECT COUNT(DISTINCT EmployeeID) AS dayInCount FROM dtr WHERE status = 'Day In' AND DATE(timestamp) = CURRENT_DATE()");
-            rs.next();
-            card3.lbValues.setText(String.valueOf(rs.getString("dayInCount")));
+    private void loadData() {
+    try {
+        // Get the employeeID from the other class
+        String employeeID = employee.getEmployeeID();
+        
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
 
+        // Retrieve the count of distinct EmployeeIDs for 'Day In' status on the current date
+         rs = stmt.executeQuery("SELECT Attdnce AS att FROM performance WHERE EmployeeID = " + employee.getEmployeeID());
+            rs.next();
+            card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
             
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        
+        // Retrieve the productivity value for the specified employeeID
+        rs = stmt.executeQuery("SELECT productivity AS prod FROM productivity WHERE id = " + employeeID);
+        if (rs.next()) {
+            card1.lbValues.setText(String.valueOf(rs.getInt("prod")));
+        } else {
+            // Handle the case where no productivity value is found for the specified employeeID
+            card1.lbValues.setText("N/A");
         }
-   }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
+
     
     private void setTime() {
         time = sdf.format(Calendar.getInstance().getTime());

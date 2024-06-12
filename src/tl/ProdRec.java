@@ -82,6 +82,9 @@ public class ProdRec extends javax.swing.JPanel {
         });
 
         id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                idKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 idKeyTyped(evt);
             }
@@ -109,8 +112,7 @@ public class ProdRec extends javax.swing.JPanel {
                         .addComponent(jSeparator1))
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel1)))
                 .addGap(377, 377, 377))
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
@@ -272,8 +274,32 @@ public class ProdRec extends javax.swing.JPanel {
         }
         
         // Parse the productivity score to a double
-        int productivityScore = Integer.parseInt(prodString);
-        
+        int productivityScore;
+        int prodInput = Integer.parseInt(prod_score.getText());
+
+        if (prodInput == 5) {
+            productivityScore = 120;
+        } else if (prodInput == 4) {
+            productivityScore = 96;
+        } else if (prodInput == 3) {
+            productivityScore = 72;
+        } else if (prodInput == 2) {
+            productivityScore = 48;
+        } else if (prodInput == 1) {
+            productivityScore = 24;
+        } else if (prodInput == 1.5) {
+            productivityScore = 36;
+        } else if (prodInput == 2.5) {
+            productivityScore = 60;
+        } else if (prodInput == 3.5) {
+            productivityScore = 84;
+        } else if (prodInput == 4.5) {
+            productivityScore = 108;
+        } else {
+            // Handle other cases if needed
+            productivityScore = 0; // Default value or handle as required
+        }
+
         // Prepare the INSERT query
         Connection con = ConnectionManager.getConnection();
         String query = "INSERT INTO productivity (id, name, productivity, date) VALUES (?, ?, ?, ?)";
@@ -319,7 +345,7 @@ public class ProdRec extends javax.swing.JPanel {
             rs.getString("date"),
             rs.getInt("id"),
             rs.getString("name"),
-            rs.getInt("productivity"),
+            rs.getInt("productivity") + "%",
             "Current User"
         });
             }
@@ -331,7 +357,8 @@ public class ProdRec extends javax.swing.JPanel {
             ex.printStackTrace();
         }
     }
-    
+   
+
     
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
         // TODO add your handling code here:
@@ -352,6 +379,62 @@ public class ProdRec extends javax.swing.JPanel {
                 }  
     }//GEN-LAST:event_nameKeyTyped
 
+    private void idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idKeyReleased
+        // TODO add your handling code here:
+            
+        
+
+    }//GEN-LAST:event_idKeyReleased
+   private void handleIDKeyReleased(String id) {
+    if (!id.isEmpty()) {
+        try {
+            int employeeID = Integer.parseInt(id); // Convert the ID to an integer
+
+            // Connect to the database
+            con = ConnectionManager.getConnection();
+
+            // Query to retrieve the name from the emp_info table
+            String queryEmpInfo = "SELECT emp_fname, emp_lname FROM emp_info WHERE employeeID = ?";
+            PreparedStatement pstEmpInfo = con.prepareStatement(queryEmpInfo);
+            pstEmpInfo.setInt(1, employeeID);
+            ResultSet rsEmpInfo = pstEmpInfo.executeQuery();
+
+            String fullName = "";
+            if (rsEmpInfo.next()) {
+                String fname = rsEmpInfo.getString("emp_fname");
+                String lname = rsEmpInfo.getString("emp_lname");
+                fullName = fname + " " + lname;
+            }
+            name.setText(fullName);
+            // Retrieve absences information
+//            int absences = getEmployeeAbsences(employeeID);
+//
+//            // Display the name and absences count
+//            name.setText(fullName); // Assuming 'name' is the component to display the name       
+//            // Set production score based on absences
+//            if (absences >= 2) {
+//                prod_score.setText("1");
+//            } else if (absences == 1) {
+//                prod_score.setText("3");
+//            } else {
+//                prod_score.setText("5");
+//            }
+
+
+            // Clean up resources
+            rsEmpInfo.close();
+            pstEmpInfo.close();
+            con.close();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid ID format.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error retrieving information: " + ex.getMessage());
+        }
+    }
+}
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField id;

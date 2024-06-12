@@ -188,7 +188,7 @@ public class perf1 extends javax.swing.JPanel {
     try (
            Connection con = ConnectionManager.getConnection();
          Statement stmt = con.createStatement();
-         ResultSet rs = stmt.executeQuery("SELECT cred.EmployeeID, performance.name AS Name, cred.LOB, cred.OM AS 'Operation Manager', performance.Quality AS 'QA', performance.knowledge_checker AS 'Knowledge Check', productivity.productivity AS 'Productivity' FROM cred INNER JOIN performance ON cred.EmployeeID = performance.EmployeeID INNER JOIN productivity ON cred.EmployeeID = productivity.id");
+         ResultSet rs = stmt.executeQuery("SELECT cred.EmployeeID, performance.name AS Name, cred.LOB, cred.OM AS 'Operation Manager', performance.Quality AS 'QA', performance.knowledge_checker AS 'KnowledgeCheck', productivity.productivity AS 'Productivity' FROM cred INNER JOIN performance ON cred.EmployeeID = performance.EmployeeID INNER JOIN productivity ON cred.EmployeeID = productivity.id");
     ) {
         // Create a DefaultTableModel with column names
         String[] columnNames = {"ID", "Name", "LOB", "Operation Manager", "QA Score", "Productivity", "Knowledge Check"};
@@ -203,7 +203,7 @@ public class perf1 extends javax.swing.JPanel {
                 rs.getString("Operation Manager"),
                 rs.getDouble("QA"),
                 rs.getDouble("Productivity"),
-                rs.getInt("Knowledge Check")
+                rs.getInt("KnowledgeCheck")
             });
         }
 

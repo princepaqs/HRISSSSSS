@@ -5,6 +5,13 @@
  */
 package hr;
 
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author i5
@@ -18,8 +25,13 @@ public class sched extends javax.swing.JPanel {
     /**
      * Creates new form sched
      */
+      Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     public sched() {
         initComponents();
+        loadSchedule();
     }
 
     /**
@@ -210,7 +222,40 @@ public class sched extends javax.swing.JPanel {
             .addComponent(jTabbedPane6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void loadSchedule(){
+        try {
+         con = ConnectionManager.getConnection(); // Establish a connection to the database
+        stmt = con.createStatement(); // Create a statement object for executing SQL queries
 
+        // Execute a SELECT query to retrieve data from the "schedules" table
+        // Filter the records based on the inputted employee ID
+        String query = "SELECT * FROM schedules;";
+        PreparedStatement pstmt = con.prepareStatement(query);
+//        pstmt.setString(1, empId);
+        rs = pstmt.executeQuery();
+
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"EMPLOYEE NUMBER", "NAME", "RES DAY", "LOB", "TIME IN", "TIME OUT"};
+        model = new DefaultTableModel(columnNames, 0); // Initialize a DefaultTableModel with column names
+
+        while (rs.next()) {
+            // Iterate over the ResultSet and add each row to the DefaultTableModel
+            model.addRow(new Object[]{
+                rs.getInt("id"),
+                rs.getString("month"),
+                rs.getString("year"),
+                rs.getString("restday"),
+                rs.getString("time_in"),
+                rs.getString("time_out"),
+            });
+        }
+
+        // Set the model to your JTable to display the filtered data
+        jTable11.setModel(model);
+        } catch (Exception e) {
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton29;

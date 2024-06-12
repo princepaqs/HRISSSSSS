@@ -6,6 +6,12 @@
 package om;
 
 import hr.*;
+import hris.ConnectionManager;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,8 +22,13 @@ public class perf1 extends javax.swing.JPanel {
     /**
      * Creates new form perf
      */
+        Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel model;
     public perf1() {
         initComponents();
+        loadData();
     }
     
     perfkc kc = new perfkc();
@@ -131,16 +142,16 @@ public class perf1 extends javax.swing.JPanel {
                 .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jLabel107)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 614, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 626, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap(12, Short.MAX_VALUE)
                     .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(13, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,6 +212,36 @@ public class perf1 extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jComboBox1ActionPerformed
+    
+    private void loadData() {
+    try (
+           Connection con = ConnectionManager.getConnection();
+         Statement stmt = con.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT cred.EmployeeID, performance.name AS Name, cred.LOB, cred.OM AS 'Operation Manager', performance.Quality AS 'QA', performance.knowledge_checker AS 'Knowledge Check', productivity.productivity AS 'Productivity' FROM cred INNER JOIN performance ON cred.EmployeeID = performance.EmployeeID INNER JOIN productivity ON cred.EmployeeID = productivity.id");
+    ) {
+        // Create a DefaultTableModel with column names
+        String[] columnNames = {"ID", "Name", "LOB", "Operation Manager", "QA Score", "Productivity", "Knowledge Check"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Iterate over the ResultSet and add each row to the model
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("EmployeeID"),
+                rs.getString("Name"),
+                rs.getString("LOB"),
+                rs.getString("Operation Manager"),
+                rs.getDouble("QA"),
+                rs.getDouble("Productivity"),
+                rs.getInt("Knowledge Check")
+            });
+        }
+
+        // Set the model to the JTable
+        jTable10.setModel(model);
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

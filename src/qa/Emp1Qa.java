@@ -39,12 +39,12 @@ import javax.swing.table.TableRowSorter;
  *
  * @author i5
  */
-public class emp1 extends javax.swing.JPanel {
+public class Emp1Qa extends javax.swing.JPanel {
 
     /**
      * Creates new form emp
      */
-    public emp1() {
+    public Emp1Qa() {
         initComponents();
         
         jTabbedPane2.setEnabledAt(1, false);

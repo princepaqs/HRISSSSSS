@@ -5,6 +5,7 @@ import jdev.form.Form_Empty;
 import qa.*;
 import java.awt.Component;
 import jdev.menu.EventMenuSelected;
+import tl.emp1;
 
 public class Qa extends javax.swing.JFrame {
     
@@ -25,9 +26,9 @@ public class Qa extends javax.swing.JFrame {
                     showForm(new Form_QA());
                 }
              //emp tab
-                else if (index == 1 && indexSubMenu == 1) {
-                        showForm(new emp1());
-                }
+                 else if (index == 1 && indexSubMenu == 1) {
+                            showForm(new emp1());
+                            }
                 else if (index == 1 && indexSubMenu == 2){
                             showForm(new empcred());
                         }
@@ -43,10 +44,9 @@ public class Qa extends javax.swing.JFrame {
                 }
                 
                 // PERFORMANCE
-                else if (index == 5 && indexSubMenu == 0) {
+                else if (index == 4 && indexSubMenu == 0) {
                         showForm(new perf1());
-                }
-                 else if (index == 1 && indexSubMenu == 1) {
+                }else if (index == 4 && indexSubMenu == 1) {
                         showForm(new ProdRec());
                 }
                 else {

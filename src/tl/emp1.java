@@ -464,28 +464,6 @@ public class emp1 extends javax.swing.JPanel {
         jLabel23 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jPanel13 = new javax.swing.JPanel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jLabel31 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
-        jLabel32 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
-        jTextField18 = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jLabel47 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel48 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel50 = new javax.swing.JLabel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
 
         setBackground(java.awt.Color.white);
         setMaximumSize(new java.awt.Dimension(1368, 736));
@@ -556,7 +534,7 @@ public class emp1 extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1098, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE)
+                .addComponent(jSeparator1)
                 .addGap(538, 538, 538))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
@@ -1142,207 +1120,6 @@ public class emp1 extends javax.swing.JPanel {
 
         jTabbedPane2.addTab("Daily Time Record", jPanel19);
 
-        jPanel13.setBackground(java.awt.Color.white);
-
-        jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel29.setText("SALARY INFORMATION");
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel30.setText("Basic Pay");
-
-        jTextField13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField13.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField13.setText("0");
-
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel31.setText("SSS");
-
-        jTextField14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField14.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField14.setText("0");
-
-        jLabel32.setText("PAG-IBIG");
-
-        jTextField15.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField15.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField15.setText("0");
-
-        jLabel36.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel36.setText("PhilHealth");
-
-        jTextField18.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField18.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField18.setText("0");
-
-        jLabel38.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel38.setText("Tax");
-
-        jTextField20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField20.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField20.setText("0");
-
-        jButton4.setText("Update Salary");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-        jLabel47.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel47.setText("Appraisal");
-
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox1.setText("Appraised");
-
-        jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel48.setText("PAYSLIP");
-
-        jTable4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Reference Number", "Employee Number", "Payroll Period", "Net Pay", "Document"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable4.setRowHeight(30);
-        jScrollPane2.setViewportView(jTable4);
-
-        jLabel50.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel50.setText("PAY RECORD");
-
-        jTable5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Employee Number", "Appraisal", "Basic Pay changed from", "Basic Pay changed to", "Updated by"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable5.setRowHeight(30);
-        jScrollPane4.setViewportView(jTable5);
-
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel48)
-                            .addComponent(jLabel50))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel13Layout.createSequentialGroup()
-                        .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel13Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel30)
-                                    .addComponent(jLabel36))
-                                .addGap(24, 24, 24)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(30, 30, 30)
-                                        .addComponent(jLabel31))
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel38)))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel32)
-                                    .addComponent(jLabel47))
-                                .addGap(23, 23, 23)
-                                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel13Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox1)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4))
-                        .addGap(0, 26, Short.MAX_VALUE))))
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel13Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel29)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel30)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel36)
-                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel38)
-                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel47)))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel48)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel50)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65))
-        );
-
-        jTabbedPane2.addTab("Employee Salary", jPanel13);
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1374,92 +1151,60 @@ public class emp1 extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        try {
-            con = ConnectionManager.getConnection();
-            
-            String searchToken = jTextField2.getText();
-            String department = String.valueOf(jComboBox1.getSelectedItem());
-            
-            if (!searchToken.equals("")) {
-                pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_mname) AS emp_name, emp_department FROM emp_info LEFT JOIN login ON login.employeeID=emp_info.EmployeeID WHERE emp_info.emp_lname LIKE ? OR emp_info.emp_fname LIKE ? OR emp_info.emp_mname LIKE ? OR emp_info.EmployeeID LIKE ?");
-                
-                model.setRowCount(0);
-                jComboBox1.setSelectedItem("All Departments");
-                
-                pst.setString(1, "%" + searchToken + "%");
-                pst.setString(2, "%" + searchToken + "%");
-                pst.setString(3, "%" + searchToken + "%");
-                pst.setString(4, "%" + searchToken + "%");
-                
-                rs = pst.executeQuery();
-                
-                while(rs.next()) {
-                    String emp_id = String.valueOf(rs.getInt("EmployeeID"));
-                    String emp_name = rs.getString("emp_name");
-                    String emp_dept = rs.getString("emp_department");
-                    String emp_action = "Update Record";
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        jButton3.setEnabled(true);
+        jButton5.setEnabled(false);
 
-                    String data[] = {emp_id, emp_name, emp_dept, emp_action};
-                    model.addRow(data);
-                }
-                
-            } else if (department.equals("All Departments")) {
-                populateTable();
-            } else {
-                pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_mname) AS emp_name, emp_department FROM emp_info LEFT JOIN login ON login.employeeID=emp_info.EmployeeID WHERE emp_department=?");
-                
-                model.setRowCount(0);
-                
-                pst.setString(1, department);
-                
-                rs = pst.executeQuery();
-                
-                while(rs.next()) {
-                    String emp_id = String.valueOf(rs.getInt("EmployeeID"));
-                    String emp_name = rs.getString("emp_name");
-                    String emp_dept = rs.getString("emp_department");
-                    String emp_action = "Update Record";
+        jTextField1.setEditable(true);
+        jTextField3.setEditable(true);
+        jTextField4.setEditable(true);
 
-                    String data[] = {emp_id, emp_name, emp_dept, emp_action};
-                    model.addRow(data);
-                }
-            }
-            
-            jTextField2.setText("");
-            
-            Action update = new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    int column = 0;
-                    int row = jTable1.getSelectedRow();
-                    
-                    String value = jTable1.getModel().getValueAt(row, column).toString();
-                    User.setEmployeeTracked(value);
-                }
-            };
-            
-            ButtonRenderer buttonColumn = new ButtonRenderer(jTable1, update, 3);
-            buttonColumn.setMnemonic(KeyEvent.VK_D);
-            
-            con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton14ActionPerformed
+        jTextField5.setEditable(true);
+        jTextField6.setEditable(true);
+
+        jTextField7.setEditable(true);
+        jComboBox9.setEnabled(true);
+
+        jTextField12.setEditable(true);
+        jComboBox10.setEnabled(true);
+        jTextField23.setEditable(true);
+
+        jComboBox2.setEnabled(true);
+        jTextField26.setEditable(true);
+        jYearChooser1.setEnabled(true);
+
+        jTextField11.setEditable(true);
+        jTextField19.setEditable(true);
+        jTextField27.setEditable(true);
+        jTextField30.setEditable(true);
+
+        jTextField24.setEditable(true);
+        jTextField32.setEditable(true);
+        jTextField25.setEditable(true);
+        jTextField29.setEditable(true);
+
+        jComboBox11.setEnabled(true);
+        jComboBox3.setEnabled(true);
+        jComboBox4.setEnabled(true);
+        jDateChooser2.setEnabled(true);
+        jDateChooser3.setEnabled(true);
+        jDateChooser1.setEnabled(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         String surname = jTextField1.getText();
         String fname = jTextField3.getText();
         String mname = jTextField4.getText();
-        
+
         String address = jTextField5.getText();
         String email = jTextField6.getText();
-        
+
         String contact = jTextField7.getText();
         String civilStatus = String.valueOf(jComboBox9.getSelectedItem());
-        
+
         String nationality = jTextField12.getText();
         String sex = String.valueOf(jComboBox10.getSelectedItem());
         String religion = jTextField23.getText();
@@ -1483,53 +1228,51 @@ public class emp1 extends javax.swing.JPanel {
         String lob = String.valueOf(jComboBox4.getSelectedItem());
         String start = sdf.format(jDateChooser2.getDate());
         String end = jDateChooser3.getDate() == null ? null : sdf.format(jDateChooser3.getDate());
-        
-        
+
         boolean check_surname = isEmpty(surname);
         boolean check_fname = isEmpty(fname);
         boolean check_mname = isEmpty(mname);
-        
+
         boolean check_address = isEmpty(address);
         boolean check_email = isEmpty(email);
-        
+
         boolean check_contact = isEmpty(contact);
         boolean check_bday = isNull(jDateChooser1.getDate());
-        
+
         boolean check_nationality = isEmpty(nationality);
         boolean check_religion = isEmpty(religion);
-        
+
         boolean check_school = isEmpty(school);
-        
+
         boolean check_sss = isEmpty(sss);
         boolean check_pagibig = isEmpty(pagibig);
         boolean check_philhealth = isEmpty(philhealth);
         boolean check_tin = isEmpty(tin);
-        
+
         boolean check_ename = isEmpty(ename);
         boolean check_econtact = isEmpty(econtact);
         boolean check_erelationship = isEmpty(erelationship);
         boolean check_eaddress = isEmpty(eaddress);
-        
+
         boolean check_start = isNull(start);
-        
+
         if (check_surname || check_fname || check_mname || check_address || check_email || check_contact || check_bday ||
-            check_nationality || check_religion || check_school || check_sss || check_pagibig || check_philhealth || 
+            check_nationality || check_religion || check_school || check_sss || check_pagibig || check_philhealth ||
             check_tin || check_ename || check_econtact || check_erelationship || check_eaddress || check_start) {
-                JOptionPane.showMessageDialog(this, "Please fill out all fields.");
+            JOptionPane.showMessageDialog(this, "Please fill out all fields.");
         } else {
             try {
                 String bday = sdf.format(jDateChooser1.getDate());
-                
-                
+
                 con = ConnectionManager.getConnection();
-                
+
                 pst = con.prepareStatement("UPDATE emp_info SET emp_fname=?, emp_lname=?, emp_mname=?, emp_address=?, emp_email=?, "
-                                                             + "emp_sex=?, emp_nationality=?, emp_civilStatus=?, emp_religion=?, emp_Birthdate=?, "
-                                                             + "emp_Contact=?, emp_hea=?, emp_school=?, emp_yrfinished=?, emp_ecname=?, "
-                                                             + "emp_ecaddress=?, emp_eccontact=?, emp_ecrelationship=?, emp_SSS=?, emp_philhealth=?, "
-                                                             + "emp_tin=?, emp_pagibig=?, emp_department=?, emp_supervisor=?, emo_lob=?, emp_start=?, emp_end=? "
-                                                             + "WHERE EmployeeID=?");
-                
+                    + "emp_sex=?, emp_nationality=?, emp_civilStatus=?, emp_religion=?, emp_Birthdate=?, "
+                    + "emp_Contact=?, emp_hea=?, emp_school=?, emp_yrfinished=?, emp_ecname=?, "
+                    + "emp_ecaddress=?, emp_eccontact=?, emp_ecrelationship=?, emp_SSS=?, emp_philhealth=?, "
+                    + "emp_tin=?, emp_pagibig=?, emp_department=?, emp_supervisor=?, emo_lob=?, emp_start=?, emp_end=? "
+                    + "WHERE EmployeeID=?");
+
                 pst.setString(1, fname);
                 pst.setString(2, surname);
                 pst.setString(3, mname);
@@ -1558,145 +1301,104 @@ public class emp1 extends javax.swing.JPanel {
                 pst.setString(26, start);
                 pst.setString(27, end);
                 pst.setInt(28, Integer.valueOf(User.getEmployeeTracked()));
-                
+
                 pst.execute();
-                
+
                 pst = con.prepareStatement("UPDATE login SET position=? WHERE employeeID=?");
-                
+
                 pst.setString(1, department);
                 pst.setInt(2, Integer.parseInt(User.getEmployeeTracked()));
-                
+
                 pst.execute();
-                
+
                 con.close();
-                
+
                 JOptionPane.showMessageDialog(this, "Record updated.");
-                
-                
+
             } catch (SQLException ex) {
-                ex.printStackTrace();   
+                ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        boolean check_pay = isFloat(jTextField13.getText());
-        boolean check_sss = isFloat(jTextField14.getText());
-        boolean check_pagibig = isFloat(jTextField15.getText());
-        boolean check_philhealth = isFloat(jTextField18.getText());
-        boolean check_tax = isFloat(jTextField20.getText());
-        
-        if(!(check_pay && check_sss && check_pagibig && check_philhealth && check_tax)) {
-            JOptionPane.showMessageDialog(this, "Please enter decimal values");
-        } else {
-            
-            try {
-                float pay = Float.parseFloat(jTextField13.getText());
-                float sss = Float.parseFloat(jTextField14.getText());
-                float pagibig = Float.parseFloat(jTextField15.getText());
-                float philhealth = Float.parseFloat(jTextField18.getText());
-                float tax = Float.parseFloat(jTextField20.getText());
-                boolean appraisal = jCheckBox1.isSelected();
-                
-                con = ConnectionManager.getConnection();
-                
-                pst = con.prepareStatement("SELECT COUNT(emp_id) AS count FROM salary WHERE emp_id=?");
-                
-                pst.setInt(1, Integer.valueOf(User.getEmployeeTracked()));
-                
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        try {
+            con = ConnectionManager.getConnection();
+
+            String searchToken = jTextField2.getText();
+            String department = String.valueOf(jComboBox1.getSelectedItem());
+
+            if (!searchToken.equals("")) {
+                pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_mname) AS emp_name, emp_department FROM emp_info LEFT JOIN login ON login.employeeID=emp_info.EmployeeID WHERE emp_info.emp_lname LIKE ? OR emp_info.emp_fname LIKE ? OR emp_info.emp_mname LIKE ? OR emp_info.EmployeeID LIKE ?");
+
+                model.setRowCount(0);
+                jComboBox1.setSelectedItem("All Departments");
+
+                pst.setString(1, "%" + searchToken + "%");
+                pst.setString(2, "%" + searchToken + "%");
+                pst.setString(3, "%" + searchToken + "%");
+                pst.setString(4, "%" + searchToken + "%");
+
                 rs = pst.executeQuery();
-                
-                rs.next();
-                
-                if(rs.getInt("count") == 0) {
-                    pst = con.prepareStatement("INSERT INTO salary (emp_id, basic_pay, sss, pagibig, philhealth, tax, appraisal) VALUES "
-                            + "(?, ?, ?, ?, ?, ?, ?)");
-                
-                    pst.setInt(1, Integer.valueOf(User.getEmployeeTracked()));
-                    pst.setFloat(2, pay);
-                    pst.setFloat(3, sss);
-                    pst.setFloat(4, pagibig);
-                    pst.setFloat(5, philhealth);
-                    pst.setFloat(6, tax);
-                    pst.setInt(7, appraisal ? 1 : 0);
 
-                    pst.execute();
-                } else {
-                    pst = con.prepareStatement("UPDATE salary SET basic_pay=?, sss=?, pagibig=?, philhealth=?, tax=?, appraisal=? WHERE emp_id=?");
-                    
-                    pst.setFloat(1, pay);
-                    pst.setFloat(2, sss);
-                    pst.setFloat(3, pagibig);
-                    pst.setFloat(4, philhealth);
-                    pst.setFloat(5, tax);
-                    pst.setInt(6, appraisal ? 1 : 0);
-                    pst.setInt(7, Integer.valueOf(User.getEmployeeTracked()));
-                    
-                    pst.execute();
+                while(rs.next()) {
+                    String emp_id = String.valueOf(rs.getInt("EmployeeID"));
+                    String emp_name = rs.getString("emp_name");
+                    String emp_dept = rs.getString("emp_department");
+                    String emp_action = "Update Record";
+
+                    String data[] = {emp_id, emp_name, emp_dept, emp_action};
+                    model.addRow(data);
                 }
-                
-                JOptionPane.showMessageDialog(this, "Record updated.");
-                
-                con.close();
-                        
-                
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+
+            } else if (department.equals("All Departments")) {
+                populateTable();
+            } else {
+                pst = con.prepareStatement("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_mname) AS emp_name, emp_department FROM emp_info LEFT JOIN login ON login.employeeID=emp_info.EmployeeID WHERE emp_department=?");
+
+                model.setRowCount(0);
+
+                pst.setString(1, department);
+
+                rs = pst.executeQuery();
+
+                while(rs.next()) {
+                    String emp_id = String.valueOf(rs.getInt("EmployeeID"));
+                    String emp_name = rs.getString("emp_name");
+                    String emp_dept = rs.getString("emp_department");
+                    String emp_action = "Update Record";
+
+                    String data[] = {emp_id, emp_name, emp_dept, emp_action};
+                    model.addRow(data);
+                }
             }
-            
-            
+
+            jTextField2.setText("");
+
+            Action update = new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    int column = 0;
+                    int row = jTable1.getSelectedRow();
+
+                    String value = jTable1.getModel().getValueAt(row, column).toString();
+                    User.setEmployeeTracked(value);
+                }
+            };
+
+            ButtonRenderer buttonColumn = new ButtonRenderer(jTable1, update, 3);
+            buttonColumn.setMnemonic(KeyEvent.VK_D);
+
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-        jButton3.setEnabled(true);
-        jButton5.setEnabled(false);
-        
-        jTextField1.setEditable(true);
-        jTextField3.setEditable(true);
-        jTextField4.setEditable(true);
-        
-        jTextField5.setEditable(true);
-        jTextField6.setEditable(true);
-        
-        jTextField7.setEditable(true);
-        jComboBox9.setEnabled(true);
-        
-        jTextField12.setEditable(true);
-        jComboBox10.setEnabled(true);
-        jTextField23.setEditable(true);
-
-        jComboBox2.setEnabled(true);
-        jTextField26.setEditable(true);
-        jYearChooser1.setEnabled(true);
-
-        jTextField11.setEditable(true);
-        jTextField19.setEditable(true);
-        jTextField27.setEditable(true);
-        jTextField30.setEditable(true);
-
-        jTextField24.setEditable(true);
-        jTextField32.setEditable(true);
-        jTextField25.setEditable(true);
-        jTextField29.setEditable(true);
-
-        jComboBox11.setEnabled(true);
-        jComboBox3.setEnabled(true);
-        jComboBox4.setEnabled(true);
-        jDateChooser2.setEnabled(true);
-        jDateChooser3.setEnabled(true);
-        jDateChooser1.setEnabled(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButton14ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox11;
@@ -1725,17 +1427,11 @@ public class emp1 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
@@ -1745,16 +1441,12 @@ public class emp1 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
-    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
@@ -1762,26 +1454,16 @@ public class emp1 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane15;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jTextField19;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField20;
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField24;
     private javax.swing.JTextField jTextField25;

@@ -21,6 +21,9 @@ public class Form_QA extends javax.swing.JPanel {
         initComponents();
         init();
         loadData();
+        User employee = new User();
+        String employeeID = employee.getEmployeeID(); // Get employeeID from the other class
+        loadProductivity(employeeID);
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -87,7 +90,26 @@ public class Form_QA extends javax.swing.JPanel {
     String time;
     DefaultTableModel model;
         
-      
+    private void loadProductivity(String employeeID) {
+    try {
+        con = ConnectionManager.getConnection();
+        String query = "SELECT productivity AS productivity FROM productivity WHERE id = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, employeeID); // Use the employeeID parameter
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            // Process the productivity data
+            int productivity = rs.getInt("productivity");
+            System.out.println("Productivity: " + productivity);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } 
+
+}
+     // Assuming the other class is called Employee
+  
     
       private void loadData(){
         try {
@@ -110,16 +132,13 @@ public class Form_QA extends javax.swing.JPanel {
     }
 
     private void init() {
-
-        //  init card data
-        
+        //  init card data      
             jButton13.setEnabled(true);
             jButton14.setEnabled(false);
             jButton15.setEnabled(false);
             jButton16.setEnabled(false);
             jButton17.setEnabled(false);
             jButton18.setEnabled(false);
-
     }
 
     @SuppressWarnings("unchecked")

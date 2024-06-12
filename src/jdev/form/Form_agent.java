@@ -89,6 +89,8 @@ public class Form_agent extends javax.swing.JPanel {
     String time;
     DefaultTableModel model;
     
+  
+    
     private void loadData() {
         try {
             con = ConnectionManager.getConnection();

@@ -32,6 +32,7 @@ public class Om extends javax.swing.JFrame {
                             showForm(new empcred());
                         }
                 
+                
              //payroll
                 else if (index == 2 && indexSubMenu == 1) {
                         showForm(new payr());

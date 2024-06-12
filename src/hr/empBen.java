@@ -188,7 +188,7 @@ public class empBen extends javax.swing.JPanel {
         Connection con;
     PreparedStatement pst;
     ResultSet rs;
-
+    float incentive = 0.0f;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
     // Retrieve data from text fields
     int employeeID = Integer.parseInt(jTextField9.getText()); // Assuming jTextField9 contains EmployeeID
@@ -197,11 +197,26 @@ public class empBen extends javax.swing.JPanel {
     
     // Retrieve LOB and Position from the database
     String[] data = getLOBAndPositionFromDatabase(employeeID);
-    String lob = data[0];
-    String position = data[1];
+    String position = data[0];
+    String lob = data[1];
     
-    float incentive = 0.0f; // You need to retrieve Incentive data from somewhere
+    // Initialize incentive
     
+    switch(lob) {
+        case "Level 1":
+            incentive = 1000.0f;
+            break;
+        case "Level 2":
+            incentive = 2000.0f;
+            break;
+        case "Level 3":
+            incentive = 3000.0f;
+            break;
+        // Add more cases as needed
+        default:
+            // Handle unknown position
+            break;
+    }
     // Insert data into the database
     try {
         Connection con = ConnectionManager.getConnection();
@@ -209,8 +224,8 @@ public class empBen extends javax.swing.JPanel {
         pst.setInt(1, employeeID);
         pst.setString(2, empName);
         pst.setInt(3, hmoNo);
-        pst.setString(4, lob);
-        pst.setString(5, position);
+        pst.setString(4, position);
+        pst.setString(5, lob);
         pst.setFloat(6, incentive);
         pst.executeUpdate();
 
@@ -232,6 +247,7 @@ public class empBen extends javax.swing.JPanel {
 }
 
 
+
     
         
     private String[] getLOBAndPositionFromDatabase(int employeeID) {
@@ -247,8 +263,8 @@ public class empBen extends javax.swing.JPanel {
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                result[0] = rs.getString("emp_lob"); // Store LOB
-                result[1] = rs.getString("emp_position"); // Store Position
+                result[0] = rs.getString("emp_position"); // Store LOB
+                result[1] = rs.getString("emp_lob"); // Store Position
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error retrieving data from the database: " + ex.getMessage());
@@ -281,7 +297,7 @@ public class empBen extends javax.swing.JPanel {
                     rs.getInt("HMO"),
                     rs.getString("HMO_date_time"),
                     rs.getString("LOB"),
-                    rs.getInt("Level"),
+                    rs.getString("Level"),
                     rs.getFloat("Incentive")
                 };
                 model.addRow(row);

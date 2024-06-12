@@ -2185,6 +2185,45 @@ public class emp1 extends javax.swing.JPanel {
         jDateChooser3.setEnabled(true);
         jDateChooser1.setEnabled(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+private int getEmployeeAbsences(int employeeId) {
+    int absences = 0;
+
+    try {
+        con = ConnectionManager.getConnection();
+        String query = "SELECT DATE(timestamp) as date, COUNT(CASE WHEN status = 'Day In' THEN 1 END) as day_in_count, "
+                     + "COUNT(CASE WHEN status = 'Day Out' THEN 1 END) as day_out_count "
+                     + "FROM dtr WHERE EmployeeID = ? "
+                     + "GROUP BY DATE(timestamp)";
+        
+        pst = con.prepareStatement(query);
+        pst.setInt(1, employeeId);
+        
+        rs = pst.executeQuery();
+        
+        while (rs.next()) {
+            int dayInCount = rs.getInt("day_in_count");
+            int dayOutCount = rs.getInt("day_out_count");
+            
+            // Consider it an absence if any day lacks either a "Day In" or "Day Out" entry
+            if (dayInCount == 0 || dayOutCount == 0) {
+                absences++;
+            }
+        }
+        
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    return absences;
+}
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

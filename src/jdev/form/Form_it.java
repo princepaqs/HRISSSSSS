@@ -20,6 +20,7 @@ public class Form_it extends javax.swing.JPanel {
     public Form_it() {
         initComponents();
         init();
+        loadData();
         // UPDATE TABLE AND EMPLOYEE PRESENT
         new Timer(1000, new ActionListener() {
             @Override
@@ -86,23 +87,20 @@ public class Form_it extends javax.swing.JPanel {
     String time;
     DefaultTableModel model;
     
-    /*private void loadData() {
+    private void loadData() {
         try {
             con = ConnectionManager.getConnection();
             stmt = con.createStatement();
             
-            rs = stmt.executeQuery("SELECT COUNT(*) as emp_count FROM emp_info");
+            rs = stmt.executeQuery("SELECT COUNT(*) as emp_count FROM cred");
             rs.next();
             card1.lbValues.setText(String.valueOf(rs.getString("emp_count")));
             
-            rs = stmt.executeQuery("SELECT emp_sex, COUNT(*) as emp_count FROM emp_info GROUP BY emp_sex");
-            while(rs.next()) {
-                if (rs.getString("emp_sex").equals("Male")) {
-                    card3.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                } else {
-                    card2.lbValues.setText(String.valueOf(rs.getString("emp_count")));
-                }
-            }
+//            rs = stmt.executeQuery("SELECT EmployeeID, COUNT(*) as emp_count FROM emp_info GROUP BY EmployeeID");
+//            while(rs.next()) {
+//                    card1.lbValues.setText(String.valueOf(rs.getString("emp_count")));
+//
+//            }
             
              
             
@@ -110,7 +108,7 @@ public class Form_it extends javax.swing.JPanel {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }*/
+    }
     
     private void setTime() {
         time = sdf.format(Calendar.getInstance().getTime());

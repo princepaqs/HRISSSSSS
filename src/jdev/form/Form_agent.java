@@ -119,7 +119,7 @@ public class Form_agent extends javax.swing.JPanel {
         con = ConnectionManager.getConnection();
         
         // Fetch Quality and Knowledge Checker values for the current employee ID
-        pst = con.prepareStatement("SELECT Quality, Knowledge_Checker FROM performance WHERE EmployeeID = ?");
+        pst = con.prepareStatement("SELECT Quality, Knowledge_Checker, Overall FROM performance WHERE EmployeeID = ?");
         pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
         rs = pst.executeQuery();
         
@@ -128,6 +128,7 @@ public class Form_agent extends javax.swing.JPanel {
             // Update card2 with Quality value
             card2.lbValues.setText(String.valueOf(rs.getString("Quality")));
             // Update card5 with Knowledge Checker value
+            card4.lbValues.setText(String.valueOf(rs.getString("Overall")));
             card5.lbValues.setText(String.valueOf(rs.getString("Knowledge_Checker")));
         }
         

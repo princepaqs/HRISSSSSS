@@ -45,7 +45,7 @@ public class Menu_om extends JPanel {
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PERM_CONTACT_CALENDAR, "Employee", "Employee Record", "Credentials"));
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PAYMENT, "Payroll", "Payslip Record"));
                     addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.VIEW_LIST, "Schedule"));
-                    addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PIE_CHART_OUTLINED, "Performance"));
+                    addMenuItem(new ModelMenuItem(GoogleMaterialDesignIcon.PIE_CHART_OUTLINED, "Performance", "View Performance", "Callibration"));
 
    }
 

@@ -164,6 +164,8 @@ public class Form_tl extends javax.swing.JPanel {
         pst.setInt(1, Integer.parseInt(User.getEmployeeID()));
         rs = pst.executeQuery();
         
+        
+        
         // If there is a result, update the card label
         if(rs.next()) {
             card4.lbValues.setText(String.valueOf(rs.getString("productivity")));
@@ -191,11 +193,12 @@ public class Form_tl extends javax.swing.JPanel {
     try (Connection con = ConnectionManager.getConnection()) {
         
         // Retrieve the attendance value for the specified employeeID
-        String query = "SELECT Attdnce AS att FROM performance WHERE EmployeeID = ?";
+        String query = "SELECT Attdnce AS att, callib as callib FROM performance WHERE EmployeeID = ?";
         try (PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, Integer.parseInt(employeeID));
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
+                    card2.lbValues.setText(String.valueOf(rs.getInt("callib")));
                     card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
                 } else {
                     card3.lbValues.setText("N/A");

@@ -121,10 +121,10 @@ public class Form_QA extends javax.swing.JPanel {
         stmt = con.createStatement();
 
         // Retrieve the count of distinct EmployeeIDs for 'Day In' status on the current date
-         rs = stmt.executeQuery("SELECT Attdnce AS att FROM performance WHERE EmployeeID = " + employee.getEmployeeID());
+         rs = stmt.executeQuery("SELECT Attdnce AS att, callib AS callib FROM performance WHERE EmployeeID = " + employee.getEmployeeID());
             rs.next();
             card3.lbValues.setText(String.valueOf(rs.getDouble("att")) + "%");
-            
+            card2.lbValues.setText(String.valueOf(rs.getInt("callib")) + "%");
         
         // Retrieve the productivity value for the specified employeeID
         rs = stmt.executeQuery("SELECT productivity AS prod FROM productivity WHERE id = " + employeeID);

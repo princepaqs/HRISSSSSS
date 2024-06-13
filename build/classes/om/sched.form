@@ -356,7 +356,6 @@
                                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                           <Component id="jTextField1" max="32767" attributes="0"/>
                                                           <Component id="jComboBox1" pref="157" max="32767" attributes="0"/>
-                                                          <Component id="jYearChooser1" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
@@ -391,10 +390,7 @@
                               <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="jYearChooser1" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -422,7 +418,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="242" max="32767" attributes="0"/>
+                          <EmptySpace pref="246" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -705,8 +701,6 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator1">
-                </Component>
-                <Component class="com.toedter.calendar.JYearChooser" name="jYearChooser1">
                 </Component>
                 <Component class="javax.swing.JComboBox" name="jComboBox6">
                   <Properties>

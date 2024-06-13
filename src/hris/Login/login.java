@@ -232,6 +232,7 @@ public class login extends javax.swing.JFrame {
                     
                     try {
                         User.set("employeeID", String.valueOf(rs.getInt("EmployeeID")));
+//                        User.set("employeeName", rs.getString("emp_name"));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

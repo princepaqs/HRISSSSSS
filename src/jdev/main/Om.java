@@ -44,8 +44,11 @@ public class Om extends javax.swing.JFrame {
                 }
                 
                 // PERFORMANCE
-                else if (index == 4 && indexSubMenu == 0) {
+                else if (index == 4 && indexSubMenu == 1) {
                         showForm(new hr.perf1());
+                }
+                else if(index == 4 && indexSubMenu == 2){
+                        showForm(new Callib1());
                 }
                 else {
                     showForm(new Form_Empty(index + " " + indexSubMenu));

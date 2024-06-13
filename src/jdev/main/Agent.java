@@ -65,7 +65,6 @@ public class Agent extends javax.swing.JFrame {
         jButton30 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        menu_agent1 = new jdev.menu.Menu_agent();
         body = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,28 +101,22 @@ public class Agent extends javax.swing.JFrame {
             .addGroup(panelMenuLayout.createSequentialGroup()
                 .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelMenuLayout.createSequentialGroup()
-                        .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelMenuLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(jButton30))
-                            .addGroup(panelMenuLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel2))
-                            .addGroup(panelMenuLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 33, Short.MAX_VALUE))
-                    .addComponent(menu_agent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton30))
+                    .addGroup(panelMenuLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel2))
+                    .addGroup(panelMenuLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel1)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(menu_agent1, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 596, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton30, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,10 +205,9 @@ public class Agent extends javax.swing.JFrame {
     private javax.swing.JButton jButton30;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private jdev.menu.Menu_agent menu_agent1;
     private javax.swing.JPanel panelMenu;
     // End of variables declaration//GEN-END:variables
-
+    private jdev.menu.Menu_agent menu_agent1;
     public void changeUsername(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

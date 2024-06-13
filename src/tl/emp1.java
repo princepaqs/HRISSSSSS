@@ -71,52 +71,56 @@ public class emp1 extends javax.swing.JPanel {
     DefaultTableModel model;
     
     public void populateTable() {
-        try {
-            con = ConnectionManager.getConnection();
-            stmt = con.createStatement();
+    try {
+        con = ConnectionManager.getConnection();
+        stmt = con.createStatement();
 
-            rs = stmt.executeQuery("SELECT emp_info.EmployeeID, CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_mname) AS emp_name, emp_department FROM emp_info LEFT JOIN login ON login.employeeID=emp_info.EmployeeID");
-            
-            model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            
-            while(rs.next()) {
-                String emp_id = String.valueOf(rs.getInt("EmployeeID"));
-                String emp_name = rs.getString("emp_name");
-                String emp_dept = rs.getString("emp_department");
-                String emp_udpate = "View Record";
-                String data[] = {emp_id, emp_name, emp_dept, emp_udpate};
-                model.addRow(data);
-            }
-            
-            Action update = new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    int column = 0;
-                    int row = jTable1.getSelectedRow();
-                    
-                    String value = jTable1.getModel().getValueAt(row, column).toString();
-                    User.setEmployeeTracked(value);
-                    
-                    jTabbedPane2.setEnabledAt(1, true);
-                    jTabbedPane2.setEnabledAt(2, true); 
-                    
-                    jTabbedPane2.setSelectedIndex(1);
-                }
-            
-            };
-            
-            ButtonRenderer bc = new ButtonRenderer(jTable1, update, 3);
-            bc.setMnemonic(KeyEvent.VK_D);
-            
-            
-            con.close();
-            
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        // Updated query to exclude "Human Resource" and "Operation Manager" departments
+        String query = "SELECT emp_info.EmployeeID, " +
+                       "CONCAT(emp_info.emp_lname, ', ', emp_info.emp_fname, ' ', emp_info.emp_mname) AS emp_name, " +
+                       "emp_department " +
+                       "FROM emp_info " +
+                       "LEFT JOIN login ON login.employeeID = emp_info.EmployeeID " +
+                       "WHERE emp_department NOT IN ('Human Resource', 'Operation Manager')";
+
+        rs = stmt.executeQuery(query);
         
+        model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        while (rs.next()) {
+            String emp_id = String.valueOf(rs.getInt("EmployeeID"));
+            String emp_name = rs.getString("emp_name");
+            String emp_dept = rs.getString("emp_department");
+            String emp_update = "View Record";
+            String[] data = {emp_id, emp_name, emp_dept, emp_update};
+            model.addRow(data);
+        }
+
+        Action update = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                int column = 0;
+                int row = jTable1.getSelectedRow();
+                
+                String value = jTable1.getModel().getValueAt(row, column).toString();
+                User.setEmployeeTracked(value);
+                
+                jTabbedPane2.setEnabledAt(1, true);
+                jTabbedPane2.setEnabledAt(2, true); 
+                
+                jTabbedPane2.setSelectedIndex(1);
+            }
+        };
+
+        ButtonRenderer bc = new ButtonRenderer(jTable1, update, 3);
+        bc.setMnemonic(KeyEvent.VK_D);
+
+        con.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
     }
+}
+
     
     public void populateDepartments() {
         try {
@@ -810,9 +814,7 @@ public class emp1 extends javax.swing.JPanel {
                                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18))
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel9)
@@ -827,7 +829,8 @@ public class emp1 extends javax.swing.JPanel {
                                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addComponent(jComboBox10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextField26, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -907,11 +910,12 @@ public class emp1 extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11)
                             .addComponent(jLabel14)
                             .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1013,7 +1017,7 @@ public class emp1 extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(74, 74, 74)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

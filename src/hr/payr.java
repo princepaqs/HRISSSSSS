@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import hris.ConnectionManager;
+import hris.User;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -29,9 +30,10 @@ public class payr extends javax.swing.JPanel {
     /**
      * Creates new form payr
      */
+    User employee = new User();
     public payr() {
         initComponents();
-        
+        loadData2();
         loadData();
         String refNumber = generateReferenceNumber();
         jTextField13.setText(refNumber);
@@ -403,8 +405,8 @@ public class payr extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-        try {
+         // TODO add your handling code here:
+    try {
         con = ConnectionManager.getConnection();
         
         // Retrieve basic_pay from the salary table
@@ -443,28 +445,35 @@ public class payr extends javax.swing.JPanel {
             String year = String.valueOf(cal.get(Calendar.YEAR));
             String payoutDateString = String.format("%s-%s-%02d", year, month, payoutDate);
 
+            // Get current user and date modified
+ 
             // Prepare the INSERT statement for payslip table
-            String payslipInsertQuery = "INSERT INTO payslip (ref_id, employee_id, payout_date, basic_pay) VALUES (?, ?, ?, ?)";
+            String payslipInsertQuery = "INSERT INTO payslip (ref_id, employee_id, payout_date, basic_pay, emp_name, department, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
             pst = con.prepareStatement(payslipInsertQuery);
 
-            // Set values from JTextFields
+            // Set values from JTextFields and other variables
             pst.setString(1, jTextField13.getText()); // ref_id
             pst.setInt(2, Integer.parseInt(jTextField1.getText())); // employee_id
             pst.setString(3, payoutDateString); // payout_date
             pst.setDouble(4, basicPay); // basic_pay
+            pst.setString(5, jTextField5.getText()); // emp_name
+            pst.setString(6, jTextField7.getText()); // department
+            pst.setString(7, jTextField8.getText()); // status
+
 
             // Execute the INSERT statement
             int rowsInserted = pst.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("A new row has been inserted into the payslip table.");
                 loadData();
+                loadData2();
             }
         } else {
             System.out.println("Error: No basic_pay found for the employee ID.");
         }
     } catch (SQLException e) {
         System.out.println("Error inserting data into payslip table: " + e.getMessage());
-    }   
+    }     
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
@@ -538,10 +547,34 @@ public class payr extends javax.swing.JPanel {
             }
     }
 
+    private void loadData2() {
+        try {
+            con = ConnectionManager.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery("SELECT * from payslip");
+            String[] columnNames = {"Reference Number", "Payout Date", "Department", "Employee Name", "Employee ID", "Status"};
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("ref_id"),
+                    rs.getString("payout_date"),
+                    rs.getString("department"),
+                    rs.getString("emp_name"),
+                    rs.getInt("employee_id"),
+                    rs.getString("status")
+                });
+            }
+
+            jTable1.setModel(model);
+
+        } catch (SQLException ex) {
+            System.out.println("Error loading data into jTable2: " + ex.getMessage());
+        }
+    }
+
 public static String generateReferenceNumber() {
         // Prefix
-        String prefix = "REF";
-        
         // Current date and time
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
         String dateTime = sdf.format(new Date());
@@ -551,7 +584,7 @@ public static String generateReferenceNumber() {
         int randomNumber = random.nextInt(1000); // Generates a random number between 0 and 999
         
         // Combine prefix, dateTime, and random number to create the reference number
-        String referenceNumber = String.format("%s-%s-%03d", prefix, dateTime, randomNumber);
+        String referenceNumber = String.format("%s-%03d", dateTime, randomNumber);
         
         return referenceNumber;
     }   

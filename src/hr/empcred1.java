@@ -313,7 +313,7 @@ public class empcred1 extends javax.swing.JPanel {
         jLabel1.setText("Status:");
 
         jComboBox7.setFont(new java.awt.Font("Trebuchet MS", 0, 11)); // NOI18N
-        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVE", "RESIGNED" }));
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Resigned" }));
         jComboBox7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jTextField16.setEditable(false);
@@ -399,10 +399,11 @@ public class empcred1 extends javax.swing.JPanel {
                     .addComponent(jLabel11)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jButton2)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(jButton2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
@@ -835,7 +836,6 @@ public class empcred1 extends javax.swing.JPanel {
             // If EmployeeID is not found, clear the text fields or display a message
             jTextField13.setText("");
             jTextField15.setText("");
-            JOptionPane.showMessageDialog(this, "Employee ID not found", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         // Close resources
@@ -941,7 +941,7 @@ public class empcred1 extends javax.swing.JPanel {
             // If EmployeeID is not found, clear the text fields or display a message
             jTextField9.setText("");
             jTextField16.setText("");
-            JOptionPane.showMessageDialog(this, "Employee ID not found", "Error", JOptionPane.ERROR_MESSAGE);
+
         }
 
         // Close resources

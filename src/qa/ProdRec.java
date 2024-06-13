@@ -24,6 +24,7 @@ public class ProdRec extends javax.swing.JPanel {
     /**
      * Creates new form ProdRec
          */
+    public float overall;
     Connection con;
     Statement stmt;
     ResultSet rs;
@@ -243,7 +244,15 @@ public class ProdRec extends javax.swing.JPanel {
 
         jLabel10.setText("Knowledge Check Score:");
 
+        kc_id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kc_idActionPerformed(evt);
+            }
+        });
         kc_id.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kc_idKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 kc_idKeyReleased(evt);
             }
@@ -416,13 +425,14 @@ public class ProdRec extends javax.swing.JPanel {
  
         if (rsCheck.next()) {
             // If the ID already exists, perform an update operation
-            String queryUpdate = "UPDATE performance SET Quality = ?, name = ?, date = ?, Attdnce = ? WHERE EmployeeID = ?";
+            String queryUpdate = "UPDATE performance SET Quality = ?, name = ?, date = ?, Attdnce = ?, Overall = ? WHERE EmployeeID = ?";
             PreparedStatement pstmtUpdate = con.prepareStatement(queryUpdate);
             String date = qa_date.getDate().toString();
             pstmtUpdate.setDouble(1, productivityScore);
             pstmtUpdate.setString(2, fname);
             pstmtUpdate.setString(3, date);
-            pstmtUpdate.setString(5, ids);
+            pstmtUpdate.setString(6, ids);
+            pstmtUpdate.setDouble(5, overall);
             pstmtUpdate.setDouble(4, Double.parseDouble(attendanceScore));
             int rowsUpdated = pstmtUpdate.executeUpdate();
 
@@ -442,7 +452,7 @@ public class ProdRec extends javax.swing.JPanel {
             pstmtInsert.setString(4, date);
             pstmtInsert.setString(5, kc_score.getText());
             pstmtInsert.setString(6, null);
-            pstmtInsert.setString(7, null);
+            pstmtInsert.setDouble(7, overall);
             pstmtInsert.setDouble(8, Double.parseDouble(attendanceScore));
             int rowsInserted = pstmtInsert.executeUpdate();
 
@@ -460,23 +470,29 @@ public class ProdRec extends javax.swing.JPanel {
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void loadData() {
+   private void loadData() {
     try (Connection con = ConnectionManager.getConnection();
          Statement stmt = con.createStatement();
          ResultSet rs = stmt.executeQuery("SELECT * FROM performance");
     ) {
         // Create a DefaultTableModel with column names
-        String[] columnNames = {"Date", "ID", "Name", "QA Score", "Knowledge Check", "Updated By"};
+        String[] columnNames = {"Date", "ID", "Name", "QA Score", "Knowledge Check", "Overall", "Updated By"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Iterate over the ResultSet and add each row to the model
         while (rs.next()) {
+            float overall = (float) rs.getInt("knowledge_checker")
+                          + (float) rs.getInt("callib")
+                          + (float) rs.getDouble("Quality")
+                          + (float) rs.getDouble("attdnce") / 4;
+            
             model.addRow(new Object[]{
                 rs.getString("date"),
                 rs.getInt("EmployeeID"),
                 rs.getString("name"),
                 rs.getDouble("Quality") + "%",
                 rs.getInt("knowledge_checker") + "%",
+                overall,
                 "Current User"
             });
         }
@@ -487,6 +503,7 @@ public class ProdRec extends javax.swing.JPanel {
         ex.printStackTrace();
     }
 }
+
  private int getEmployeeAbsences(int employeeId) {
             int absences = 0;
 
@@ -558,10 +575,11 @@ public class ProdRec extends javax.swing.JPanel {
     
     // Prepare the UPDATE query
     Connection con = ConnectionManager.getConnection();
-    String query = "UPDATE performance SET knowledge_checker = ? WHERE EmployeeID = ?";
+    String query = "UPDATE performance SET knowledge_checker = ?, Overall = ? WHERE EmployeeID = ?";
     PreparedStatement pstmt = con.prepareStatement(query);
     pstmt.setInt(1, productivityScore);
-    pstmt.setInt(2, Integer.parseInt(ids));
+    pstmt.setDouble(2, overall);
+    pstmt.setInt(3, Integer.parseInt(ids));
 
     // Execute the UPDATE query
     int rowsUpdated = pstmt.executeUpdate();
@@ -601,7 +619,7 @@ public class ProdRec extends javax.swing.JPanel {
 
     private void kc_idKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kc_idKeyReleased
                 // TODO add your handling code here:
-                String id = qa_id.getText().trim();
+                String id = kc_id.getText().trim();
             // Call the method to retrieve employee information based on the ID
             if(id.isEmpty()){
                 kc_name.setText("");
@@ -613,6 +631,14 @@ public class ProdRec extends javax.swing.JPanel {
     private void quality_scoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quality_scoreActionPerformed
           
     }//GEN-LAST:event_quality_scoreActionPerformed
+
+    private void kc_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kc_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kc_idActionPerformed
+
+    private void kc_idKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kc_idKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kc_idKeyPressed
          private void handleIDKeyReleased(String id) {
     if (!id.isEmpty()) {
         try {
@@ -637,33 +663,38 @@ public class ProdRec extends javax.swing.JPanel {
     }
 }
     
-     private void getEmployeeByID(String id){
-    // Implement the logic to retrieve employee information based on the ID
-    // You can perform database queries or other operations here
-    // For example:
+    private void getEmployeeByID(String id) {
+    Connection con = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
     try {
         con = ConnectionManager.getConnection();
-            stmt = con.createStatement();
-
-        // Execute a SELECT query to retrieve data from the "emp_info" table based on the employee ID
-       String query = "SELECT * FROM emp_info WHERE EmployeeID = ?";
-        PreparedStatement pstmt = con.prepareStatement(query);
+        String query = "SELECT * FROM emp_info WHERE EmployeeID = ?";
+        pstmt = con.prepareStatement(query);
         pstmt.setString(1, id);
         rs = pstmt.executeQuery();
-        
-        while(rs.next()){
 
-                   qa_name.setText(rs.getString("emp_fname") + " " + rs.getString("emp_lname"));
+        if (rs.next()) {
+            qa_name.setText(rs.getString("emp_fname") + " " + rs.getString("emp_lname"));
+        } else {
+            qa_name.setText("");
         }
-         
-        
-        // Process the ResultSet and display or handle the retrieved employee information
-        // For example, you can display the information in JTextFields or other components
 
     } catch (SQLException ex) {
         ex.printStackTrace(); // Handle SQL exceptions
+    } finally {
+        // Close resources in the finally block to ensure they are closed even if an exception occurs
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-     }
+}
+
    private void getEmployeeByID_KC(String id){
     // Implement the logic to retrieve employee information based on the ID
     // You can perform database queries or other operations here
@@ -678,11 +709,12 @@ public class ProdRec extends javax.swing.JPanel {
         pstmt.setString(1, id);
         rs = pstmt.executeQuery();
         
-        while(rs.next()){
+        if(rs.next()){
             kc_name.setText(rs.getString("emp_fname") + " " + rs.getString("emp_lname"));
+        }else{
+            kc_name.setText("");
         }
-         
-        
+              
         // Process the ResultSet and display or handle the retrieved employee information
         // For example, you can display the information in JTextFields or other components
 

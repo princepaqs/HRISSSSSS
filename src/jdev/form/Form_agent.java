@@ -60,7 +60,7 @@ public class Form_agent extends javax.swing.JPanel {
                         
                         rs.next();
                         
-                        card3.lbValues.setText(String.valueOf(rs.getInt("emp_count")));
+                       
                         
                         
                         con.close();

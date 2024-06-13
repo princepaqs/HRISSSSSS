@@ -452,8 +452,8 @@ public class ProdRec extends javax.swing.JPanel {
             pstmtInsert.setString(4, date);
             pstmtInsert.setString(5, kc_score.getText());
             pstmtInsert.setString(6, null);
-            pstmtInsert.setDouble(7, overall);
-            pstmtInsert.setDouble(8, Double.parseDouble(attendanceScore));
+            pstmtInsert.setDouble(7, Double.parseDouble(attendanceScore));
+            pstmtInsert.setDouble(8, overall);
             int rowsInserted = pstmtInsert.executeUpdate();
 
             if (rowsInserted > 0) {
@@ -481,10 +481,6 @@ public class ProdRec extends javax.swing.JPanel {
 
         // Iterate over the ResultSet and add each row to the model
         while (rs.next()) {
-            float overall = (float) rs.getInt("knowledge_checker")
-                          + (float) rs.getInt("callib")
-                          + (float) rs.getDouble("Quality")
-                          + (float) rs.getDouble("attdnce") / 4;
             
             model.addRow(new Object[]{
                 rs.getString("date"),
@@ -492,7 +488,7 @@ public class ProdRec extends javax.swing.JPanel {
                 rs.getString("name"),
                 rs.getDouble("Quality") + "%",
                 rs.getInt("knowledge_checker") + "%",
-                overall,
+                rs.getInt("Overall"),
                 "Current User"
             });
         }

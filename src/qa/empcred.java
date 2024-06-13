@@ -296,7 +296,6 @@ public class empcred extends javax.swing.JPanel {
         jTextField5.setText("");
         jTextField6.setText("");
         jTextField7.setText("");
-        jComboBox2.setSelectedIndex(0);
         loadData();
     }
       private String getStringValue(Object obj) {

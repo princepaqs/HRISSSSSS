@@ -7,6 +7,7 @@ package tl;
 
 
 import hris.ConnectionManager;
+import hris.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -235,7 +236,7 @@ public class payr extends javax.swing.JPanel {
         con = ConnectionManager.getConnection(); // Establish a connection to the database
         stmt = con.createStatement(); // Create a statement object for executing SQL queries
 
-        rs = stmt.executeQuery("SELECT * from payslip"); // Execute a SELECT query to retrieve data from the "payslip" table
+        rs = stmt.executeQuery("SELECT * from payslip WHERE employee_id = " + User.getEmployeeID()); // Execute a SELECT query to retrieve data from the "payslip" table
 
         // Create a DefaultTableModel with column names
         String[] columnNames = {"EMPLOYEE ID", "REFERENCE NUMBER", "PAYOUT DATE"};
